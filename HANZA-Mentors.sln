@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0_Solution_Items", "0_Solut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Domain", "Base.Domain\Base.Domain.csproj", "{B71BB652-4754-4A43-BE3C-B8310E4A9D55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Domain.Contracts", "Base.Domain.Contracts\Base.Domain.Contracts.csproj", "{75EDCEA5-5182-4340-9670-1D455596C1A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Domain.Contract", "Base.Domain.Contract\Base.Domain.Contract.csproj", "{75EDCEA5-5182-4340-9670-1D455596C1A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Domain", "App.Domain\App.Domain.csproj", "{174D8379-CCFD-42B8-82D2-7D398EBA35A8}"
 EndProject
