@@ -8,8 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_Base", "2_Base", "{89188C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0_Solution_Items", "0_Solution_Items", "{1A72DF69-7ADF-4459-B38D-44A1310191B1}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Downloads\docker-compose.yml = ..\..\Downloads\docker-compose.yml
 		.gitignore = .gitignore
+		..\..\Downloads\docker-compose.yml = ..\..\Downloads\docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Domain", "Base.Domain\Base.Domain.csproj", "{B71BB652-4754-4A43-BE3C-B8310E4A9D55}"
