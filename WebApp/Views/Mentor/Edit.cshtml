@@ -1,0 +1,69 @@
+@model MentorCreateEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Mentor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Mentor.EmployeeId" class="control-label"></label>
+                <select asp-for="Mentor.EmployeeId" class="form-control" asp-items="Model.EmployeeSelectList"></select>
+                <span asp-validation-for="Mentor.EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.InternMentorshipId" class="control-label"></label>
+                <select asp-for="Mentor.InternMentorshipId" class="form-control" asp-items="Model.InternMentorshipSelectList"></select>
+                <span asp-validation-for="Mentor.InternMentorshipId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.EmployeeMentorshipId" class="control-label"></label>
+                <select asp-for="Mentor.EmployeeMentorshipId" class="form-control" asp-items="Model.EmployeeSelectList"></select>
+                <span asp-validation-for="Mentor.EmployeeMentorshipId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.FromDate" class="control-label"></label>
+                <input asp-for="Mentor.FromDate" class="form-control" />
+                <span asp-validation-for="Mentor.FromDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.UntilDate" class="control-label"></label>
+                <input asp-for="Mentor.UntilDate" class="form-control" />
+                <span asp-validation-for="Mentor.UntilDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.PaymentAmount" class="control-label"></label>
+                <input asp-for="Mentor.PaymentAmount" class="form-control" />
+                <span asp-validation-for="Mentor.PaymentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.PaymentOrderDate" class="control-label"></label>
+                <input asp-for="Mentor.PaymentOrderDate" class="form-control" />
+                <span asp-validation-for="Mentor.PaymentOrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mentor.ChangeReason" class="control-label"></label>
+                <input asp-for="Mentor.ChangeReason" class="form-control" />
+                <span asp-validation-for="Mentor.ChangeReason" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Mentor.Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

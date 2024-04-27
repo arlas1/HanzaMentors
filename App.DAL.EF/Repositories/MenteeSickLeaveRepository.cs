@@ -1,12 +1,15 @@
 ﻿using App.DAL.Contracts.Repositories;
-using App.Domain;
+using DomainEntity = App.Domain;
+using DALDTO = App.DAL.DTO;using AutoMapper;
 using Base.DAL.EF;
 
 namespace App.DAL.EF.Repositories;
 
-public class MenteeSickLeaveRepository : BaseEntityRepository<MenteeSickLeave, AppDbContext>, IMenteeSickLeaveRepository
+public class MenteeSickLeaveRepository :
+    BaseEntityRepository<DomainEntity.MenteeSickLeave, DALDTO.MenteeSickLeave, AppDbContext>, IMenteeSickLeaveRepository
 {
-    public MenteeSickLeaveRepository(AppDbContext dataContext) : base(dataContext)
+    public MenteeSickLeaveRepository(AppDbContext dbContext, IMapper mapper) : 
+        base(dbContext, new DalDummyMapper<DomainEntity.MenteeSickLeave, DALDTO.MenteeSickLeave>(mapper))
     {
     }
 }

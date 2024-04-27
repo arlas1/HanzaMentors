@@ -19,4 +19,9 @@ public class EmployeeMentorshipDocument : BaseEntityId
     
     [MaxLength(50)]
     public string? DocumentStatus { get; set; }
+    
+    [MaxLength(50)]
+    public string? ChoosenSigningTime { get; set; }
+    
+    public int WayOfSigning { get; set; }
 }

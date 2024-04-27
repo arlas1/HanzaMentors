@@ -1,12 +1,16 @@
 ﻿using App.DAL.Contracts.Repositories;
-using App.Domain;
+using AutoMapper;
+using DomainEntity = App.Domain;
+using DALDTO = App.DAL.DTO;
 using Base.DAL.EF;
 
 namespace App.DAL.EF.Repositories;
 
-public class EmployeeRepository : BaseEntityRepository<Employee, AppDbContext>, IEmployeeRepository
+public class EmployeeRepository : BaseEntityRepository<DomainEntity.Employee, DALDTO.Employee, AppDbContext>, IEmployeeRepository
 {
-    public EmployeeRepository(AppDbContext dataContext) : base(dataContext)
+    public EmployeeRepository(AppDbContext dbContext, IMapper mapper) : 
+        base(dbContext, new DalDummyMapper<DomainEntity.Employee, DALDTO.Employee>(mapper))
     {
     }
+
 }

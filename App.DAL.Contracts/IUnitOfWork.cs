@@ -5,7 +5,9 @@ namespace App.DAL.Contracts;
 
 public interface IUnitOfWork : IBaseUnitOfWork
 {
+    IAppUserRepository Users { get; }
     IDocumentSampleRepository DocumentSamples { get; }
+    IDoucmentSigningTimeRepository DoucmentSigningTimes { get; }
     
     IInternRepository Interns { get; }
     IInternMentorshipRepository InternMentorships { get; }

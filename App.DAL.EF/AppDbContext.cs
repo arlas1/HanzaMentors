@@ -11,6 +11,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid, IdentityUs
 
 {
     public DbSet<DocumentSample> DocumentSamples { get; set; } = default!;
+    public DbSet<DoucmentSigningTime> DoucmentSigningTimes { get; set; } = default!;
 
     public DbSet<Intern> Interns { get; set; } = default!;
     public DbSet<InternMentorship> InternMentorships { get; set; } = default!;
@@ -27,6 +28,8 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid, IdentityUs
     public DbSet<Mentor> Mentors { get; set; } = default!;
     public DbSet<MenteeSickLeave> MenteeSickLeaves { get; set; } = default!;
     public DbSet<SickLeaveType> SickLeaveTypes { get; set; } = default!;
+    
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
 
 
     public AppDbContext(DbContextOptions options) : base(options)

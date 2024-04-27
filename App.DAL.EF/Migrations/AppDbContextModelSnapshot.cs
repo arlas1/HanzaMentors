@@ -40,6 +40,30 @@ namespace App.DAL.EF.Migrations
                     b.ToTable("DocumentSamples");
                 });
 
+            modelBuilder.Entity("App.Domain.DoucmentSigningTime", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EmployeeMentorshipDocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("InternMentorshipDocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeMentorshipDocumentId");
+
+                    b.HasIndex("InternMentorshipDocumentId");
+
+                    b.ToTable("DoucmentSigningTimes");
+                });
+
             modelBuilder.Entity("App.Domain.Employee", b =>
                 {
                     b.Property<Guid>("Id")
@@ -99,6 +123,10 @@ namespace App.DAL.EF.Migrations
                     b.Property<byte[]>("Base64Code")
                         .HasColumnType("bytea");
 
+                    b.Property<string>("ChoosenSigningTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<Guid>("DocumentSampleId")
                         .HasColumnType("uuid");
 
@@ -111,6 +139,9 @@ namespace App.DAL.EF.Migrations
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("WayOfSigning")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -203,12 +234,10 @@ namespace App.DAL.EF.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
@@ -275,6 +304,37 @@ namespace App.DAL.EF.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("App.Domain.Identity.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpirationDT")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("PreviousExpirationDT")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreviousRefreshToken")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("App.Domain.Intern", b =>
                 {
                     b.Property<Guid>("Id")
@@ -339,6 +399,10 @@ namespace App.DAL.EF.Migrations
                     b.Property<byte[]>("Base64Code")
                         .HasColumnType("bytea");
 
+                    b.Property<string>("ChoosenSigningTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<Guid>("DocumentSampleId")
                         .HasColumnType("uuid");
 
@@ -351,6 +415,9 @@ namespace App.DAL.EF.Migrations
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("WayOfSigning")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -574,6 +641,25 @@ namespace App.DAL.EF.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("App.Domain.DoucmentSigningTime", b =>
+                {
+                    b.HasOne("App.Domain.EmployeeMentorshipDocument", "EmployeeMentorshipDocument")
+                        .WithMany()
+                        .HasForeignKey("EmployeeMentorshipDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Domain.InternMentorshipDocument", "InternMentorshipDocument")
+                        .WithMany()
+                        .HasForeignKey("InternMentorshipDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeMentorshipDocument");
+
+                    b.Navigation("InternMentorshipDocument");
+                });
+
             modelBuilder.Entity("App.Domain.Employee", b =>
                 {
                     b.HasOne("App.Domain.Identity.AppUser", "AppUser")
@@ -645,6 +731,17 @@ namespace App.DAL.EF.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("App.Domain.Identity.RefreshToken", b =>
+                {
+                    b.HasOne("App.Domain.Identity.AppUser", "AppUser")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("App.Domain.Intern", b =>
@@ -801,6 +898,11 @@ namespace App.DAL.EF.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("App.Domain.Identity.AppUser", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,12 +1,14 @@
 ﻿using App.DAL.Contracts.Repositories;
-using App.Domain;
-using Base.DAL.EF;
+using AutoMapper;
+using DomainEntity = App.Domain;
+using DALDTO = App.DAL.DTO;using Base.DAL.EF;
 
 namespace App.DAL.EF.Repositories;
 
-public class InternRepository : BaseEntityRepository<Intern, AppDbContext>, IInternRepository
+public class InternRepository : BaseEntityRepository<DomainEntity.Intern, DALDTO.Intern, AppDbContext>, IInternRepository
 {
-    public InternRepository(AppDbContext dataContext) : base(dataContext)
+    public InternRepository(AppDbContext dbContext, IMapper mapper) : 
+        base(dbContext, new DalDummyMapper<DomainEntity.Intern, DALDTO.Intern>(mapper))
     {
     }
 }

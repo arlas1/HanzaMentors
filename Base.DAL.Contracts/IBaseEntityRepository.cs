@@ -11,11 +11,18 @@ public interface IBaseEntityRepository<TEntity, TKey>
     where TEntity : class, IBaseEntityId<TKey>
     where TKey : IEquatable<TKey>
 {
-    Task<IEnumerable<TEntity>> AllAsync();
-    Task<TEntity?> FindAsync(TKey id);
     TEntity Add(TEntity entity);
     TEntity Update(TEntity entity);
-    TEntity Remove(TEntity entity);
-    Task<TEntity?> RemoveAsync(TKey id);
+    int Remove(TEntity entity, TKey? userId = default);
+    int Remove(TKey id, TKey? userId = default);
 
+    TEntity? FirstOrDefault(TKey id, TKey? userId = default, bool noTracking = true);
+    IEnumerable<TEntity> GetAll(TKey? userId = default, bool noTracking = true);
+    bool Exists(TKey id, TKey? userId = default);
+
+    Task<TEntity?> FirstOrDefaultAsync(TKey id, TKey? userId = default, bool noTracking = true);
+    Task<IEnumerable<TEntity>> GetAllAsync(TKey? userId = default, bool noTracking = true);
+    Task<bool> ExistsAsync(TKey id, TKey? userId = default);
+    Task<int> RemoveAsync(TEntity entity, TKey? userId = default);
+    Task<int> RemoveAsync(TKey id, TKey? userId = default);
 }
