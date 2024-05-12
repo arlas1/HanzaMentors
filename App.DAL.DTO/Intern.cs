@@ -8,6 +8,8 @@ public class Intern : IBaseEntityId
     
     public Guid? AppUserId { get; set; }
     
-    public int InternType { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? InternType { get; set; }
     public string? StudyProgram { get; set; }
 }

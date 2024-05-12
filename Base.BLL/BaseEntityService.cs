@@ -64,9 +64,9 @@ public class BaseEntityService<TDalEntity, TBllEntity, TRepository, TKey> : IEnt
         return Repository.GetAll(userId, noTracking).Select(e => Mapper.Map(e))!;
     }
 
-    public bool Exists(TKey id, TKey? userId = default)
+    public bool Exists(TKey id, TKey? userId = default) 
     {
-        return Repository.Exists(id, userId);
+        return Repository.Exists(id);
     }
 
     public async Task<bool> ExistsAsync(TKey id, TKey? userId = default)

@@ -21,12 +21,11 @@ public class AutoMapperProfile: Profile
         CreateMap<App.DAL.DTO.DoucmentSigningTime, App.Domain.DoucmentSigningTime>().ReverseMap();
         CreateMap<App.DAL.DTO.EmployeeMentorship, App.Domain.EmployeeMentorship>().ReverseMap();
         CreateMap<App.DAL.DTO.EmployeeMentorshipDocument, App.Domain.EmployeeMentorshipDocument>().ReverseMap();
-        CreateMap<App.DAL.DTO.EmployeeMentorshipUntilDate, App.Domain.EmployeeMentorshipUntilDate>().ReverseMap();
+        CreateMap<App.DAL.DTO.EmployeesMentor, App.Domain.EmployeesMentor>().ReverseMap();
         CreateMap<App.DAL.DTO.FactorySupervisor, App.Domain.FactorySupervisor>().ReverseMap();
         CreateMap<App.DAL.DTO.InternMentorshipDocument, App.Domain.InternMentorshipDocument>().ReverseMap();
-        CreateMap<App.DAL.DTO.InternMentorshipUntilDate, App.Domain.InternMentorshipUntilDate>().ReverseMap();
+        CreateMap<App.DAL.DTO.InternsMentor, App.Domain.InternsMentor>().ReverseMap();
         CreateMap<App.DAL.DTO.InternSupervisor, App.Domain.InternSupervisor>().ReverseMap();
         CreateMap<App.DAL.DTO.MenteeSickLeave, App.Domain.MenteeSickLeave>().ReverseMap();
-        CreateMap<App.DAL.DTO.SickLeaveType, App.Domain.SickLeaveType>().ReverseMap();
     }
 }

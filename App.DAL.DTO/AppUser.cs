@@ -9,6 +9,6 @@ public class AppUser : IBaseEntityId
     
     public string? FirstName { get; set; } = default!;
     public string? LastName { get; set; } = default!;
-    public int PersonalCode { get; set; }
+    public long? PersonalCode { get; set; }
     public ICollection<RefreshToken>? RefreshTokens { get; set; }
 }

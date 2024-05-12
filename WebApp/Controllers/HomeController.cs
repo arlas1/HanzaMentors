@@ -1,31 +1,27 @@
 using System.Diagnostics;
+using App.BLL.Contracts;
+using App.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using Spire.Pdf;
 
 namespace WebApp.Controllers;
 
-public class HomeController : Controller
+public class HomeController(IAppBLL bll, UserManager<AppUser> userManager) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    // GET: Intern
+    public async Task<IActionResult> Index()
     {
-        _logger = logger;
-    }
-
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        if (User.Identity!.IsAuthenticated)
+        {
+            var userId = Guid.Parse(userManager.GetUserId(User)!);
+            var interns = await bll.Interns.GetAllAsync(userId);
+            return View(interns);
+        }
+        else
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,96 @@
+﻿@model DocumentsViewModel
+
+<h1 class="text-center mb-4">Documents</h1>
+
+<div class="container-fluid mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-10"> 
+
+            <div class="mb-4">
+                <h2 class="text-center mb-3">Documents Samples</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 70%;">Title</th> 
+                                <th style="width: 30%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sample in Model.DocumentSamples)
+                            {
+                                <tr>
+                                    <td>@sample.Title</td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "Details", new { documentId = sample.Id })" class="btn btn-primary px-3 py-2 me-2">Download</a>
+                                        <a asp-controller="Document" asp-action="DeleteSampleDocument" asp-route-documentId="@sample.Id" class="btn btn-danger px-3 py-2">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h2 class="text-center mb-3">Intern Mentorship Documents</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Receiver Id</th>
+                                <th style="width: 25%;">Document Status</th>
+                                <th style="width: 25%;">Way of Signing</th>
+                                <th style="width: 25%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sample in Model.InternMentorshipDocuments)
+                            {
+                                <tr>
+                                    <td>@sample.ReceiverId</td>
+                                    <td>@sample.DocumentStatus</td>
+                                    <td>@sample.WayOfSigning</td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "Details", new { documentId = sample.Id })" class="btn btn-primary px-3 py-2 me-2">Download</a>
+                                        <a asp-controller="Document" asp-action="DeleteInternDocument" asp-route-documentId="@sample.Id" class="btn btn-danger px-3 py-2">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-center mb-3">Employee Mentorship Documents</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Receiver Id</th>
+                                <th style="width: 25%;">Document Status</th>
+                                <th style="width: 25%;">Way of Signing</th>
+                                <th style="width: 25%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sample in Model.EmployeeMentorshipDocuments)
+                            {
+                                <tr>
+                                    <td>@sample.ReceiverId</td>
+                                    <td>@sample.DocumentStatus</td>
+                                    <td>@sample.WayOfSigning</td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "Details", new { documentId = sample.Id })" class="btn btn-primary px-3 py-2 me-2">Download</a>
+                                        <a asp-controller="Document" asp-action="DeleteEmployeeDocument" asp-route-documentId="@sample.Id" class="btn btn-danger px-3 py-2">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

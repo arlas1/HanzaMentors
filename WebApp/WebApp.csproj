@@ -9,6 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
         <PackageReference Include="AutoMapper" Version="13.0.1" />
         <PackageReference Include="CodeGenerator" Version="2019.2.9.2128" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
@@ -21,14 +23,19 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+        <PackageReference Include="MicrosoftOfficeCore" Version="15.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+        <PackageReference Include="Spire.PDF" Version="10.4.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\App.BLL.Contracts\App.BLL.Contracts.csproj" />
       <ProjectReference Include="..\App.BLL\App.BLL.csproj" />
       <ProjectReference Include="..\App.DAL.EF\App.DAL.EF.csproj" />
+      <ProjectReference Include="..\App.Helpers\App.Helpers.csproj" />
       <ProjectReference Include="..\Base.Helpers\Base.Helpers.csproj" />
     </ItemGroup>
 
@@ -38,6 +45,23 @@
       <_ContentIncludedByDefault Remove="Views\Employee\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Employee\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Employee\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Intern\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Intern\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Intern\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Intern\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Intern\Index.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Employee\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Employee\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Employee\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Employee\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Employee\Index.cshtml" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
 </Project>

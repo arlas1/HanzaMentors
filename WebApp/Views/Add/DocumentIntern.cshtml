@@ -1,0 +1,88 @@
+﻿@model MenteeViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form id="generateDocumentForm" method="post" action="@Url.Action("GenerateDocumentIntern", "Add")">
+            <div class="card p-4 border-0">
+                <h2 class="text-center mb-4">Generate Document</h2>
+                <div class="form-group">
+                    <input asp-for="MenteeId" type="hidden" id="menteeId" name="menteeId" value="@Model.MenteeId" />
+                </div>
+                <div class="form-group">
+                    <label>Document Samples:</label>
+                    <br/>
+                    <ul class="list-inline">
+                        @foreach (var sample in Model.DocumentSamples)
+                        {
+                            <li>
+                                <input type="checkbox" id="sample_@sample.Key" name="selectedSamples" value="@sample.Key"/>
+                                <label for="sample_@sample.Key">@sample.Value</label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="selectedMentorSelect">Related mentor:</label>
+                    <select name="selectedMentorId" id="selectedMentorSelect" class="form-select">
+                        <option value="" disabled selected>Select mentor</option>
+                        @foreach (var mentor in Model.Mentors)
+                        {
+                            <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <br/>
+                    <label for="signingTimes">Signing Times:</label>
+                    <br/>
+                    <div id="signingTimesContainer">
+                        @if (Model.SigningTimes != null)
+                        {
+                            @for (int i = 0; i < Model.SigningTimes.Count; i++)
+                            {
+                                <div class="mb-2">
+                                    @Model.SigningTimes[i]
+                                    <button class="btn btn-sm btn-danger deleteSigningTime">Delete</button>
+                                    <input type="hidden" name="signingTimes[@i]" value="@Model.SigningTimes[i]" />
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter time like 14.00, 12th May" id="newSigningTime">
+                        <button class="btn btn-outline-secondary" type="button" id="addSigningTimeBtn">Add Time</button>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Generate Document</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            function addSigningTimeToList(time) {
+                var $timeItem = $('<div class="mb-2">' + time + ' <button class="btn btn-sm btn-danger deleteSigningTime">Delete</button></div>');
+                $('#signingTimesContainer').append($timeItem);
+                var signingTimesInput = $('<input type="hidden" name="signingTimes" value="' + time + '">');
+                $('#generateDocumentForm').append(signingTimesInput);
+            }
+
+            $('#addSigningTimeBtn').click(function () {
+                var newTime = $('#newSigningTime').val().trim();
+                if (newTime !== '') {
+                    addSigningTimeToList(newTime);
+                    $('#newSigningTime').val('');
+                }
+            });
+
+            $('#signingTimesContainer').on('click', '.deleteSigningTime', function () {
+                $(this).parent().remove();
+                $(this).siblings('input').remove();
+            });
+        });
+    </script>
+}

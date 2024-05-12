@@ -12,13 +12,12 @@ public interface IAppBLL : IBLL
     IEmployeeService Employees { get;}
     IEmployeeMentorshipService EmployeeMentorships { get; }
     IEmployeeMentorshipDocumentService EmployeeMentorshipDocuments { get; }
-    IEmployeeMentorshipUntilDateService EmployeeMentorshipUntilDates { get; }
+    IEmployeesMentorService EmployeesMentors { get; }
     IFactorySupervisorService FactorySupervisors { get; }
     IInternService Interns { get; }
     IInternMentorshipService InternMentorships { get; }
     IInternMentorshipDocumentService InternMentorshipDocuments  { get; }
-    IInternMentorshipUntilDateService InternMentorshipUntilDates  { get; }
+    IInternsMentorService InternsMentors  { get; }
     IInternSupervisorService InternSupervisors { get; }
     IMenteeSickLeaveService MenteeSickLeaves { get; }
-    ISickLeaveTypeService SickLeaveTypes { get; }
 }

@@ -5,10 +5,17 @@ using App.BLL.Contracts;
 using App.DAL.Contracts;
 using App.DAL.EF;
 using App.Domain.Identity;
+using App.Helpers;
+using App.Helpers.EmailService;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using Base.BLL.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAppBLL, AppBLL>();
+builder.Services.AddScoped<IEmailService, EmailService>(); // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -64,10 +72,32 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(
     typeof(App.DAL.EF.AutoMapperProfile),
     typeof(App.BLL.AutoMapperProfile)
-    );
+);
+
+var apiVersioningBuilder = builder.Services.AddApiVersioning(options =>
+    {
+        options.ReportApiVersions = true;
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+    }
+);
+apiVersioningBuilder.AddApiExplorer(options =>
+{
+    // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+    // note: the specified format code will format the version as "'v'major[.minor][-status]"
+    options.GroupNameFormat = "'v'VVV";
+
+    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+    // can also be used to control the format of the API version in route templates
+    options.SubstituteApiVersionInUrl = true;
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddSwaggerGen();
 
 // ===================================================
 var app = builder.Build();
+// SetupAppData(app);
 // ===================================================
 
 // SetupAppData(app);
@@ -91,6 +121,21 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>(); 
+    foreach ( var description in provider.ApiVersionDescriptions )
+    {
+        options.SwaggerEndpoint(
+            $"/swagger/{description.GroupName}/swagger.json",
+            description.GroupName.ToUpperInvariant() 
+        );
+    }
+    // serve from root
+    // opt ions.RoutePrefix = string.Empty;
+});
 
 app.MapControllerRoute(
     name: "area",
@@ -122,14 +167,18 @@ app.Run();
 //
 //     var res = roleManager.CreateAsync(new AppRole()
 //     {
-//         Name = "Admin"
+//         Name = "Mentor"
 //     }).Result;
-//
+//     var res1 = roleManager.CreateAsync(new AppRole()
+//     {
+//         Name = "Mentee"
+//     }).Result;
+//     
 //     if (!res.Succeeded)
 //     {
 //         Console.WriteLine(res.ToString());
 //     }
-//
+//     
 //     var user = new AppUser()
 //     {
 //         Email = "admin@eesti.ee",

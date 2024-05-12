@@ -1,17 +1,154 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<App.BLL.DTO.Intern>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<table class="table table-striped">
-    @foreach (var claim in User.Claims)
-    {
-        <tr>
-            <td>@claim.Type</td>
-            <td>@claim.Value</td>
-        </tr>
-    }
-</table>
+@if (User.IsInRole("Admin"))
+{
+    <div class="container mt-3">
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="get" asp-page="/Car/Index" class="card p-3 border-0">
+                    <div class="input-group mb-3">
+                        <select class="custom-select border border-1 rounded-start-3 border-primary-subtle" style="background-color: white;">
+                            <option selected="selected"></option>
+                            <option value="Mark">Mark</option>
+                            <option value="Model">Model</option>
+                            <option value="Year">Year</option>
+                        </select>
+                        <input class="form-control border-primary-subtle" placeholder="Search">
+                        <button class="btn btn-primary rounded-end-3" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <span class="text-danger"></span>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center column-gap-5">
+            <div class="col-lg-4 col-12 mb-10">
+                <div class="text-center mb-2">
+                    <div class="table-title">Lastly viewed Mentee-Interns</div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AppUserId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.InternType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StudyProgram)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AppUserId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InternType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudyProgram)
+                            </td>
+                            <td>
+                                <a asp-action="" asp-route-id="@item.Id">Show</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4 col-12 mb-10">
+                <div class="text-center mb-2">
+                    <div class="table-title">Lastly viewed Mentee-Employees</div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AppUserId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.InternType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StudyProgram)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AppUserId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InternType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudyProgram)
+                            </td>
+                            <td>
+                                <a asp-action="" asp-route-id="@item.Id">Show</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4 col-12 mb-10">
+                <div class="text-center mb-2">
+                    <div class="table-title">Lastly viewed Mentors</div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AppUserId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.InternType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StudyProgram)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AppUserId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InternType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudyProgram)
+                            </td>
+                            <td>
+                                <a asp-action="" asp-route-id="@item.Id">Show</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>    
+}

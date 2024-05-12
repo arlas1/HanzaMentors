@@ -42,10 +42,6 @@ public class UnitOfWork : BaseUnitOfWork<AppDbContext>, IUnitOfWork
     public IInternMentorshipDocumentRepository InternMentorshipDocuments =>
         _internMentorshipDocuments ?? new InternMentorshipDocumentRepository(UowDbContext, _mapper);
     
-    private IInternMentorshipUntilDateRepository? _internMentorshipUntilDates;
-    public IInternMentorshipUntilDateRepository InternMentorshipUntilDates =>
-        _internMentorshipUntilDates ?? new InternMentorshipUntilDateRepository(UowDbContext, _mapper);
-    
     private IEmployeeRepository? _employees;
     public IEmployeeRepository Employees =>
         _employees ?? new EmployeeRepository(UowDbContext, _mapper);
@@ -62,10 +58,6 @@ public class UnitOfWork : BaseUnitOfWork<AppDbContext>, IUnitOfWork
     public IEmployeeMentorshipDocumentRepository EmployeeMentorshipDocuments =>
         _employeeMentorshipDocuments ?? new EmployeeMentorshipDocumentRepository(UowDbContext, _mapper);
     
-    private IEmployeeMentorshipUntilDateRepository? _employeeMentorshipUntilDates;
-    public IEmployeeMentorshipUntilDateRepository EmployeeMentorshipUntilDates =>
-        _employeeMentorshipUntilDates ?? new EmployeeMentorshipUntilDateRepository(UowDbContext, _mapper);
-    
     private IMentorRepository? _mentors;
     public IMentorRepository Mentors =>
         _mentors ?? new MentorRepository(UowDbContext, _mapper);
@@ -74,8 +66,11 @@ public class UnitOfWork : BaseUnitOfWork<AppDbContext>, IUnitOfWork
     public IMenteeSickLeaveRepository MenteeSickLeaves =>
         _menteeSickLeaves ?? new MenteeSickLeaveRepository(UowDbContext, _mapper);
     
-    private ISickLeaveTypeRepository? _sickLeaveTypes;
-    public ISickLeaveTypeRepository SickLeaveTypes =>
-        _sickLeaveTypes ?? new SickLeaveTypeRepository(UowDbContext, _mapper);
+    private IInternsMentorRepository? _internsMentors;
+    public IInternsMentorRepository InternsMentors =>
+        _internsMentors ?? new InternsMentorRepository(UowDbContext, _mapper);
     
+    private IEmployeesMentorRepository? _employeesMentors;
+    public IEmployeesMentorRepository EmployeesMentors =>
+        _employeesMentors ?? new EmployeesMentorRepository(UowDbContext, _mapper);
 }

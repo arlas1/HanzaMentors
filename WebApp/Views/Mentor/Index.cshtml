@@ -1,77 +1,75 @@
-@model IEnumerable<App.BLL.DTO.Mentor>
+@model MentorsViewModel
 
-@{
-    ViewData["Title"] = "Index";
-}
+<h1 class="text-center mb-4">Mentors</h1>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InternMentorshipId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeMentorshipId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FromDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UntilDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaymentAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaymentOrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangeReason)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InternMentorshipId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeMentorshipId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UntilDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentOrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangeReason)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container mt-3">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="get" asp-controller="Mentor" asp-action="Index" class="card p-3 border-0">
+                <div class="input-group mb-3">
+                    <select asp-for="FilterType" class="custom-select border border-1 rounded-start-3 border-primary-subtle" style="background-color: white;">
+                        <option value=""></option>
+                        <option value="Name">Name</option>
+                        <option value="Profession">Profession</option>
+                    </select>
+                    <input asp-for="FilterRequest" class="form-control border-primary-subtle" placeholder="Search">
+                    <button class="btn btn-primary rounded-end-3" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </div>
+                <span class="text-danger"></span>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center column-gap-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Full name
+                    </th>
+                    <th>
+                        Profession
+                    </th>
+                    <th>
+                        Currently mentors
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @foreach (var mentor in @Model.Mentors)
+                {
+                    <tr>
+                        <td>
+                            @mentor.FirstName @mentor.LastName
+                        </td>
+                        <td>
+                            @mentor.Profession
+                        </td>
+                        <td>
+                            @foreach (var mentorMentee in Model.MentorMentees)
+                                {
+                                    <div>
+                                        @if (mentorMentee.Key.Count >= 2 && mentor.Id.Equals(mentorMentee.Key[0]))
+                                        {
+                                            <div>@mentorMentee.Value</div>
+                                        }
+                                    </div>
+                                }
+                        </td>
+                        <td>
+                            <a asp-controller="Details" asp-action="Mentor" asp-route-mentorId="@mentor.Id" class="btn btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+    </div>
+    
+</div>

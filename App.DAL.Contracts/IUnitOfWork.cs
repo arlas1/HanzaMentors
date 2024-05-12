@@ -13,15 +13,14 @@ public interface IUnitOfWork : IBaseUnitOfWork
     IInternMentorshipRepository InternMentorships { get; }
     IInternSupervisorRepository InternSupervisors { get; }
     IInternMentorshipDocumentRepository InternMentorshipDocuments { get; }
-    IInternMentorshipUntilDateRepository InternMentorshipUntilDates { get; }
+    IInternsMentorRepository InternsMentors { get; }
     
     IEmployeeRepository Employees { get; }
     IEmployeeMentorshipRepository EmployeeMentorships { get; }
     IFactorySupervisorRepository FactorySupervisors { get; }
     IEmployeeMentorshipDocumentRepository EmployeeMentorshipDocuments { get; }
-    IEmployeeMentorshipUntilDateRepository EmployeeMentorshipUntilDates { get; }
+    IEmployeesMentorRepository EmployeesMentors { get; }
     
     IMentorRepository Mentors { get; }
     IMenteeSickLeaveRepository MenteeSickLeaves { get; }
-    ISickLeaveTypeRepository SickLeaveTypes { get; }
 }

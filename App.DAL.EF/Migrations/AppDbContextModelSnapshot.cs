@@ -46,10 +46,10 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("EmployeeMentorshipDocumentId")
+                    b.Property<Guid?>("EmployeeMentorshipDocumentId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("InternMentorshipDocumentId")
+                    b.Property<Guid?>("InternMentorshipDocumentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Time")
@@ -73,8 +73,17 @@ namespace App.DAL.EF.Migrations
                     b.Property<Guid?>("AppUserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("EmployeeType")
-                        .HasColumnType("integer");
+                    b.Property<string>("EmployeeType")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("Profession")
                         .HasMaxLength(50)
@@ -93,17 +102,20 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("FactorySupervisorId")
+                    b.Property<Guid?>("FactorySupervisorId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("FromDate")
+                    b.Property<DateOnly?>("FromDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("TotalHours")
+                    b.Property<int?>("TotalHours")
                         .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("UntilDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -127,21 +139,21 @@ namespace App.DAL.EF.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<Guid>("DocumentSampleId")
+                    b.Property<Guid?>("DocumentSampleId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("DocumentStatus")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<Guid>("EmployeeMentorshipId")
+                    b.Property<Guid?>("EmployeeMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ReceiverId")
+                    b.Property<Guid?>("ReceiverId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("WayOfSigning")
-                        .HasColumnType("integer");
+                    b.Property<string>("WayOfSigning")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -152,23 +164,40 @@ namespace App.DAL.EF.Migrations
                     b.ToTable("EmployeeMentorshipDocuments");
                 });
 
-            modelBuilder.Entity("App.Domain.EmployeeMentorshipUntilDate", b =>
+            modelBuilder.Entity("App.Domain.EmployeesMentor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("EmployeeMentorshipId")
+                    b.Property<string>("ChangeReason")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("EmployeeMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("UntilDate")
+                    b.Property<DateOnly?>("FromDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsCurrentlyActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("MentorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("TotalHours")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("UntilDate")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeMentorshipId");
 
-                    b.ToTable("EmployeeMentorshipUntilDates");
+                    b.HasIndex("MentorId");
+
+                    b.ToTable("EmployeesMentors");
                 });
 
             modelBuilder.Entity("App.Domain.FactorySupervisor", b =>
@@ -258,8 +287,8 @@ namespace App.DAL.EF.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
-                    b.Property<int>("PersonalCode")
-                        .HasColumnType("integer");
+                    b.Property<long?>("PersonalCode")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
@@ -344,8 +373,17 @@ namespace App.DAL.EF.Migrations
                     b.Property<Guid?>("AppUserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("InternType")
-                        .HasColumnType("integer");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("InternType")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("StudyProgram")
                         .HasMaxLength(50)
@@ -364,20 +402,23 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("FactorySupervisorId")
+                    b.Property<Guid?>("FactorySupervisorId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("FromDate")
+                    b.Property<DateOnly?>("FromDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("InternId")
+                    b.Property<Guid?>("InternId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("InternSupervisorId")
+                    b.Property<Guid?>("InternSupervisorId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("TotalHours")
+                    b.Property<int?>("TotalHours")
                         .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("UntilDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -403,21 +444,21 @@ namespace App.DAL.EF.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<Guid>("DocumentSampleId")
+                    b.Property<Guid?>("DocumentSampleId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("DocumentStatus")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<Guid>("InternMentorshipId")
+                    b.Property<Guid?>("InternMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ReceiverId")
+                    b.Property<Guid?>("ReceiverId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("WayOfSigning")
-                        .HasColumnType("integer");
+                    b.Property<string>("WayOfSigning")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -426,25 +467,6 @@ namespace App.DAL.EF.Migrations
                     b.HasIndex("InternMentorshipId");
 
                     b.ToTable("InternMentorshipDocuments");
-                });
-
-            modelBuilder.Entity("App.Domain.InternMentorshipUntilDate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("InternMentorshipId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateOnly>("UntilDate")
-                        .HasColumnType("date");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InternMentorshipId");
-
-                    b.ToTable("InternMentorshipUntilDates");
                 });
 
             modelBuilder.Entity("App.Domain.InternSupervisor", b =>
@@ -457,12 +479,45 @@ namespace App.DAL.EF.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("InternSupervisors");
+                });
+
+            modelBuilder.Entity("App.Domain.InternsMentor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ChangeReason")
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly?>("FromDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid?>("InternMentorshipId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsCurrentlyActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("MentorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("TotalHours")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("UntilDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InternMentorshipId");
+
+                    b.HasIndex("MentorId");
+
+                    b.ToTable("InternsMentors");
                 });
 
             modelBuilder.Entity("App.Domain.MenteeSickLeave", b =>
@@ -471,19 +526,19 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("EmployeeMentorshipId")
+                    b.Property<Guid?>("EmployeeMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("FromDate")
+                    b.Property<DateOnly?>("FromDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("InternMentorshipId")
+                    b.Property<Guid?>("InternMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SickLeaveTypeId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
 
-                    b.Property<DateOnly>("UntilDate")
+                    b.Property<DateOnly?>("UntilDate")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
@@ -491,8 +546,6 @@ namespace App.DAL.EF.Migrations
                     b.HasIndex("EmployeeMentorshipId");
 
                     b.HasIndex("InternMentorshipId");
-
-                    b.HasIndex("SickLeaveTypeId");
 
                     b.ToTable("MenteeSickLeaves");
                 });
@@ -503,54 +556,31 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ChangeReason")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("EmployeeMentorshipId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
-                    b.Property<DateOnly>("FromDate")
-                        .HasColumnType("date");
-
-                    b.Property<Guid>("InternMentorshipId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("PaymentAmount")
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("PaymentOrderDate")
+                    b.Property<DateOnly?>("PaymentOrderDate")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("UntilDate")
-                        .HasColumnType("date");
+                    b.Property<string>("Profession")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("EmployeeMentorshipId");
-
-                    b.HasIndex("InternMentorshipId");
-
                     b.ToTable("Mentors");
-                });
-
-            modelBuilder.Entity("App.Domain.SickLeaveType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SickLeaveTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -645,15 +675,11 @@ namespace App.DAL.EF.Migrations
                 {
                     b.HasOne("App.Domain.EmployeeMentorshipDocument", "EmployeeMentorshipDocument")
                         .WithMany()
-                        .HasForeignKey("EmployeeMentorshipDocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeMentorshipDocumentId");
 
                     b.HasOne("App.Domain.InternMentorshipDocument", "InternMentorshipDocument")
                         .WithMany()
-                        .HasForeignKey("InternMentorshipDocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InternMentorshipDocumentId");
 
                     b.Navigation("EmployeeMentorshipDocument");
 
@@ -673,15 +699,11 @@ namespace App.DAL.EF.Migrations
                 {
                     b.HasOne("App.Domain.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("App.Domain.FactorySupervisor", "FactorySupervisor")
                         .WithMany()
-                        .HasForeignKey("FactorySupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FactorySupervisorId");
 
                     b.Navigation("Employee");
 
@@ -692,30 +714,30 @@ namespace App.DAL.EF.Migrations
                 {
                     b.HasOne("App.Domain.DocumentSample", "DocumentSample")
                         .WithMany()
-                        .HasForeignKey("DocumentSampleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentSampleId");
 
                     b.HasOne("App.Domain.EmployeeMentorship", "EmployeeMentorship")
                         .WithMany()
-                        .HasForeignKey("EmployeeMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeMentorshipId");
 
                     b.Navigation("DocumentSample");
 
                     b.Navigation("EmployeeMentorship");
                 });
 
-            modelBuilder.Entity("App.Domain.EmployeeMentorshipUntilDate", b =>
+            modelBuilder.Entity("App.Domain.EmployeesMentor", b =>
                 {
                     b.HasOne("App.Domain.EmployeeMentorship", "EmployeeMentorship")
                         .WithMany()
-                        .HasForeignKey("EmployeeMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeMentorshipId");
+
+                    b.HasOne("App.Domain.Mentor", "Mentor")
+                        .WithMany()
+                        .HasForeignKey("MentorId");
 
                     b.Navigation("EmployeeMentorship");
+
+                    b.Navigation("Mentor");
                 });
 
             modelBuilder.Entity("App.Domain.Identity.AppUserRole", b =>
@@ -757,21 +779,15 @@ namespace App.DAL.EF.Migrations
                 {
                     b.HasOne("App.Domain.FactorySupervisor", "FactorySupervisor")
                         .WithMany()
-                        .HasForeignKey("FactorySupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FactorySupervisorId");
 
                     b.HasOne("App.Domain.Intern", "Intern")
                         .WithMany()
-                        .HasForeignKey("InternId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InternId");
 
                     b.HasOne("App.Domain.InternSupervisor", "InternSupervisor")
                         .WithMany()
-                        .HasForeignKey("InternSupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InternSupervisorId");
 
                     b.Navigation("FactorySupervisor");
 
@@ -784,84 +800,54 @@ namespace App.DAL.EF.Migrations
                 {
                     b.HasOne("App.Domain.DocumentSample", "DocumentSample")
                         .WithMany()
-                        .HasForeignKey("DocumentSampleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentSampleId");
 
                     b.HasOne("App.Domain.InternMentorship", "InternMentorship")
                         .WithMany()
-                        .HasForeignKey("InternMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InternMentorshipId");
 
                     b.Navigation("DocumentSample");
 
                     b.Navigation("InternMentorship");
                 });
 
-            modelBuilder.Entity("App.Domain.InternMentorshipUntilDate", b =>
+            modelBuilder.Entity("App.Domain.InternsMentor", b =>
                 {
                     b.HasOne("App.Domain.InternMentorship", "InternMentorship")
                         .WithMany()
-                        .HasForeignKey("InternMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InternMentorshipId");
+
+                    b.HasOne("App.Domain.Mentor", "Mentor")
+                        .WithMany()
+                        .HasForeignKey("MentorId");
 
                     b.Navigation("InternMentorship");
+
+                    b.Navigation("Mentor");
                 });
 
             modelBuilder.Entity("App.Domain.MenteeSickLeave", b =>
                 {
                     b.HasOne("App.Domain.EmployeeMentorship", "EmployeeMentorship")
                         .WithMany()
-                        .HasForeignKey("EmployeeMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeMentorshipId");
 
                     b.HasOne("App.Domain.InternMentorship", "InternMentorship")
                         .WithMany()
-                        .HasForeignKey("InternMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("App.Domain.SickLeaveType", "SickLeaveType")
-                        .WithMany()
-                        .HasForeignKey("SickLeaveTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InternMentorshipId");
 
                     b.Navigation("EmployeeMentorship");
 
                     b.Navigation("InternMentorship");
-
-                    b.Navigation("SickLeaveType");
                 });
 
             modelBuilder.Entity("App.Domain.Mentor", b =>
                 {
                     b.HasOne("App.Domain.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("App.Domain.EmployeeMentorship", "EmployeeMentorship")
-                        .WithMany()
-                        .HasForeignKey("EmployeeMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("App.Domain.InternMentorship", "InternMentorship")
-                        .WithMany()
-                        .HasForeignKey("InternMentorshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.Navigation("Employee");
-
-                    b.Navigation("EmployeeMentorship");
-
-                    b.Navigation("InternMentorship");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

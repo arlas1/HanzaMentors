@@ -3,6 +3,7 @@ using System.Net;
 using System.Security.Claims;
 using App.DAL.EF;
 using App.Domain.Identity;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.DTO;
@@ -13,8 +14,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.ApiControllers.Identity;
 
+[ApiVersion( "1.0" )]
 [ApiController]
-[Route("/api/identity/[controller]/[action]")]
+[Route("/api/v{version:apiVersion}/identity/[controller]/[action]")]
 public class AccountController(UserManager<AppUser> _userManager, ILogger<AccountController> _logger,
     SignInManager<AppUser> _signInManager, IConfiguration _configuration, AppDbContext _context) : ControllerBase
 {
@@ -110,6 +112,8 @@ public class AccountController(UserManager<AppUser> _userManager, ILogger<Accoun
             claimsPrincipal.Claims,
             _configuration.GetValue<string>("JWT:key")!,
             _configuration.GetValue<string>("JWT:issuer")!,
+            _configuration.GetValue<string>("JWT:audience")!,
+
             expiresInSeconds
         );
         var res = new JWTResponse()
@@ -162,7 +166,6 @@ public class AccountController(UserManager<AppUser> _userManager, ILogger<Accoun
         }
         else
         {
-            //TODO: inMemory delete for testing
         }
 
 
@@ -177,6 +180,7 @@ public class AccountController(UserManager<AppUser> _userManager, ILogger<Accoun
             claimsPrincipal.Claims,
             _configuration.GetValue<string>("JWT:key")!,
             _configuration.GetValue<string>("JWT:issuer")!,
+            _configuration.GetValue<string>("JWT:audience")!,
             expiresInSeconds
         );
 
@@ -299,6 +303,7 @@ public class AccountController(UserManager<AppUser> _userManager, ILogger<Accoun
             claimsPrincipal.Claims,
             _configuration.GetValue<string>("JWT:key")!,
             _configuration.GetValue<string>("JWT:issuer")!,
+            _configuration.GetValue<string>("JWT:audience")!,
             expiresInSeconds
         );
 

@@ -1,8 +1,5 @@
 using App.BLL.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using App.Domain;
 using App.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
@@ -12,166 +9,104 @@ namespace WebApp.Controllers;
 public class MentorController(IAppBLL bll, UserManager<AppUser> userManager) : Controller
 {
     // GET: Mentor
-    public async Task<IActionResult> Index()
+    public IActionResult Index(MentorsViewModel viewModel)
     {
-        var userId = Guid.Parse(userManager.GetUserId(User)!);
-        
-        var mentors = await bll.Mentors.GetAllAsync(userId);
-        return View(mentors);
-    }
-
-    // GET: Mentor/Details/5
-    public async Task<IActionResult> Details(Guid? id)
-    {
-        if (id == null)
+        // var userId = Guid.Parse(userManager.GetUserId(User)!);
+        var mentorsViewModel = new MentorsViewModel()
         {
-            return NotFound();
-        }
-
-        var mentor = await bll.Mentors
-            .FirstOrDefaultAsync(id.Value);
-        if (mentor == null)
-        {
-            return NotFound();
-        }
-
-        return View(mentor);
-    }
-
-    // GET: Mentor/Create
-    public async Task<IActionResult> Create()
-    {
-        var viewModel = new MentorCreateEditViewModel()
-        {
-            EmployeeSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(Employee.Id)),
-            InternMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(InternMentorship.Id)),
-            EmployeeMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(EmployeeMentorship.Id))
+            MentorMentees = new Dictionary<List<Guid>, string>()
         };
 
-        return View(viewModel);
-    }
-
-    // POST: Mentor/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(MentorCreateEditViewModel viewModel)
-    {
-        if (ModelState.IsValid)
+        switch (viewModel.FilterType)
         {
-            bll.Mentors.Add(viewModel.Mentor);
-            await bll.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        // viewModel.AppUserSelectList = new SelectList(await bll.Users.GetAllAsync(), nameof(AppUser.Id),
-        //     nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
-        viewModel.EmployeeSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(Employee.Id),
-            nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
-        viewModel.InternMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(InternMentorship.Id),
-            nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
-        viewModel.EmployeeMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(EmployeeMentorship.Id),
-            nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
+            case "Name":
+                mentorsViewModel.Mentors = bll.Mentors.GetAll().Where(mentor =>
+                    mentor.FirstName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) ||
+                    mentor.LastName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+                break;
         
-        return View(viewModel);
-    }
-
-    // GET: Mentor/Edit/5
-    public async Task<IActionResult> Edit(Guid? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
+            case "Profession":
+                mentorsViewModel.Mentors = bll.Mentors.GetAll().Where(mentor =>
+                    mentor.Profession!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+                break;
+            default:
+                mentorsViewModel.Mentors = bll.Mentors.GetAll().ToList();
+                break;
         }
+        
+        var employesMentors = bll.EmployeesMentors.GetAll().ToList();
+        var employeeMentorships = bll.EmployeeMentorships.GetAll().ToList();
+        var employees = bll.Employees.GetAll().ToList();
 
-        var mentor = await bll.Mentors.FirstOrDefaultAsync(id.Value);
-        if (mentor == null)
+        foreach (var mentor in mentorsViewModel.Mentors)
         {
-            return NotFound();
-        }
+            var mentorMenteeId = new List<Guid>();
+            var menteeFullname = "";
 
-        var viewModel = new MentorCreateEditViewModel()
-        {
-            Mentor = mentor,
-            EmployeeSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(Employee.Id),
-                nameof(AppUser.Email), mentor.EmployeeId),
-            InternMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(InternMentorship.Id),
-                nameof(AppUser.Email), mentor.EmployeeId),
-            EmployeeMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(EmployeeMentorship.Id),
-                nameof(AppUser.Email), mentor.EmployeeId)
-        };
-
-        return View(viewModel);
-    }
-
-    // POST: Mentor/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id,MentorCreateEditViewModel viewModel)
-    {
-        if (id != viewModel.Mentor.Id)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
+            foreach (var mentorship in employesMentors)
             {
-                bll.Mentors.Update(viewModel.Mentor);
-                await bll.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await bll.Mentors.ExistsAsync(viewModel.Mentor.Id))
+                if (mentorship.MentorId == mentor.Id && mentorship.IsCurrentlyActive)
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    var mentorshipId = mentorship.EmployeeMentorshipId;
+
+                    foreach (var employeeMentorship in employeeMentorships)
+                    {
+                        if (employeeMentorship.Id == mentorshipId)
+                        {
+                            var menteeId = employeeMentorship.EmployeeId;
+                            var mentee = employees.FirstOrDefault(e => e.Id == menteeId);
+                            if (mentee != null)
+                            {
+                                mentorMenteeId.Add(mentor.Id);
+                                mentorMenteeId.Add(mentee.Id);
+                                menteeFullname = $"{mentee.FirstName} {mentee.LastName}, Employee({mentee.EmployeeType})";
+                            }
+                        }
+                    }
                 }
             }
 
-            return RedirectToAction(nameof(Index));
-
+            mentorsViewModel.MentorMentees.Add(mentorMenteeId, menteeFullname);
         }
-        viewModel.EmployeeSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(Employee.Id),
-            nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
-        viewModel.InternMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(InternMentorship.Id),
-            nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
-        viewModel.EmployeeMentorshipSelectList = new SelectList(await bll.Mentors.GetAllAsync(), nameof(EmployeeMentorship.Id),
-            nameof(AppUser.Email), viewModel.Mentor.EmployeeId);
-        return View(viewModel);
-    }
-
-    // GET: Mentor/Delete/5
-    public async Task<IActionResult> Delete(Guid? id)
-    {
-        if (id == null)
+        
+        var internsMentors = bll.InternsMentors.GetAll().ToList();
+        var internMentorships = bll.InternMentorships.GetAll().ToList();
+        var interns = bll.Interns.GetAll().ToList();
+        
+        foreach (var mentor in mentorsViewModel.Mentors)
         {
-            return NotFound();
+            var mentorMenteeId = new List<Guid>();
+            var menteeFullname = "";
+        
+            foreach (var mentorship in internsMentors)
+            {
+                if (mentorship.MentorId == mentor.Id && mentorship.IsCurrentlyActive)
+                {
+                    var mentorshipId = mentorship.InternMentorshipId;
+        
+                    foreach (var internMentorship in internMentorships)
+                    {
+                        if (internMentorship.Id == mentorshipId)
+                        {
+                            var menteeId = internMentorship.InternId;
+                            var mentee = interns.FirstOrDefault(e => e.Id == menteeId);
+                            if (mentee != null)
+                            {
+                                mentorMenteeId.Add(mentor.Id);
+                                mentorMenteeId.Add(mentee.Id);
+                                menteeFullname = $"{mentee.FirstName} {mentee.LastName}, Intern({mentee.InternType})";
+                            }
+                        }
+                    }
+                }
+            }
+        
+            mentorsViewModel.MentorMentees.Add(mentorMenteeId, menteeFullname);
         }
 
-        var employee = await bll.Mentors.FirstOrDefaultAsync(id.Value);
-        if (employee == null)
-        {
-            return NotFound();
-        }
-
-        return View(employee);
+        return View(mentorsViewModel);
     }
-
-    // POST: Mentor/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(Guid id)
-    {
-        await bll.Mentors.RemoveAsync(id);
-        await bll.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
+    
 }

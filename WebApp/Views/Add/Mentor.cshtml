@@ -1,0 +1,83 @@
+@model AddMentorViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <section>
+            <form id="mentorForm" method="post">
+                <h1 class="text-center">Add Mentor</h1>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-floating">
+                    <input asp-for="FirstName" id="firstName" class="form-control border-dark-subtle"/>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <label for="firstName">First Name</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input asp-for="LastName" id="lastName" class="form-control border-dark-subtle"/>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <label for="lastName">Last Name</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input asp-for="Email" type="email" id="email" class="form-control border-dark-subtle"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label for="email">Email</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input asp-for="PersonalCode" id="idCode" class="form-control border-dark-subtle"/>
+                    <span asp-validation-for="PersonalCode" class="text-danger"></span>
+                    <label for="idCode">Id code</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input asp-for="Profession" id="profession" class="form-control border-dark-subtle"/>
+                    <span asp-validation-for="Profession" class="text-danger"></span>
+                    <label for="profession">Profession</label>
+                </div>
+                <br>
+                
+                <div class="form-group text-center mb-3">
+                    <div class="d-flex justify-content-center">
+                        <div class="btn-group" role="group" aria-label="Add buttons">
+                            <button type="button" class="btn btn-primary px-4 py-2 rounded-3" 
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add & Create User</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Mentor added, user created and email-notification sent.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+          <button type="button" onclick="setAction('AddMentor')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center" >Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    function setAction(actionName) {
+        const form = document.getElementById('mentorForm');
+        form.action = actionName;
+        form.submit();
+    }
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+UA8pG4Zv3ng1dWu1qyO9bKU4IuFZveL8S/0Jz1r/mkk7+tkzQ5S+g/hJ0" crossorigin="anonymous"></script>

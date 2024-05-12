@@ -7,5 +7,4 @@ public class InternSupervisor : BaseEntityId
 {
     [MaxLength(50)]
     public string? FullName { get; set; }
-    public int Type { get; set; }
 }

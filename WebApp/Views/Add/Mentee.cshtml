@@ -1,0 +1,273 @@
+@model AddMenteeViewModel
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <section>
+                <form id="menteeForm" method="post">
+                    <h1 class="text-center mb-4">Add Mentee</h1>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-center mb-2">
+                                <div class="table-title">
+                                    <h6>Employee/Intern</h6> 
+                                    <hr class="mx-auto mb-1">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="form-floating">
+                                                    <select asp-for="MenteeType" id="menteeTypeSelect" class="form-select border border-dark-subtle">
+                                                        <option selected="selected"></option>
+                                                        <option value="Intern">Intern</option>
+                                                        <option value="Employee">Employee</option>
+                                                    </select>
+                                                    <label for="menteeTypeSelect">Mentee type</label>
+                                                    <span asp-validation-for="MenteeType" class="text-danger"></span>
+                                                </div>
+                                                <br>
+                                                
+                                                <div id="internFields" style="display: none;">
+                                                    <div class="form-floating">
+                                                        <select asp-for="InternType" id="internTypeSelect" class="form-select border border-dark-subtle">
+                                                            <option selected="selected"></option>
+                                                            <option value="Vocational school (gep)">Vocational school (gep)</option>
+                                                            <option value="Töötukassa">Töötukassa</option>
+                                                        </select>
+                                                        <label for="internTypeSelect">Mentee type</label>
+                                                        <span asp-validation-for="InternType" class="text-danger"></span>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <select asp-for="InternSupervisorId" id="internSupervisorSelect" class="form-select border border-dark-subtle">
+                                                            <option selected="selected"></option>
+                                                            @foreach (var internSupervisor in Model.InternSupervisors)
+                                                            {
+                                                                <option value="@internSupervisor.Id ">@internSupervisor.FullName</option>
+                                                            }
+                                                        </select>
+                                                        <label for="internSupervisorSelect">Intern supervisor</label>
+                                                        <span asp-validation-for="InternSupervisorId" class="text-danger"></span>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <select asp-for="InternFactorySupervisorId" id="factorySupervisorSelect1" class="form-select border border-dark-subtle">
+                                                            <option selected="selected"></option>
+                                                            @foreach (var factorySupervisor in Model.FactorySupervisors)
+                                                            {
+                                                                <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
+                                                            }
+                                                        </select>
+                                                        <label for="factorySupervisorSelect1">Factory supervisor</label>
+                                                        <span asp-validation-for="InternFactorySupervisorId" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div id="employeeFields" style="display: none;">
+                                                    <div class="form-floating">
+                                                        <select asp-for="EmployeeType" id="employeeTypeSelect" class="form-select">
+                                                            <option selected="selected"></option>
+                                                            <option value="Full-time">Full-time</option>
+                                                            <option value="Rental">Rental</option>
+                                                            <option value="Probation">Probation</option>
+                                                        </select>
+                                                        <label for="employeeTypeSelect">Mentee type</label>
+                                                        <span asp-validation-for="EmployeeType" class="text-danger"></span>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <select asp-for="EmployeeFactorySupervisorId" id="factorySupervisorSelect" class="form-select border border-dark-subtle">
+                                                            <option selected="selected"></option>
+                                                            @foreach (var factorySupervisor in Model.FactorySupervisors)
+                                                            {
+                                                                <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
+                                                            }
+                                                        </select>
+                                                        <label for="factorySupervisorSelect">Factory supervisor</label>
+                                                        <span asp-validation-for="EmployeeFactorySupervisorId" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-center mb-2">
+                                <div class="table-title">
+                                    <h6>Mentee Info</h6>
+                                    <hr class="mx-auto mb-1">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="form-floating">
+                                                <input asp-for="FirstName" id="firstName" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                                                <label for="firstName">First Name</label>
+                                            </div>
+                                            <br>
+                                            <div class="form-floating">
+                                                <input asp-for="LastName" id="lastName" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                                <label for="lastName">Last Name</label>
+                                            </div>
+                                            <br>
+                                            <div class="form-floating">
+                                                <input asp-for="Email" type="email" id="email" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                                <label for="email">Email</label>
+                                            </div>
+                                            <br>
+                                            <div class="form-floating">
+                                                <input asp-for="PersonalCode" id="idCode" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="PersonalCode" class="text-danger"></span>
+                                                <label for="idCode">Id code</label>
+                                            </div>
+                                            <br>
+                                            <div class="form-floating">
+                                                <input asp-for="Profession" id="profession" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="Profession" class="text-danger"></span>
+                                                <label for="profession">Profession</label>
+                                            </div>
+                                            <br/>
+                                            <div class="form-floating">
+                                                <input asp-for="MenteeFromDate" type="date" id="menteeFromDate" class="form-control border-dark-subtle" placeholder="Mentee from date" aria-label="Mentee from date"/>
+                                                <span asp-validation-for="MenteeFromDate" class="text-danger"></span>
+                                                <label for="menteeFromDate">Mentee from date</label>
+                                            </div>
+                                            <br/>
+                                            <div class="form-floating">
+                                                <input asp-for="MenteeUntilDate" type="date" id="menteeUntilDate" class="form-control border-dark-subtle" placeholder="Mentee until date" aria-label="Mentee until date"/>
+                                                <span asp-validation-for="MenteeUntilDate" class="text-danger"></span>
+                                                <label for="menteeUntilDate">Mentee until date</label>
+                                            </div>
+                                            <br/>
+                                            <div class="form-floating">
+                                                <input asp-for="MenteeTotalHours" type="email" id="menteeTotalHours" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="MenteeTotalHours" class="text-danger"></span>
+                                                <label for="menteeTotalHours">Mentee for total hours</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-center mb-2">
+                                <div class="table-title">
+                                    <h6>Assign Mentor</h6>
+                                    <hr class="mx-auto mb-1">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="form-floating">
+                                                <select asp-for="ChosenMentorId" id="mentorSelect" class="form-select border border-dark-subtle">
+                                                    <option selected="selected"></option>
+                                                    @foreach (var mentor in Model.Mentors)
+                                                    {
+                                                        <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option>
+                                                    }
+                                                </select>
+                                                <label for="mentorSelect">Mentors</label>
+                                                <span asp-validation-for="ChosenMentorId" class="text-danger"></span>
+                                            </div>
+                                            <br>
+                                            <div class="form-floating">
+                                                <input asp-for="MentorFromDate" type="date" id="mentorFromDate" class="form-control border-dark-subtle" placeholder="Mentor from date" aria-label="Mentor from date"/>
+                                                <span asp-validation-for="MentorFromDate" class="text-danger"></span>
+                                                <label for="mentorFromDate">Mentee until date</label>
+                                            </div>
+                                            <br/>
+                                            <div class="form-floating">
+                                                <input asp-for="MentorUntilDate" type="date" id="mentorUntilDate" class="form-control border-dark-subtle" placeholder="Mentor until date" aria-label="Mentor until date"/>
+                                                <span asp-validation-for="MentorUntilDate" class="text-danger"></span>
+                                                <label for="mentorUntilDate">Mentee until date</label>
+                                            </div>
+                                            <br/>
+                                            <div class="form-floating">
+                                                <input asp-for="MentorTotalHours" type="email" id="mentorTotalHours" class="form-control border-dark-subtle"/>
+                                                <span asp-validation-for="MentorTotalHours" class="text-danger"></span>
+                                                <label for="mentorTotalHours">Mentor for total hours</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center mb-3">
+                        <div class="d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="Add buttons">
+                                <button type="button" class="btn btn-primary px-4 py-2 rounded-3" 
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add & Create User</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Mentee added, user created and email-notification sent.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" onclick="setAction('AddMentee')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center" >Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script>
+    document.getElementById("menteeTypeSelect").addEventListener("change", function() {
+        const selectedValue = this.value;
+
+        document.getElementById("internFields").style.display = "none";
+        document.getElementById("employeeFields").style.display = "none";
+
+        if (selectedValue === "Intern") {
+            document.getElementById("internFields").style.display = "block";
+        } else if (selectedValue === "Employee") {
+            document.getElementById("employeeFields").style.display = "block";
+        }
+    });
+    
+    function setAction(actionName) {
+            const form = document.getElementById('menteeForm');
+            form.action = actionName;
+            form.submit();
+        }
+</script>
+
+<style>
+    .table td, .table th {
+        border-bottom: none !important;
+    }
+</style>
+
+

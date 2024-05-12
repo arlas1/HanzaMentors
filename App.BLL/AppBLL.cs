@@ -39,9 +39,6 @@ public class AppBLL : BaseBLL<AppDbContext>, IAppBLL
     
     private IEmployeeMentorshipDocumentService? _employeeMentorshipDocuments;
     public IEmployeeMentorshipDocumentService EmployeeMentorshipDocuments => _employeeMentorshipDocuments ?? new EmployeeMentorshipDocumentService(_uow, _uow.EmployeeMentorshipDocuments, _mapper);
-
-    private IEmployeeMentorshipUntilDateService? _employeeMentorshipUntilDates;
-    public IEmployeeMentorshipUntilDateService EmployeeMentorshipUntilDates => _employeeMentorshipUntilDates ?? new EmployeeMentorshipUntilDateService(_uow, _uow.EmployeeMentorshipUntilDates, _mapper);
     
     private IFactorySupervisorService? _factorySupervisors;
     public IFactorySupervisorService FactorySupervisors => _factorySupervisors ?? new FactorySupervisorService(_uow, _uow.FactorySupervisors, _mapper);
@@ -54,16 +51,16 @@ public class AppBLL : BaseBLL<AppDbContext>, IAppBLL
 
     private IInternMentorshipDocumentService? _internMentorshipDocuments;
     public IInternMentorshipDocumentService InternMentorshipDocuments => _internMentorshipDocuments ?? new InternMentorshipDocumentService(_uow, _uow.InternMentorshipDocuments, _mapper);
-
-    private IInternMentorshipUntilDateService? _internMentorshipUntilDates;
-    public IInternMentorshipUntilDateService InternMentorshipUntilDates => _internMentorshipUntilDates ?? new InternMentorshipUntilDateService(_uow, _uow.InternMentorshipUntilDates, _mapper);
-
+    
     private IInternSupervisorService? _internSupervisors;
     public IInternSupervisorService InternSupervisors => _internSupervisors ?? new InternSupervisorService(_uow, _uow.InternSupervisors, _mapper);
 
     private IMenteeSickLeaveService? _menteeSickLeaves;
     public IMenteeSickLeaveService MenteeSickLeaves => _menteeSickLeaves ?? new MenteeSickLeaveService(_uow, _uow.MenteeSickLeaves, _mapper);
 
-    private ISickLeaveTypeService? _sickLeaveTypes;
-    public ISickLeaveTypeService SickLeaveTypes => _sickLeaveTypes ?? new SickLeaveTypeService(_uow, _uow.SickLeaveTypes, _mapper);
+    private IInternsMentorService? _internsMentors;
+    public IInternsMentorService InternsMentors => _internsMentors ?? new InternsMentorService(_uow, _uow.InternsMentors, _mapper);
+    
+    private IEmployeesMentorService? _employeesMentors;
+    public IEmployeesMentorService EmployeesMentors => _employeesMentors ?? new EmployeesMentorService(_uow, _uow.EmployeesMentors, _mapper);
 }

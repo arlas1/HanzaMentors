@@ -7,20 +7,31 @@ namespace Base.Helpers;
 
 public static class IdentityHelpers
 {
-    public static string GenerateJwt(IEnumerable<Claim> claims, string key, string issuer, int expiresInSeconds)
+    /// <summary>
+    /// asd. qwe Main()
+    /// </summary>
+    /// <param name="claims"></param>
+    /// <param name="key"></param>
+    /// <param name="issuer"></param>
+    /// <param name="audience"></param>
+    /// <param name="expiresInSeconds"></param>
+    /// <returns></returns>
+    public static string GenerateJwt(IEnumerable<Claim> claims, string key, string issuer, string audience,
+        int expiresInSeconds)
     {
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
         var expires = DateTime.Now.AddSeconds(expiresInSeconds);
         var token = new JwtSecurityToken(
             issuer: issuer,
-            audience: issuer,
+            audience: audience,
             claims: claims,
             expires: expires,
             signingCredentials: signingCredentials
         );
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
 
     public static bool ValidateJWT(string jwt, string key, string issuer, string audience)
     {

@@ -1,0 +1,169 @@
+﻿@model MenteeViewModel
+
+<h1 class="text-center mb-4">Mentees</h1>
+
+<div class="container mt-3">
+                                
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="get" asp-controller="Mentee" asp-action="Mentees" class="card p-3 border-0">
+                <div class="input-group mb-3">
+                    <select asp-for="FilterType" class="custom-select border border-1 rounded-start-3 border-primary-subtle" style="background-color: white;">
+                        <option value=""></option>
+                        <option value="Mentee's name">Mentee's name</option>
+                        <option value="Profession">Profession</option>
+                        <option value="Mentee's type">Mentee's type</option>
+                    </select>
+                    <input asp-for="FilterRequest" class="form-control border-primary-subtle" placeholder="Search">
+                    <button class="btn btn-primary rounded-end-3" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </div>
+                <span class="text-danger"></span>
+            </form>
+        </div>
+    </div>
+                                
+    <div class="row justify-content-center column-gap-5">
+        <h2>Employee Mentees</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Full name</th>
+                <th>Profession</th>
+                <th>Employee/Intern</th>
+                <th>Mentorship until/from/total hours</th>
+                <th>Mentee's mentor</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            @foreach (var mentee in @Model.EmployeeMentees)
+            {
+                <tr>
+                    <td>@mentee.FirstName @mentee.LastName</td>
+                    <td>@mentee.Profession</td>
+                    <td>@mentee.EmployeeType</td>
+                    <td>
+                        @foreach (var employeeMentorship in Model.EmployeeMentorships)
+                        {
+                            if (employeeMentorship.EmployeeId.Equals(mentee.Id))
+                            {
+                                <div>@employeeMentorship.FromDate - @employeeMentorship.UntilDate / @employeeMentorship.TotalHours hours</div>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @foreach (var mentors in Model.MenteesMentor)
+                        {
+                            <div>
+                                @if (mentee.Id.Equals(mentors.Key))
+                                {
+                                    foreach (var mentorId in mentors.Value)
+                                    {
+                                        foreach (var mentor in Model.Mentors)
+                                        {
+                                            if (mentor.Id.Equals(mentorId))
+                                            {
+                                                if (mentors.Value.Count == 1)
+                                                {
+                                                    <div>@mentor.FirstName @mentor.LastName (currently active)</div>
+                                                }
+                                                else if (mentorId.Equals(mentors.Value.Last()) && mentors.Value.Count > 1)
+                                                {
+                                                    <div>@mentor.FirstName @mentor.LastName (currently active)</div>
+                                                }
+                                                else if (!mentorId.Equals(mentors.Value.Last()) && mentors.Value.Count > 1)
+                                                {
+                                                    <div>@mentor.FirstName @mentor.LastName</div>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="Details" asp-action="EmployeeMentee" asp-route-employeeId="@mentee.Id" class="btn btn-primary">Details</a>
+                        <a asp-controller="Add" asp-action="DocumentEmployee" asp-route-menteeId="@mentee.Id" class="btn btn-primary">Generate Document</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+                                
+    <div class="row justify-content-center column-gap-5">
+        <h2>Intern Mentees</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Full name</th>
+                <th>Study Program</th>
+                <th>Employee/Intern</th>
+                <th>Mentorship until/from/total hours</th>
+                <th>Mentee's mentor</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            @foreach (var mentee in @Model.InternMentees)
+            {
+                <tr>
+                    <td>@mentee.FirstName @mentee.LastName</td>
+                    <td>@mentee.StudyProgram</td>
+                    <td>@mentee.InternType</td>
+                    <td>
+                        @foreach (var internMentorship in Model.InternMentorships)
+                        {
+                            if (internMentorship.InternId.Equals(mentee.Id))
+                            {
+                                <div>@internMentorship.FromDate - @internMentorship.UntilDate / @internMentorship.TotalHours hours</div>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @foreach (var mentors in Model.MenteesMentor)
+                        {
+                            <div>
+                                @if (mentee.Id.Equals(mentors.Key))
+                                {
+                                    foreach (var mentorId in mentors.Value)
+                                    {
+                                        foreach (var mentor in Model.Mentors)
+                                        {
+                                            if (mentor.Id.Equals(mentorId))
+                                            {
+                                                if (mentors.Value.Count == 1)
+                                                {
+                                                    <div>@mentor.FirstName @mentor.LastName (currently active)</div>
+                                                }
+                                                else if (mentorId.Equals(mentors.Value.Last()) && mentors.Value.Count > 1)
+                                                {
+                                                    <div>@mentor.FirstName @mentor.LastName (currently active)</div>
+                                                }
+                                                else if (!mentorId.Equals(mentors.Value.Last()) && mentors.Value.Count > 1)
+                                                {
+                                                    <div>@mentor.FirstName @mentor.LastName</div>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="Details" asp-action="InternMentee" asp-route-internId="@mentee.Id" class="btn btn-primary">Details</a>
+                        <a asp-controller="Add" asp-action="DocumentIntern" asp-route-menteeId="@mentee.Id" class="btn btn-primary">Generate Document</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+                                
+</div>
