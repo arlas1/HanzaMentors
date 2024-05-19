@@ -12,4 +12,5 @@ public class Intern : IBaseEntityId
     public string? LastName { get; set; }
     public string? InternType { get; set; }
     public string? StudyProgram { get; set; }
+    public string? Email { get; set; }
 }

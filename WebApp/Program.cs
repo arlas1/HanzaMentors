@@ -71,7 +71,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(
     typeof(App.DAL.EF.AutoMapperProfile),
-    typeof(App.BLL.AutoMapperProfile)
+    typeof(App.BLL.AutoMapperProfile),
+    typeof(App.Public.DTO.AutoMapperProfile)
 );
 
 var apiVersioningBuilder = builder.Services.AddApiVersioning(options =>
@@ -97,10 +98,7 @@ builder.Services.AddSwaggerGen();
 
 // ===================================================
 var app = builder.Build();
-// SetupAppData(app);
 // ===================================================
-
-// SetupAppData(app);
 
 
 // Configure the HTTP request pipeline.
@@ -133,8 +131,6 @@ app.UseSwaggerUI(options =>
             description.GroupName.ToUpperInvariant() 
         );
     }
-    // serve from root
-    // opt ions.RoutePrefix = string.Empty;
 });
 
 app.MapControllerRoute(
@@ -150,53 +146,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-
-
-
-// static void SetupAppData(WebApplication app)
-// {
-//     using var serviceScope = ((IApplicationBuilder) app).ApplicationServices
-//         .GetRequiredService<IServiceScopeFactory>()
-//         .CreateScope();
-//     using var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-//
-//     context.Database.Migrate();
-//
-//     using var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-//     using var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
-//
-//     var res = roleManager.CreateAsync(new AppRole()
-//     {
-//         Name = "Mentor"
-//     }).Result;
-//     var res1 = roleManager.CreateAsync(new AppRole()
-//     {
-//         Name = "Mentee"
-//     }).Result;
-//     
-//     if (!res.Succeeded)
-//     {
-//         Console.WriteLine(res.ToString());
-//     }
-//     
-//     var user = new AppUser()
-//     {
-//         Email = "admin@eesti.ee",
-//         UserName = "admin@eesti.ee",
-//         FirstName = "asd",
-//         LastName = "qwe",
-//         PersonalCode = 123
-//     };
-//     res = userManager.CreateAsync(user, "Kala.maja1").Result;
-//     if (!res.Succeeded)
-//     {
-//         Console.WriteLine(res.ToString());
-//     }
-//
-//
-//     res = userManager.AddToRoleAsync(user, "Admin").Result;
-//     if (!res.Succeeded)
-//     {
-//         Console.WriteLine(res.ToString());
-//     }
-// }

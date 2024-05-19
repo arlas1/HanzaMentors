@@ -61,7 +61,7 @@ public class MentorController(IAppBLL bll, UserManager<AppUser> userManager) : C
                             {
                                 mentorMenteeId.Add(mentor.Id);
                                 mentorMenteeId.Add(mentee.Id);
-                                menteeFullname = $"{mentee.FirstName} {mentee.LastName}, Employee({mentee.EmployeeType})";
+                                menteeFullname = $"{mentee.FirstName} {mentee.LastName}, Employee ({mentee.EmployeeType})";
                             }
                         }
                     }

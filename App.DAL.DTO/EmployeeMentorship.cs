@@ -12,4 +12,6 @@ public class EmployeeMentorship : IBaseEntityId
     public DateOnly? FromDate { get; set; }
     public DateOnly? UntilDate { get; set; }
     public int? TotalHours { get; set; }
+    public bool IsCurrentlyActive { get; set; }
+    public bool CurrentlyOnSickLeave { get; set; }
 }

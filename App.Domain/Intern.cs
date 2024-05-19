@@ -20,4 +20,6 @@ public class Intern : BaseEntityId
     
     [MaxLength(50)]
     public string? StudyProgram { get; set; }
+    
+    public string? Email { get; set; }
 }

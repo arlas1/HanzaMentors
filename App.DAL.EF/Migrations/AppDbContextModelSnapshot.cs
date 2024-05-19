@@ -73,6 +73,9 @@ namespace App.DAL.EF.Migrations
                     b.Property<Guid?>("AppUserId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("EmployeeType")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -102,6 +105,9 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("CurrentlyOnSickLeave")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uuid");
 
@@ -110,6 +116,9 @@ namespace App.DAL.EF.Migrations
 
                     b.Property<DateOnly?>("FromDate")
                         .HasColumnType("date");
+
+                    b.Property<bool>("IsCurrentlyActive")
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("TotalHours")
                         .HasColumnType("integer");
@@ -373,6 +382,9 @@ namespace App.DAL.EF.Migrations
                     b.Property<Guid?>("AppUserId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("FirstName")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
@@ -402,6 +414,9 @@ namespace App.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("CurrentlyOnSickLeave")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid?>("FactorySupervisorId")
                         .HasColumnType("uuid");
 
@@ -413,6 +428,9 @@ namespace App.DAL.EF.Migrations
 
                     b.Property<Guid?>("InternSupervisorId")
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsCurrentlyActive")
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("TotalHours")
                         .HasColumnType("integer");

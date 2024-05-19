@@ -13,7 +13,77 @@ namespace WebApp.Controllers;
 
 public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmailService emailService) : Controller
 {
-    // private const string emailSubject = "HANZA Mentors account created";
+    public async Task<IActionResult> SickLeaveIntern(Guid internId, DetailsViewModel detailsViewModel)
+    {
+        var internship = (await bll.InternMentorships.GetAllAsync()).FirstOrDefault(ms => ms.InternId.Equals(internId));
+        var sickLeave = new MenteeSickLeave
+        {
+            Id = Guid.NewGuid(),
+            InternMentorshipId = internship!.Id,
+            EmployeeMentorshipId = null,
+            FromDate = detailsViewModel.SickLeaveFromDate,
+            UntilDate = detailsViewModel.SickLeaveUntilDate,
+            Reason = detailsViewModel.SickLeaveReason
+        };
+
+        var workingDays = 0;
+
+        var fromDate = detailsViewModel.SickLeaveFromDate!.Value;
+        var untilDate = detailsViewModel.SickLeaveUntilDate!.Value;
+        var fromDateTime = new DateTime(fromDate.Year, fromDate.Month, fromDate.Day);
+        var untilDateTime = new DateTime(untilDate.Year, untilDate.Month, untilDate.Day);
+
+        for (var date = fromDateTime; date <= untilDateTime; date = date.AddDays(1))
+        {
+            if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
+            {
+                workingDays++;
+            }
+        }
+    
+
+        var sickLeaveHours = workingDays * 8;
+        var newTotalHours = internship.TotalHours - sickLeaveHours;
+        
+        internship.TotalHours = newTotalHours;
+        // internship.CurrentlyOnSickLeave = true;
+        
+        bll.InternMentorships.Update(internship);
+        await bll.SaveChangesAsync();
+        bll.MenteeSickLeaves.Add(sickLeave);
+        await bll.SaveChangesAsync();
+        
+        return RedirectToAction("InternMentee", "Mentee");
+    }
+    
+    public async Task<IActionResult> SickLeaveEmployee(Guid employeeId, DetailsViewModel detailsViewModel)
+    {
+        var mentorship = (await bll.EmployeeMentorships.GetAllAsync()).FirstOrDefault(ms => ms.EmployeeId.Equals(employeeId));
+        var sickLeave = new MenteeSickLeave
+        {
+            Id = Guid.NewGuid(),
+            InternMentorshipId = null,
+            EmployeeMentorshipId = mentorship!.Id,
+            FromDate = detailsViewModel.SickLeaveFromDate,
+            UntilDate = detailsViewModel.SickLeaveUntilDate,
+            Reason = detailsViewModel.SickLeaveReason
+        };
+        
+        var fromDate = detailsViewModel.SickLeaveFromDate!.Value;
+        var untilDate = detailsViewModel.SickLeaveUntilDate!.Value;
+        var fromDateTime = new DateTime(fromDate.Year, fromDate.Month, fromDate.Day);
+        var untilDateTime = new DateTime(untilDate.Year, untilDate.Month, untilDate.Day);
+        
+        var sickLeaveDays = (untilDateTime - fromDateTime).Days + 1;
+        mentorship.UntilDate = mentorship.UntilDate!.Value.AddDays(sickLeaveDays);
+        
+        bll.EmployeeMentorships.Update(mentorship);
+        await bll.SaveChangesAsync();
+        bll.MenteeSickLeaves.Add(sickLeave);
+        await bll.SaveChangesAsync();
+        
+        return RedirectToAction("EmployeeMentee", "Mentee");
+    }
     
     // GET: Add/Mentee
     public IActionResult Mentee()
@@ -112,7 +182,6 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         return View(menteesViewModel);
     }
     
-    
     [HttpPost]
     public async Task<IActionResult> GenerateDocumentIntern(List<Guid> selectedSamples, Guid selectedMentorId, Guid menteeId, List<string> signingTimes)
     {
@@ -204,12 +273,15 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                     }
                     
                     await bll.SaveChangesAsync();
-
+                    
                     zipArchive.CreateEntryFromFile(pdfPath, pdfFileName);
                 }
             }
         }
 
+        // var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}");
+        // await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
+        
         byte[] zipFileBytes = System.IO.File.ReadAllBytes(zipFilePath);
         return File(zipFileBytes, "application/zip", randomFileName);
     }
@@ -222,7 +294,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         var mentee = await bll.Employees.FirstOrDefaultAsync(menteeId);
         var menteesMentor = (await bll.EmployeesMentors.GetAllAsync()).FirstOrDefault(ms => ms.MentorId.Equals(mentor!.Id));
         var mentorship = (await bll.EmployeeMentorships.GetAllAsync()).FirstOrDefault(ms => ms.EmployeeId.Equals(mentee!.Id));
-
+        
+        
         if (mentor == null || mentee == null || menteesMentor == null || mentorship == null)
         {
             return NotFound();
@@ -310,7 +383,9 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                 }
             }
         }
-
+        // var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}"); 
+        // await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
+        
         byte[] zipFileBytes = System.IO.File.ReadAllBytes(zipFilePath);
         return File(zipFileBytes, "application/zip", randomFileName);
     }
@@ -341,7 +416,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         bll.DocumentSamples.Add(documentSample);
         await bll.SaveChangesAsync();
 
-        return RedirectToAction("Documents", "Document");
+        return RedirectToAction("DocumentSamples", "Document");
     }
     
     [HttpPost]
@@ -394,17 +469,13 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
             
             var userPassword = emailService.GenerateUserPassword();
             var result = await userManager.CreateAsync(user, userPassword);
-            if (!result.Succeeded)
-            {
-                Console.WriteLine("asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-            }
-                
+            
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Mentor");
                 
-                // var emailBody = emailService.GenerateEmailBody(mentorViewModel.FirstName!, mentorViewModel.Email!, userPassword);
-                // await emailService.SendEmailAsync(mentorViewModel.Email!, emailSubject, emailBody);
+                var emailBody = emailService.GenerateAccountEmailBody(mentorViewModel.FirstName!, mentorViewModel.Email!, userPassword);
+                await emailService.SendEmailAsync(mentorViewModel.Email!, "HANZA Mentors account created", emailBody);
                     
                 var employee = new Employee()
                 {
@@ -413,7 +484,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                     FirstName = mentorViewModel.FirstName,
                     LastName = mentorViewModel.LastName,
                     EmployeeType = "Full-time",
-                    Profession = mentorViewModel.Profession
+                    Profession = mentorViewModel.Profession,
+                    Email = mentorViewModel.Email
                 };
                 
                 bll.Employees.Add(employee);
@@ -457,17 +529,13 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         
         var userPassword = emailService.GenerateUserPassword();
         var result = await userManager.CreateAsync(user, userPassword);
-        if (!result.Succeeded)
-        {
-            Console.WriteLine("Faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaail");
-        }
         
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(user, "Mentee");
         
             // var emailBody = emailService.GenerateEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
-            // await emailService.SendEmailAsync(menteeViewModel.Email!, emailSubject, emailBody);
+            // await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
         
             switch (menteeViewModel.MenteeType)
             {
@@ -479,7 +547,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         FirstName = menteeViewModel.FirstName,
                         LastName = menteeViewModel.LastName,
                         InternType = menteeViewModel.InternType,
-                        StudyProgram = menteeViewModel.Profession
+                        StudyProgram = menteeViewModel.Profession,
+                        Email = menteeViewModel.Email
                     };
                     
                     bll.Interns.Add(intern);
@@ -493,7 +562,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         FactorySupervisorId = menteeViewModel.InternFactorySupervisorId,
                         FromDate = menteeViewModel.MenteeFromDate,
                         UntilDate = menteeViewModel.MenteeUntilDate,
-                        TotalHours = menteeViewModel.MenteeTotalHours
+                        TotalHours = menteeViewModel.MenteeTotalHours,
+                        IsCurrentlyActive = true
                     };
                     
                     bll.InternMentorships.Add(internMentorship);
@@ -525,11 +595,11 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         LastName = menteeViewModel.LastName,
                         EmployeeType = menteeViewModel.EmployeeType,
                         Profession = menteeViewModel.Profession,
+                        Email = menteeViewModel.Email
                     };
                     
                     bll.Employees.Add(employee);
                     await bll.SaveChangesAsync();
-                    
                     
                     var employeeMentorship = new EmployeeMentorship()
                     {
@@ -538,7 +608,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         FactorySupervisorId = menteeViewModel.EmployeeFactorySupervisorId,
                         FromDate = menteeViewModel.MenteeFromDate,
                         UntilDate = menteeViewModel.MenteeUntilDate,
-                        TotalHours = menteeViewModel.MenteeTotalHours
+                        TotalHours = menteeViewModel.MenteeTotalHours,
+                        IsCurrentlyActive = true
                     };
                     
                     bll.EmployeeMentorships.Add(employeeMentorship);

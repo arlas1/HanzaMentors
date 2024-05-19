@@ -1,0 +1,77 @@
+﻿@model DocumentsViewModel
+
+@if (User.IsInRole("Admin"))
+{
+    
+    <div class="container mt-3">
+        <div class="row justify-content-center column-gap-5">
+            <div class="col-lg-10 mb-4">
+                <h2 class="text-center mb-3">Mentee-Intern Documents</h2>
+                <div class="card border rounded-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th style="width: 25%;">Document Status</th>
+                                    <th style="width: 25%;">Way of Signing</th>
+                                    <th style="width: 25%;">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                @foreach (var sample in Model.InternMentorshipDocuments)
+                                {
+                                    <tr>
+                                        <td>@sample.DocumentStatus</td>
+                                        <td>@sample.WayOfSigning</td>
+                                        <td>
+                                            <a href="@Url.Action("DownloadInternDocument", "Details", new { documentId = sample.Id })" class="btn btn-primary px-3 py-2 me-2">Download</a>
+                                            <a asp-controller="Document" asp-action="DeleteInternDocument" asp-route-documentId="@sample.Id" class="btn btn-danger px-3 py-2">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (User.IsInRole("Mentee"))
+{
+    
+}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 0;
+    }
+    .table th,
+    .table td {
+        border: none;
+    }
+    .table th {
+        background-color: #f8f9fa;
+    }
+    .table tr {
+        border-bottom: 1px solid #acacac;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>

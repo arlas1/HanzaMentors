@@ -324,12 +324,28 @@ public class DetailsController(IAppBLL bll) : Controller
         return View(newDetails);
     }
     
-    public IActionResult Download(Guid documentId)
+    public IActionResult DownloadSample(Guid documentId)
     {
         var sample = bll.DocumentSamples.GetAll().ToList().FirstOrDefault(me => me.Id.Equals(documentId));
         byte[] fileBytes = Convert.FromBase64String(sample!.Base64Code!);
         
         return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", sample.Title + ".docx");
+    }
+    
+    public IActionResult DownloadInternDocument(Guid documentId)
+    {
+        var pdfDoc = bll.InternMentorshipDocuments.GetAll().ToList().FirstOrDefault(me => me.Id.Equals(documentId));
+        byte[] fileBytes = Convert.FromBase64String(pdfDoc!.Base64Code!);
+        
+        return File(fileBytes, "application/pdf", pdfDoc.Id + ".docx");
+    }
+    
+    public IActionResult DownloadEmployeeDocument(Guid documentId)
+    {
+        var pdfDoc = bll.EmployeeMentorshipDocuments.GetAll().ToList().FirstOrDefault(me => me.Id.Equals(documentId));
+        byte[] fileBytes = Convert.FromBase64String(pdfDoc!.Base64Code!);
+        
+        return File(fileBytes, "application/pdf", pdfDoc.Id + ".docx");
     }
 
 }

@@ -15,4 +15,5 @@ public class Employee : IBaseEntityId
     
     [MaxLength(50)]
     public string? Profession { get; set; }
+    public string? Email { get; set; }
 }

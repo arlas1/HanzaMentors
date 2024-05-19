@@ -14,7 +14,10 @@ public class DetailsViewModel
     public string? MentorFirstName { get; set; }
     public string? MentorLastName { get; set; }
     
-    
+    public DateOnly? SickLeaveFromDate { get; set; }
+    public DateOnly? SickLeaveUntilDate { get; set; }
+    public string? SickLeaveReason { get; set; }
+    public string? SickLeaveFor { get; set; }
     
     public Guid NewMentorId { get; set; }
     public Guid EmployeeId { get; set; }

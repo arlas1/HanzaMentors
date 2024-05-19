@@ -9,24 +9,42 @@ namespace WebApp.Controllers;
 
 public class DocumentController (IAppBLL bll, UserManager<AppUser> userManager) : Controller
 {
-    public IActionResult Documents()
+    public IActionResult DocumentSamples()
     {
         var documentsViewModel = new DocumentsViewModel
         {
             DocumentSamples = bll.DocumentSamples.GetAll(),
-            InternMentorshipDocuments = bll.InternMentorshipDocuments.GetAll(),
-            EmployeeMentorshipDocuments = bll.EmployeeMentorshipDocuments.GetAll()
         };
         
         return View(documentsViewModel);
     }
 
+    public IActionResult MenteeEmployeeDocuments()
+    {
+        var documentsViewModel = new DocumentsViewModel
+        {
+            EmployeeMentorshipDocuments = bll.EmployeeMentorshipDocuments.GetAll()
+        };
+        
+        return View(documentsViewModel);
+    }
+    
+    public IActionResult MenteeInternsDocuments()
+    {
+        var documentsViewModel = new DocumentsViewModel
+        {
+            InternMentorshipDocuments = bll.InternMentorshipDocuments.GetAll()
+        };
+        
+        return View(documentsViewModel);
+    }
+    
     public IActionResult DeleteSampleDocument(Guid documentId)
     {
         bll.DocumentSamples.Remove(bll.DocumentSamples.FirstOrDefault(documentId)!);
         bll.SaveChangesAsync();
         
-        return RedirectToAction("Documents", "Document");
+        return RedirectToAction("DocumentSamples", "Document");
     }
     
     public IActionResult DeleteInternDocument(Guid documentId)
@@ -34,7 +52,7 @@ public class DocumentController (IAppBLL bll, UserManager<AppUser> userManager) 
         bll.InternMentorshipDocuments.Remove(bll.InternMentorshipDocuments.FirstOrDefault(documentId)!);
         bll.SaveChangesAsync();
         
-        return RedirectToAction("Documents", "Document");
+        return RedirectToAction("MenteeInternsDocuments", "Document");
     }
     
     public IActionResult DeleteEmployeeDocument(Guid documentId)
@@ -42,6 +60,6 @@ public class DocumentController (IAppBLL bll, UserManager<AppUser> userManager) 
         bll.EmployeeMentorshipDocuments.Remove(bll.EmployeeMentorshipDocuments.FirstOrDefault(documentId)!);
         bll.SaveChangesAsync();
         
-        return RedirectToAction("Documents", "Document");
+        return RedirectToAction("MenteeEmployeeDocuments", "Document");
     }
 }

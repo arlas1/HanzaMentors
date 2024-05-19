@@ -38,13 +38,22 @@ public class EmailService : IEmailService
         await smtpClient.SendMailAsync(mailMessage);
     }
 
-    public string GenerateEmailBody(string firstName, string email, string password)
+    public string GenerateAccountEmailBody(string firstName, string email, string password)
     {
         return $"Dear {firstName},<br /><br />" +
                $"Your account has been successfully created. The password can be changed later in our application.<br />" +
                $"Username: {email}<br />" +
                $"Password: {password}<br /><br />" +
                $"Best Regards,<br />" +
+               $"Artur Lasimer";
+
+    }
+    
+    public string GenerateDocumentEmailBody(string fullName)
+    {
+        return $"Dear {fullName},<br/><br/>" +
+               $"New documents are awaiting signing. In our application you can choose the way, date and time of signing that is convenient for you.<br/><br/>" +
+               $"Best Regards,<br/>" +
                $"Artur Lasimer";
 
     }
