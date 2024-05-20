@@ -1,0 +1,62 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="YourCurrentInternship" xml:space="preserve">
+        <value>Your current internship</value>
+    </data>
+    <data name="MentorshipUntil/from" xml:space="preserve">
+        <value>Mentorship until/from</value>
+    </data>
+    <data name="MentorshipTotalHours" xml:space="preserve">
+        <value>Mentorship total hours</value>
+    </data>
+    <data name="IsOnSickLeave" xml:space="preserve">
+        <value>Is on sick leave</value>
+    </data>
+    <data name="Mentor(s)" xml:space="preserve">
+        <value>Mentor(s)</value>
+    </data>
+    <data name="From" xml:space="preserve">
+        <value>From</value>
+    </data>
+    <data name="Until" xml:space="preserve">
+        <value>Until</value>
+    </data>
+    <data name="YourDocuments" xml:space="preserve">
+        <value>Your Documents</value>
+    </data>
+    <data name="DocumentStatus" xml:space="preserve">
+        <value>Document Status</value>
+    </data>
+    <data name="WayOfSigning" xml:space="preserve">
+        <value>Way of Signing</value>
+    </data>
+    <data name="TimeOfSigning" xml:space="preserve">
+        <value>Time of signing</value>
+    </data>
+    <data name="Action" xml:space="preserve">
+        <value>Action</value>
+    </data>
+    <data name="NoDocumentsFound" xml:space="preserve">
+        <value>no documents found</value>
+    </data>
+    <data name="Download" xml:space="preserve">
+        <value>Download</value>
+    </data>
+    <data name="ChoseSigningOption" xml:space="preserve">
+        <value>Chose signing option</value>
+    </data>
+    <data name="YourCurrentMentorship" xml:space="preserve">
+        <value>Your current mentorship</value>
+    </data>
+</root>

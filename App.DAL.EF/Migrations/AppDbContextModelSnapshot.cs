@@ -158,8 +158,8 @@ namespace App.DAL.EF.Migrations
                     b.Property<Guid?>("EmployeeMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ReceiverId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.Property<string>("WayOfSigning")
                         .HasColumnType("text");
@@ -472,8 +472,8 @@ namespace App.DAL.EF.Migrations
                     b.Property<Guid?>("InternMentorshipId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ReceiverId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.Property<string>("WayOfSigning")
                         .HasColumnType("text");

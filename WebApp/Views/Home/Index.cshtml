@@ -8,13 +8,12 @@
             <div class="col-lg-6">
                 <div class="card text-center">
                     <div class="card-header bg-white">
-                        <h5 class="card-title">General Information</h5>
+                        <h5 class="card-title">@App.Resources.Home.Admin.GeneralInformation</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Total Mentors: <span class="text-primary">@Model.TotalMentorsAmount</span></p>
-                        <p class="card-text">Active Mentorships: <span class="text-success">@Model.ActiveMentorshipsAmount</span></p>
-                        @* <p class="card-text">Mentees on Sick Leave: <span class="text-warning">@Model.MenteesOnSickLeaveAmount</span></p> *@
-                        <p class="card-text">Total Factory Supervisors: <span class="text-danger">@Model.FactorySupervisorsAmount</span></p>
+                        <p class="card-text">@App.Resources.Home.Admin.TotalMentors: <span class="text-primary">@Model.TotalMentorsAmount</span></p>
+                        <p class="card-text">@App.Resources.Home.Admin.ActiveMentorships: <span class="text-success">@Model.ActiveMentorshipsAmount</span></p>
+                        <p class="card-text">@App.Resources.Home.Admin.TotalFactorySupervisors: <span class="text-danger">@Model.FactorySupervisorsAmount</span></p>
                     </div>
                 </div>
             </div>
@@ -22,15 +21,172 @@
     </div>
 
 }
-else if (User.IsInRole("Mentee"))
+else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Intern"))
 {
-    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title">@App.Resources.Home.Mentee.YourCurrentInternship</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span class="text-primary">@Model.MenteeFromDate - @Model.MenteeUntilDate</span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span class="text-success">@Model.MenteeTotalHours</span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span class="text-danger">@Model.IsOnSickLeave</span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <span>
+                            @foreach (var mentor in Model.MenteeData.InternsMentors)
+                            {
+                                <span>@mentor.Value - @App.Resources.Home.Mentee.From: @mentor.Key.FromDate, @App.Resources.Home.Mentee.Until: @mentor.Key.UntilDate</span><br />
+                            }
+                        </span></p>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <h2 class="text-center mb-3">@App.Resources.Home.Mentee.YourDocuments</h2>
+            <div class="card border rounded-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <colgroup>
+                                <col style="width: 24%;">
+                                <col style="width: 23%;">
+                                <col style="width: 23%;">
+                                <col style="width: 30%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>@App.Resources.Home.Mentee.DocumentStatus</th>
+                                <th>@App.Resources.Home.Mentee.WayOfSigning</th>
+                                <th>@App.Resources.Home.Mentee.TimeOfSigning</th>
+                                <th>@App.Resources.Home.Mentee.Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if (Model.MenteeData.InternDocuments.IsNullOrEmpty())
+                            {
+                                <tr>
+                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
+                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
+                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
+                                    <td></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var document in Model.MenteeData.InternDocuments!)
+                                {
+                                    <tr>
+                                        <td>@document.Key.DocumentStatus</td>
+                                        <td>@document.Key.WayOfSigning</td>
+                                        <td>@document.Key.ChoosenSigningTime</td>
+                                        <td>
+                                            <a href="@Url.Action("DownloadInternDocument", "Details", new { documentId = document.Key.Id })"
+                                               class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.Download</a>
+                                            @if (document.Key.DocumentStatus == "Not signed")
+                                            {
+                                                <a href="@Url.Action("SigningTimesIntern", "Document", new { documentId = document.Key.Id, menteeId = @Model.MenteeId})"
+                                                   class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.ChoseSigningOption</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
+else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Employee"))
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title">@App.Resources.Home.Mentee.YourCurrentMentorship</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span class="text-primary">@Model.MenteeFromDate - @Model.MenteeUntilDate</span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span class="text-success">@Model.MenteeTotalHours</span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span class="text-danger">@Model.IsOnSickLeave</span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <span>
+                            @foreach (var mentor in Model.MenteeData.EmployeesMentors)
+                            {
+                                <span>@mentor.Value - @App.Resources.Home.Mentee.From: @mentor.Key.FromDate, @App.Resources.Home.Mentee.Until: @mentor.Key.UntilDate</span><br />
+                            }
+                        </span></p>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <h2 class="text-center mb-3">@App.Resources.Home.Mentee.YourDocuments</h2>
+            <div class="card border rounded-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <colgroup>
+                                <col style="width: 24%;">
+                                <col style="width: 23%;">
+                                <col style="width: 23%;">
+                                <col style="width: 30%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>@App.Resources.Home.Mentee.DocumentStatus</th>
+                                <th>@App.Resources.Home.Mentee.WayOfSigning</th>
+                                <th>@App.Resources.Home.Mentee.TimeOfSigning</th>
+                                <th>@App.Resources.Home.Mentee.Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if (Model.MenteeData.EmployeeDocuments.IsNullOrEmpty())
+                            {
+                                <tr>
+                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
+                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
+                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
+                                    <td></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var document in Model.MenteeData.EmployeeDocuments!)
+                                {
+                                    <tr>
+                                        <td>@document.Key.DocumentStatus</td>
+                                        <td>@document.Key.WayOfSigning</td>
+                                        <td>@document.Key.ChoosenSigningTime</td>
+                                        <td>
+                                            <a href="@Url.Action("DownloadEmployeeDocument", "Details", new { documentId = document.Key.Id })"
+                                               class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.Download</a>
+                                            @if (document.Key.DocumentStatus == "Not signed")
+                                            {
+                                                <a href="@Url.Action("SigningTimesEmployee", "Document", new { documentId = document.Key.Id, menteeId = @Model.MenteeId})"
+                                                   class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.ChoseSigningOption</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 else if (User.IsInRole("Mentor"))
 {
     <div class="row justify-content-center column-gap-5">
         <div class="col-lg-12 mb-4">
-            <h2 class="text-center mb-3">Your current mentees</h2>
+            <h2 class="text-center mb-3">@App.Resources.Home.Mentor.YourCurrentMentees</h2>
             <div class="card border rounded-3">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -43,10 +199,10 @@ else if (User.IsInRole("Mentor"))
                             </colgroup>
                             <thead>
                             <tr>
-                                <th>Mentee Full name</th>
-                                <th>Mentee type</th>
-                                <th>Mentorship until/from</th>
-                                <th>Mentor for total hours</th>
+                                <th>@App.Resources.Home.Mentor.MenteeFullName</th>
+                                <th>@App.Resources.Home.Mentor.MenteeType</th>
+                                <th>@App.Resources.Home.Mentee.MentorshipUntil_from</th>
+                                <th>@App.Resources.Home.Mentor.MentoForTotaHours</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -86,11 +242,10 @@ else if(!User.Identity!.IsAuthenticated)
                 <div class="col-lg-6">
                     <div class="card text-center">
                         <div class="card-header bg-white">
-                            <h5 class="card-title">Welcome to Our Platform</h5>
+                            <h5 class="card-title">@App.Resources.Home.UnAuth.WelcomeToOurPlatform</h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">Please log in to access your dashboard.</p>
-                            @* <a href="~/Account/Login" class="btn btn-primary">Login</a> *@
+                            <p class="card-text">@App.Resources.Home.UnAuth.LogInMessage</p>
                         </div>
                     </div>
                 </div>

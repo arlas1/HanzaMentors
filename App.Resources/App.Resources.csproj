@@ -1,0 +1,267 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="View\Shared\_Layout.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\AppUser.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>AppUser.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\RefreshToken.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>RefreshToken.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\DocumentSample.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>DocumentSample.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\DoucmentSigningTime.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>DoucmentSigningTime.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\Employee.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Employee.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\EmployeeMentorship.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>EmployeeMentorship.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\EmployeesMentor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>EmployeesMentor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\FactorySupervisor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>FactorySupervisor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\Intern.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Intern.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\InternMentorship.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>InternMentorship.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\InternsMentor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>InternsMentor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\InternSupervisor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>InternSupervisor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\MenteeSickLeave\.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\Mentor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Mentor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\MenteeSickLeave.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>MenteeSickLeave.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Home\Admin.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Admin.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Home\Mentee.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Mentee.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Home\UnAuth.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>UnAuth.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Home\Mentor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Mentor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Add\Supervisor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Supervisor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Add\Mentor.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Mentor.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Add\Mentee.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Mentee.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Add\DocumentSample.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>DocumentSample.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Add\DocumentGenerate.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>DocumentGenerate.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Details\Document.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Document.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Details\EmployeeMentee.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>EmployeeMentee.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Documents\Documents.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Documents.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="View\Shared\_Layout.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_Layout.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\AppUser.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AppUser.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\RefreshToken.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>RefreshToken.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\DocumentSample.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DocumentSample.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\DoucmentSigningTime.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DoucmentSigningTime.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\Employee.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Employee.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\EmployeeMentorship.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>EmployeeMentorship.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\EmployeesMentor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>EmployeesMentor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\FactorySupervisor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>FactorySupervisor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\Intern.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Intern.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\InternMentorship.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>InternMentorship.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\InternsMentor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>InternsMentor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\InternSupervisor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>InternSupervisor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\MenteeSickLeave\.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\Mentor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Mentor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\MenteeSickLeave.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MenteeSickLeave.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Home\Admin.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Admin.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Home\Mentee.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Mentee.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Home\UnAuth.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>UnAuth.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Home\Mentor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Mentor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Add\Supervisor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Supervisor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Add\Mentor.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Mentor.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Add\Mentee.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Mentee.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Add\DocumentSample.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DocumentSample.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Add\DocumentGenerate.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DocumentGenerate.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Details\Document.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Document.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Details\EmployeeMentee.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>EmployeeMentee.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Documents\Documents.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Documents.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

@@ -3,7 +3,7 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-6 mb-3">
-            <h1 class="text-center mb-3">Add Document Sample</h1>
+            <h1 class="text-center mb-3">@App.Resources.Add.DocumentSample.AddDocumentSample</h1>
             <div class="card">
                 <div class="card-body">
                     <section>
@@ -14,7 +14,7 @@
                                     <div class="form-floating mb-3">
                                         <input asp-for="Title" id="sampleTitle" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="Title" class="text-danger"></span>
-                                        <label for="sampleTitle">Sample document title</label>
+                                        <label for="sampleTitle">@App.Resources.Add.DocumentSample.SampleDocumentTitle</label>
                                     </div>
                                     
                                     <div class="input-group mb-3">
@@ -27,7 +27,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="btn-group" role="group" aria-label="Add buttons">
                                         <button type="button" class="btn btn-primary px-4 py-2 rounded-3"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add sample</button>
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">@App.Resources.Add.DocumentSample.AddSample</button>
                                     </div>
                                 </div>
                             </div>
@@ -43,11 +43,11 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">@App.Resources.Add.Mentee.Notification</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Document sample added successfully.</p>
+        <p>@App.Resources.Add.DocumentSample.Message</p>
       </div>
       <div class="modal-footer justify-content-center">
           <button type="button" onclick="setAction('AddDocumentSample')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center" >Ok</button>

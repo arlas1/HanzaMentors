@@ -4,10 +4,10 @@
     <div class="col-md-4">
         <section>
             <form id="mentorForm" method="post" asp-controller="Details" asp-action="Mentor">
-                <h1 class="text-center">Mentor details</h1>
+                <h1 class="text-center">@App.Resources.Details.Document.MentorDetails</h1>
                 <hr/>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input asp-for="Title" value="@Model.Title" class="form-control border-dark-subtle" placeholder="Sample document title" aria-label="Sample document title" disabled/>
+                <input asp-for="Title" value="@Model.Title" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.Document.SampleDocumentTitle" aria-label="@App.Resources.Details.Document.SampleDocumentTitle" disabled/>
                 <hr/>
                 <input asp-for="File" type="file" class="form-control" value="@Model.File" disabled>
                 <input asp-for="DocumentId" type="hidden" value="@Model.DocumentId" />
@@ -15,11 +15,11 @@
                 <div class="form-group text-center mb-3">
                     <div class="d-flex justify-content-center">
                         <div class="btn-group" role="group" aria-label="Add buttons">
-                            <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">Edit</button>
+                            <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">@App.Resources.Details.Document.Edit</button>
                         </div>
                         <div class="input-group-text" style="opacity: 0;">&nbsp;</div>
                         <div class="btn-group" role="group" aria-label="Add buttons">
-                            <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>Save</button>
+                            <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>@App.Resources.Details.Document.Save</button>
                         </div>
                     </div>
                 </div>

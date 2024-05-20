@@ -3,29 +3,31 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-6 mb-3">
-            <h1 class="text-center mb-3">Edit Mentor</h1>
+            <h1 class="text-center mb-3">@App.Resources.Details.Document.Edit @App.Resources.Details.EmployeeMentee.Mentor</h1>
             <div class="card">
                 <div class="card-body">
                     <section>
                        <form id="mentorForm" method="post" asp-controller="Details" asp-action="Mentor">
                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                            <div class="form-floating">
-                               <input asp-for="MentorFirstName" class="form-control" id="firstName" type="text" value="@Model.MentorFirstName" aria-label="Mentor first name" disabled>
-                               <label for="firstName">Mentor first name</label>
+                               <input asp-for="MentorFirstName" class="form-control" id="firstName" type="text" value="@Model.MentorFirstName"
+                                      aria-label="@App.Resources.Details.EmployeeMentee.Mentor @App.Resources.Add.Mentee.FirstName" disabled>
+                               <label for="firstName">@App.Resources.Details.EmployeeMentee.Mentor @App.Resources.Add.Mentee.FirstName</label>
                            </div>
                            <div class="form-floating">
-                               <input asp-for="MentorLastName" class="form-control" type="text" value="@Model.MentorLastName" id="lastName" aria-label="Mentor last name" disabled>
+                               <input asp-for="MentorLastName" class="form-control" type="text" value="@Model.MentorLastName" id="lastName"
+                                      aria-label="@App.Resources.Details.EmployeeMentee.Mentor @App.Resources.Add.Mentee.LastName" disabled>
                                <input asp-for="InitialMentorId" type="hidden" value="@Model.InitialMentorId" />
-                               <label for="lastName">Mentor last name</label>
+                               <label for="lastName">@App.Resources.Details.EmployeeMentee.Mentor @App.Resources.Add.Mentee.LastName</label>
                            </div>
                            <div class="form-group text-center mb-0">
                                <div class="d-flex justify-content-center">
                                    <div class="btn-group" role="group">
-                                       <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">Edit</button>
+                                       <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">@App.Resources.Details.Document.Edit</button>
                                    </div>
                                    <div class="input-group-text" style="opacity: 0;">&nbsp;</div>
                                    <div class="btn-group" role="group">
-                                       <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>Save</button>
+                                       <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>@App.Resources.Details.Document.Save</button>
                                    </div>
                                </div>
                            </div>

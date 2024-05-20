@@ -1,0 +1,65 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="AddSickLeave" xml:space="preserve">
+        <value>Добавить больничный</value>
+    </data>
+    <data name="AssignedMentor" xml:space="preserve">
+        <value>Назначеный ментор</value>
+    </data>
+    <data name="MenteeDetails" xml:space="preserve">
+        <value>Детали ученика</value>
+    </data>
+    <data name="MenteeInfo" xml:space="preserve">
+        <value>Информация ученика</value>
+    </data>
+    <data name="MentorFromDate" xml:space="preserve">
+        <value>Ментор начиная с</value>
+    </data>
+    <data name="MentorUntilDate" xml:space="preserve">
+        <value>Ментор до</value>
+    </data>
+    <data name="NewMentor" xml:space="preserve">
+        <value>Новый ментор</value>
+    </data>
+    <data name="NewMentorFromDate" xml:space="preserve">
+        <value>Новый ментор начиная с </value>
+    </data>
+    <data name="NewMentorTotalHours" xml:space="preserve">
+        <value>Новый ментор полных часов</value>
+    </data>
+    <data name="NewMentorUntilDate" xml:space="preserve">
+        <value>Новый ментор до</value>
+    </data>
+    <data name="ReasonOfChange" xml:space="preserve">
+        <value>Причина смены на другого ментора</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Добавить</value>
+    </data>
+    <data name="SickLeaveFromDate" xml:space="preserve">
+        <value>Больничный начиная с</value>
+    </data>
+    <data name="SickLeaveInfo" xml:space="preserve">
+        <value>Больничный информация</value>
+    </data>
+    <data name="SickLeaveReason" xml:space="preserve">
+        <value>Причина больничного</value>
+    </data>
+    <data name="SickLeaveUntilDate" xml:space="preserve">
+        <value>Больничный до</value>
+    </data>
+    <data name="Mentor" xml:space="preserve">
+        <value>Ментор</value>
+    </data>
+</root>

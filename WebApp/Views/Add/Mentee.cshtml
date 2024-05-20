@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <h2 class="text-center mb-3">Add Mentee</h2>   
+            <h2 class="text-center mb-3">@App.Resources.Add.Mentee.AddMentee</h2>   
             <div class="card">
                 <div class="card-body">
                     <section>
@@ -12,7 +12,7 @@
                                 <div class="col">
                                     <div class="text-center mb-2">
                                         <div class="table-title">
-                                            <h6>Employee/Intern</h6> 
+                                            <h6>@App.Resources.Add.Mentee.EmployeeIntern</h6> 
                                             <hr class="mx-auto mb-1">
                                         </div>
                                     </div>
@@ -24,10 +24,10 @@
                                                         <div class="form-floating">
                                                             <select asp-for="MenteeType" id="menteeTypeSelect" class="form-select border border-dark-subtle">
                                                                 <option selected="selected"></option>
-                                                                <option value="Intern">Intern</option>
-                                                                <option value="Employee">Employee</option>
+                                                                <option value="Intern">@App.Resources.Add.Mentee.OptionIntern</option>
+                                                                <option value="Employee">@App.Resources.Add.Mentee.OptionEmployee</option>
                                                             </select>
-                                                            <label for="menteeTypeSelect">Mentee type</label>
+                                                            <label for="menteeTypeSelect">@App.Resources.Add.Mentee.MenteeType</label>
                                                             <span asp-validation-for="MenteeType" class="text-danger"></span>
                                                         </div>
                                                         <br>
@@ -36,10 +36,10 @@
                                                             <div class="form-floating">
                                                                 <select asp-for="InternType" id="internTypeSelect" class="form-select border border-dark-subtle">
                                                                     <option selected="selected"></option>
-                                                                    <option value="Vocational school (gep)">Vocational school (gep)</option>
-                                                                    <option value="Töötukassa">Töötukassa</option>
+                                                                    <option value="Vocational school (gep)">@App.Resources.Add.Mentee.OptionVocationalSchool</option>
+                                                                    <option value="Töötukassa">@App.Resources.Add.Mentee.Töötukassa</option>
                                                                 </select>
-                                                                <label for="internTypeSelect">Mentee type</label>
+                                                                <label for="internTypeSelect">@App.Resources.Add.Mentee.MenteeType</label>
                                                                 <span asp-validation-for="InternType" class="text-danger"></span>
                                                             </div>
                                                             <br/>
@@ -51,7 +51,7 @@
                                                                         <option value="@internSupervisor.Id ">@internSupervisor.FullName</option>
                                                                     }
                                                                 </select>
-                                                                <label for="internSupervisorSelect">Intern supervisor</label>
+                                                                <label for="internSupervisorSelect">@App.Resources.Add.Mentee.InternSupervisor</label>
                                                                 <span asp-validation-for="InternSupervisorId" class="text-danger"></span>
                                                             </div>
                                                             <br/>
@@ -63,7 +63,7 @@
                                                                         <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
                                                                     }
                                                                 </select>
-                                                                <label for="factorySupervisorSelect1">Factory supervisor</label>
+                                                                <label for="factorySupervisorSelect1">@App.Resources.Add.Mentee.FactorySupervisor</label>
                                                                 <span asp-validation-for="InternFactorySupervisorId" class="text-danger"></span>
                                                             </div>
                                                         </div>
@@ -72,11 +72,11 @@
                                                             <div class="form-floating">
                                                                 <select asp-for="EmployeeType" id="employeeTypeSelect" class="form-select">
                                                                     <option selected="selected"></option>
-                                                                    <option value="Full-time">Full-time</option>
-                                                                    <option value="Rental">Rental</option>
-                                                                    <option value="Probation">Probation</option>
+                                                                    <option value="Full-time">@App.Resources.Add.Mentee.Full_time</option>
+                                                                    <option value="Rental">@App.Resources.Add.Mentee.Rental</option>
+                                                                    <option value="Probation">@App.Resources.Add.Mentee.Probation</option>
                                                                 </select>
-                                                                <label for="employeeTypeSelect">Mentee type</label>
+                                                                <label for="employeeTypeSelect">@App.Resources.Add.Mentee.MenteeType</label>
                                                                 <span asp-validation-for="EmployeeType" class="text-danger"></span>
                                                             </div>
                                                             <br/>
@@ -88,7 +88,7 @@
                                                                         <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
                                                                     }
                                                                 </select>
-                                                                <label for="factorySupervisorSelect">Factory supervisor</label>
+                                                                <label for="factorySupervisorSelect">@App.Resources.Add.Mentee.FactorySupervisor</label>
                                                                 <span asp-validation-for="EmployeeFactorySupervisorId" class="text-danger"></span>
                                                             </div>
                                                         </div>
@@ -101,7 +101,7 @@
                                 <div class="col">
                                     <div class="text-center mb-2">
                                         <div class="table-title">
-                                            <h6>Mentee Info</h6>
+                                            <h6>@App.Resources.Add.Mentee.MenteeInfo</h6>
                                             <hr class="mx-auto mb-1">
                                         </div>
                                     </div>
@@ -113,49 +113,49 @@
                                                     <div class="form-floating">
                                                         <input asp-for="FirstName" id="firstName" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="FirstName" class="text-danger"></span>
-                                                        <label for="firstName">First Name</label>
+                                                        <label for="firstName">@App.Resources.Add.Mentee.FirstName</label>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="LastName" id="lastName" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="LastName" class="text-danger"></span>
-                                                        <label for="lastName">Last Name</label>
+                                                        <label for="lastName">@App.Resources.Add.Mentee.LastName</label>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="Email" type="email" id="email" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="Email" class="text-danger"></span>
-                                                        <label for="email">Email</label>
+                                                        <label for="email">@App.Resources.Add.Mentee.Email</label>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="PersonalCode" id="idCode" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="PersonalCode" class="text-danger"></span>
-                                                        <label for="idCode">Id code</label>
+                                                        <label for="idCode">@App.Resources.Add.Mentee.IdCode</label>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="Profession" id="profession" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="Profession" class="text-danger"></span>
-                                                        <label for="profession">Profession</label>
+                                                        <label for="profession">@App.Resources.Add.Mentee.Profession</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="MenteeFromDate" type="date" id="menteeFromDate" class="form-control border-dark-subtle" placeholder="Mentee from date" aria-label="Mentee from date"/>
                                                         <span asp-validation-for="MenteeFromDate" class="text-danger"></span>
-                                                        <label for="menteeFromDate">Mentee from date</label>
+                                                        <label for="menteeFromDate">@App.Resources.Add.Mentee.MenteeFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="MenteeUntilDate" type="date" id="menteeUntilDate" class="form-control border-dark-subtle" placeholder="Mentee until date" aria-label="Mentee until date"/>
                                                         <span asp-validation-for="MenteeUntilDate" class="text-danger"></span>
-                                                        <label for="menteeUntilDate">Mentee until date</label>
+                                                        <label for="menteeUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="MenteeTotalHours" type="email" id="menteeTotalHours" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="MenteeTotalHours" class="text-danger"></span>
-                                                        <label for="menteeTotalHours">Mentee for total hours</label>
+                                                        <label for="menteeTotalHours">@App.Resources.Add.Mentee.MenteeTotaHours</label>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -166,7 +166,7 @@
                                 <div class="col">
                                     <div class="text-center mb-2">
                                         <div class="table-title">
-                                            <h6>Assign Mentor</h6>
+                                            <h6>@App.Resources.Add.Mentee.AssignMentor</h6>
                                             <hr class="mx-auto mb-1">
                                         </div>
                                     </div>
@@ -183,26 +183,26 @@
                                                                 <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option>
                                                             }
                                                         </select>
-                                                        <label for="mentorSelect">Mentors</label>
+                                                        <label for="mentorSelect">@App.Resources.Add.Mentee.Mentors</label>
                                                         <span asp-validation-for="ChosenMentorId" class="text-danger"></span>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="MentorFromDate" type="date" id="mentorFromDate" class="form-control border-dark-subtle" placeholder="Mentor from date" aria-label="Mentor from date"/>
                                                         <span asp-validation-for="MentorFromDate" class="text-danger"></span>
-                                                        <label for="mentorFromDate">Mentee until date</label>
+                                                        <label for="mentorFromDate">@App.Resources.Add.Mentee.MenteeFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="MentorUntilDate" type="date" id="mentorUntilDate" class="form-control border-dark-subtle" placeholder="Mentor until date" aria-label="Mentor until date"/>
                                                         <span asp-validation-for="MentorUntilDate" class="text-danger"></span>
-                                                        <label for="mentorUntilDate">Mentee until date</label>
+                                                        <label for="mentorUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="MentorTotalHours" type="email" id="mentorTotalHours" class="form-control border-dark-subtle"/>
                                                         <span asp-validation-for="MentorTotalHours" class="text-danger"></span>
-                                                        <label for="mentorTotalHours">Mentor for total hours</label>
+                                                        <label for="mentorTotalHours">@App.Resources.Add.Mentee.MentorTotalHours</label>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -215,7 +215,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="btn-group" role="group" aria-label="Add buttons">
                                         <button type="button" class="btn btn-primary px-4 py-2 rounded-3" 
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add & Create User</button>
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">@App.Resources.Add.Mentee.AddCreateUser</button>
                                     </div>
                                 </div>
                             </div>
@@ -231,11 +231,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5 justify-content-center" id="staticBackdropLabel">Notification</h1>
+                <h1 class="modal-title fs-5 justify-content-center" id="staticBackdropLabel">@App.Resources.Add.Mentee.Notification</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Mentee added, user created and email-notification sent.</p>
+                <p>@App.Resources.Add.Mentee.Message</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" onclick="setAction('AddMentee')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center" >Ok</button>

@@ -3,7 +3,7 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-6 mb-3">
-            <h1 class="text-center mb-3">Add Supervisor</h1>
+            <h1 class="text-center mb-3">@App.Resources.Add.Supervisor.AddSupervisor</h1>
             <div class="card">
                 <div class="card-body">
                     <section>
@@ -14,16 +14,16 @@
                                     <div class="form-floating mb-3">
                                         <input asp-for="FullName" id="fullName" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="FullName" class="text-danger"></span>
-                                        <label for="fullName">Full Name</label>
+                                        <label for="fullName">@App.Resources.Add.Supervisor.FullName</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
                                         <select asp-for="SupervisorType" id="supervisorTypeSelect" class="form-select border border-dark-subtle">
                                             <option selected="selected"></option>
-                                            <option value="Factory">Factory supervisor</option>
-                                            <option value="Vocational school">Vocational school supervisor (GEP)</option>
+                                            <option value="Factory">@App.Resources.Add.Supervisor.FactorySupervisor</option>
+                                            <option value="Vocational school">@App.Resources.Add.Supervisor.VolSclSupervisor</option>
                                         </select>
-                                        <label for="supervisorTypeSelect">Supervisor Type</label>
+                                        <label for="supervisorTypeSelect">@App.Resources.Add.Supervisor.SupervisorType</label>
                                         <span asp-validation-for="SupervisorType" class="text-danger"></span>
                                     </div>
 
@@ -31,7 +31,7 @@
                                         <div class="d-flex justify-content-center">
                                             <div class="btn-group" role="group" aria-label="Add buttons">
                                                 <button type="button" class="btn btn-primary px-4 py-2 rounded-3" 
-                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Supervisor</button>
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">@App.Resources.Add.Supervisor.AddSupervisor</button>
                                             </div>
                                         </div>
                                     </div>
@@ -49,11 +49,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">@App.Resources.Add.Supervisor.Notification</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Supervisor added successfully.</p>
+                <p>@App.Resources.Add.Supervisor.MessageSuccess</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" onclick="setAction('AddSupervisor')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center">Ok</button>

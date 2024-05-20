@@ -7,11 +7,11 @@
                 <div class="input-group">
                     <select asp-for="FilterType" class="custom-select border border-1 rounded-start-3 border-primary-subtle" style="background-color: white;">
                         <option value=""></option>
-                        <option value="Mentee's name">Mentee's name</option>
-                        <option value="Study Program">Study Program</option>
-                        <option value="Mentee's type">Mentee's type</option>
+                        <option value="Mentee's name">@App.Resources.Add.Mentee.Mentee_sName</option>
+                        <option value="Study Program">@App.Resources.Add.Mentee.StudyProgram</option>
+                        <option value="Mentee's type">@App.Resources.Add.Mentee.Mentee_sType</option>
                     </select>
-                    <input asp-for="FilterRequest" class="form-control border-primary-subtle" placeholder="Search">
+                    <input asp-for="FilterRequest" class="form-control border-primary-subtle" placeholder="@App.Resources.Documents.Documents.Search">
                     <button class="btn btn-primary rounded-end-3" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -24,7 +24,7 @@
 
     <div class="row justify-content-center column-gap-5">
         <div class="col-lg-12 mb-4">
-            <h2 class="text-center mb-3">Intern Mentees</h2>
+            <h2 class="text-center mb-3">@App.Resources.Add.Mentee.InternMentees</h2>
             <div class="card border rounded-3">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -39,11 +39,11 @@
                             </colgroup>
                             <thead>
                                 <tr>
-                                   <th>Full name</th>
-                                   <th>Study Program</th>
-                                   <th>Type</th>
-                                   <th>Mentorship until/from/total hours</th>
-                                   <th>Mentee's mentor</th>
+                                   <th>@App.Resources.Add.Mentee.Full_time</th>
+                                   <th>@App.Resources.Add.Mentee.StudyProgram</th>
+                                   <th>@App.Resources.Add.Mentee.Type</th>
+                                   <th>@App.Resources.Add.Mentee.MentorshipUntil_from</th>
+                                   <th>@App.Resources.Add.Mentee.Mentee_sMentor</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -59,7 +59,7 @@
                                             {
                                                 if (internMentorship.InternId.Equals(mentee.Id))
                                                 {
-                                                    <div>@internMentorship.FromDate - @internMentorship.UntilDate / @internMentorship.TotalHours hours</div>
+                                                    <div>@internMentorship.FromDate - @internMentorship.UntilDate / @internMentorship.TotalHours @App.Resources.Add.Mentee.Hours</div>
                                                 }
                                             }
                                         </td>
@@ -77,7 +77,7 @@
                                                                 {
                                                                     if (mentors.Value.Count == 1 || mentorId.Equals(mentors.Value.Last()))
                                                                     {
-                                                                        <div>@mentor.FirstName @mentor.LastName (currently active)</div>
+                                                                        <div>@mentor.FirstName @mentor.LastName @App.Resources.Add.Mentee._currently_active_</div>
                                                                     }
                                                                     else
                                                                     {
@@ -91,8 +91,8 @@
                                             }
                                         </td>
                                         <td>
-                                            <a asp-controller="Details" asp-action="InternMentee" asp-route-internId="@mentee.Id" class="btn btn-primary">Edit</a>
-                                            <a asp-controller="Add" asp-action="DocumentIntern" asp-route-menteeId="@mentee.Id" class="btn btn-primary">Generate Document</a>
+                                            <a asp-controller="Details" asp-action="InternMentee" asp-route-internId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a>
+                                            <a asp-controller="Add" asp-action="DocumentIntern" asp-route-menteeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.GenerateDocument</a>
                                         </td>
                                     </tr>
                                 }

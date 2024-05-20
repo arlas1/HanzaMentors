@@ -3,7 +3,7 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-6 mb-3">
-            <h1 class="text-center mb-3">Generate Document</h1>
+            <h1 class="text-center mb-3">@App.Resources.Add.DocumentGenerate.GenerateDocument</h1>
             <div class="card">
                 <div class="card-body">
                     <section>
@@ -12,7 +12,7 @@
                                 <input asp-for="MenteeId" type="hidden" id="menteeId" name="menteeId" value="@Model.MenteeId" />
                             </div>
                             <div class="form-group">
-                                <label>Document Samples:</label>
+                                <label>@App.Resources.Add.DocumentGenerate.DocumentSamples:</label>
                                 <br/>
                                 <ul class="list-inline">
                                     @foreach (var sample in Model.DocumentSamples)
@@ -25,9 +25,9 @@
                                 </ul>
                             </div>
                             <div class="form-group">
-                                <label for="selectedMentorSelect">Related mentor:</label>
+                                <label for="selectedMentorSelect">@App.Resources.Add.DocumentGenerate.RelatedMentor:</label>
                                 <select name="selectedMentorId" id="selectedMentorSelect" class="form-select">
-                                    <option value="" disabled selected>Select mentor</option>
+                                    <option value="" disabled selected>@App.Resources.Add.DocumentGenerate.SelectMentor</option>
                                     @foreach (var mentor in Model.Mentors)
                                     {
                                         <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 <br/>
-                                <label for="signingTimes">Signing Times:</label>
+                                <label for="signingTimes">@App.Resources.Add.DocumentGenerate.SigningTimes:</label>
                                 <br/>
                                 <div id="signingTimesContainer">
                                     @if (Model.SigningTimes != null)
@@ -45,7 +45,7 @@
                                         {
                                             <div class="mb-2">
                                                 @Model.SigningTimes[i]
-                                                <button class="btn btn-sm btn-danger deleteSigningTime">Delete</button>
+                                                <button class="btn btn-sm btn-danger deleteSigningTime">@App.Resources.Add.DocumentGenerate.Delete</button>
                                                 <input type="hidden" name="signingTimes[@i]" value="@Model.SigningTimes[i]" />
                                             </div>
                                         }
@@ -53,11 +53,11 @@
                                 </div>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Enter time like 14.00, 12th May" id="newSigningTime">
-                                    <button class="btn btn-outline-secondary" type="button" id="addSigningTimeBtn">Add Time</button>
+                                    <button class="btn btn-outline-secondary" type="button" id="addSigningTimeBtn">@App.Resources.Add.DocumentGenerate.AddTime</button>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Generate Document</button>
+                                <button type="submit" class="btn btn-primary">@App.Resources.Add.DocumentGenerate.GenerateDocument</button>
                             </div>
                         </form>
                     </section>
@@ -71,7 +71,7 @@
    <script>
        $(document).ready(function () {
            function addSigningTimeToList(time) {
-               var $timeItem = $('<div class="mb-2">' + time + ' <button class="btn btn-sm btn-danger deleteSigningTime">Delete</button></div>');
+               var $timeItem = $('<div class="mb-2">' + time + ' <button class="btn btn-sm btn-danger deleteSigningTime">@App.Resources.Add.DocumentGenerate.Delete</button></div>');
                $('#signingTimesContainer').append($timeItem);
                var signingTimesInput = $('<input type="hidden" name="signingTimes" value="' + time + '">');
                $('#generateDocumentForm').append(signingTimesInput);

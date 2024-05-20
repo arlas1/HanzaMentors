@@ -1,0 +1,35 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="GenerateDocument" xml:space="preserve">
+        <value>Сгененировать документ</value>
+    </data>
+    <data name="AddTime" xml:space="preserve">
+        <value>Добавить время</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+    <data name="DocumentSamples" xml:space="preserve">
+        <value>Образец документа</value>
+    </data>
+    <data name="RelatedMentor" xml:space="preserve">
+        <value>Связаный ментор</value>
+    </data>
+    <data name="SelectMentor" xml:space="preserve">
+        <value>Выберите ментора</value>
+    </data>
+    <data name="SigningTimes" xml:space="preserve">
+        <value>Времена для подписи</value>
+    </data>
+</root>

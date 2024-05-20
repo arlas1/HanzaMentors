@@ -115,56 +115,54 @@
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Mentees
+                                @App.Resources.View.Shared._Layout.Mentee
                             </a>
                             <ul class="dropdown-menu custom-dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Mentee" asp-action="EmployeeMentee">Mentee-Employees</a></li>
-                                <li><a class="dropdown-item" asp-controller="Mentee" asp-action="InternMentee">Mentee-Interns</a></li>
+                                <li><a class="dropdown-item" asp-controller="Mentee" asp-action="EmployeeMentee">@App.Resources.View.Shared._Layout.Mentee_Employees</a></li>
+                                <li><a class="dropdown-item" asp-controller="Mentee" asp-action="InternMentee">@App.Resources.View.Shared._Layout.Mentee_Interns</a></li>
                             </ul>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mentor" asp-action="Index">Mentors</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mentor" asp-action="Index">@App.Resources.View.Shared._Layout.Mentors</a>
                         </li>
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Documents
+                                @App.Resources.View.Shared._Layout.Documents
                             </a>
                             <ul class="dropdown-menu custom-dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Document" asp-action="DocumentSamples">Document Samples</a></li>
-                                <li><a class="dropdown-item" asp-controller="Document" asp-action="MenteeInternsDocuments">Mentee-Interns Documents</a></li>
-                                <li><a class="dropdown-item" asp-controller="Document" asp-action="MenteeEmployeeDocuments">Mentee-Interns Documents</a></li>
+                                <li><a class="dropdown-item" asp-controller="Document" asp-action="DocumentSamples">@App.Resources.View.Shared._Layout.Document_Samples</a></li>
+                                <li><a class="dropdown-item" asp-controller="Document" asp-action="MenteeInternsDocuments">@App.Resources.View.Shared._Layout.Mentee_Interns @App.Resources.View.Shared._Layout.Documents</a></li>
+                                <li><a class="dropdown-item" asp-controller="Document" asp-action="MenteeEmployeeDocuments">@App.Resources.View.Shared._Layout.Mentee_Employees @App.Resources.View.Shared._Layout.Documents</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="btn btn-secondary dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Add
+                                @App.Resources.View.Shared._Layout.Add
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Add" asp-action="Mentor">Add Mentor</a></li>
-                                <li><a class="dropdown-item" asp-controller="Add" asp-action="Mentee">Add Mentee</a></li>
-                                <li><a class="dropdown-item" asp-controller="Add" asp-action="Supervisor">Add Supervisor</a></li>
-                                <li><a class="dropdown-item" asp-controller="Add" asp-action="DocumentSample">Add Document Sample</a></li>
+                                <li><a class="dropdown-item" asp-controller="Add" asp-action="Mentor">@App.Resources.View.Shared._Layout.AddMentor</a></li>
+                                <li><a class="dropdown-item" asp-controller="Add" asp-action="Mentee">@App.Resources.View.Shared._Layout.AddMentee</a></li>
+                                <li><a class="dropdown-item" asp-controller="Add" asp-action="Supervisor">@App.Resources.View.Shared._Layout.AddSupervisor</a></li>
+                                <li><a class="dropdown-item" asp-controller="Add" asp-action="DocumentSample">@App.Resources.View.Shared._Layout.AddDocumentSample</a></li>
                             </ul>
                         </li>
                     } 
                     else if (User.IsInRole("Mentee"))
                     {
-                        @* <li class="nav-item"> *@
-                        @*     <a class="nav-link text-dark" asp-area="" asp-controller="Document" asp-action="Documents">Documents</a> *@
-                        @* </li> *@
-                    }else if (User.IsInRole("Mentor"))
+                        
+                    }
+                    else if (User.IsInRole("Mentor"))
                     {
-                        @* <li class="nav-item"> *@
-                        @*     <a class="nav-link text-dark" asp-area="" asp-controller="Document" asp-action="Documents">Documents</a> *@
-                        @* </li> *@
+                        
                     }
                     else if (!User.Identity!.IsAuthenticated)
                     {
                         
                     }
+                    <partial name="_LanguageSelectionPartial"/>
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>
@@ -179,7 +177,7 @@
 
 <footer class="footer text-muted">
     <div class="container">
-        &copy; 2024 - HANZA Mentors
+        &copy; 2024 - HANZA Mentors | @Thread.CurrentThread.CurrentCulture.Name
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

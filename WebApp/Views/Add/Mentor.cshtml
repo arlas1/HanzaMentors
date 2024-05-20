@@ -3,7 +3,7 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-6 mb-3">
-            <h1 class="text-center mb-3">Add Mentor</h1>
+            <h1 class="text-center mb-3">@App.Resources.Add.Mentor.AddMentor</h1>
             <div class="card">
                 <div class="card-body">
                     <section>
@@ -14,37 +14,38 @@
                                     <div class="form-floating mb-3">
                                         <input asp-for="FirstName" id="firstName" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="FirstName" class="text-danger"></span>
-                                        <label for="firstName">First Name</label>
+                                        <label for="firstName">@App.Resources.Add.Mentor.FirstName</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
                                         <input asp-for="LastName" id="lastName" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="LastName" class="text-danger"></span>
-                                        <label for="lastName">Last Name</label>
+                                        <label for="lastName">@App.Resources.Add.Mentor.LastName</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
                                         <input asp-for="Email" type="email" id="email" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="Email" class="text-danger"></span>
-                                        <label for="email">Email</label>
+                                        <label for="email">@App.Resources.Add.Mentor.Email</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
                                         <input asp-for="PersonalCode" id="idCode" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="PersonalCode" class="text-danger"></span>
-                                        <label for="idCode">Id Code</label>
+                                        <label for="idCode">@App.Resources.Add.Mentor.IdCode</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
                                         <input asp-for="Profession" id="profession" class="form-control border-dark-subtle"/>
                                         <span asp-validation-for="Profession" class="text-danger"></span>
-                                        <label for="profession">Profession</label>
+                                        <label for="profession">@App.Resources.Add.Mentor.Profession</label>
                                     </div>
 
                                     <div class="form-group text-center mb-0">
                                         <div class="d-flex justify-content-center">
                                             <div class="btn-group" role="group" aria-label="Add buttons">
-                                                <button type="button" class="btn btn-primary px-4 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add & Create User</button>
+                                                <button type="button" class="btn btn-primary px-4 py-2 rounded-3"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">@App.Resources.Add.Mentor.AddCreateUser</button>
                                             </div>
                                         </div>
                                     </div>
@@ -62,11 +63,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5 justify-content-center" id="staticBackdropLabel">Notification</h1>
+                <h1 class="modal-title fs-5 justify-content-center" id="staticBackdropLabel">@App.Resources.Add.Mentor.Notification</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Mentor added, user created and email-notification sent.</p>
+                <p>@App.Resources.Add.Mentor.Message</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" onclick="setAction('AddMentor')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center">Ok</button>

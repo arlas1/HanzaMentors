@@ -1,9 +1,11 @@
 ﻿using App.BLL.Contracts;
-using App.Domain.Identity;
+using App.BLL.DTO;
 using App.Helpers.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using WebApp.Models;
+using AppUser = App.Domain.Identity.AppUser;
 
 namespace WebApp.Controllers;
 
@@ -61,5 +63,48 @@ public class DocumentController (IAppBLL bll, UserManager<AppUser> userManager) 
         bll.SaveChangesAsync();
         
         return RedirectToAction("MenteeEmployeeDocuments", "Document");
+    }
+
+    [HttpGet]
+    public IActionResult SigningTimesIntern(Guid documentId, Guid menteeId)
+    {
+        var signingTimes = bll.DocumentSigningTimes.GetAll()
+            .Where(time => time.InternMentorshipDocumentId.Equals(documentId));
+
+        var signTimesViewModel = new SignTimeViewModel
+        {
+            AvailableTimes = new List<string>(),
+            DocumentId = documentId,
+            MenteeId = menteeId
+            
+        };
+
+        foreach (var signingTime in signingTimes)
+        {
+            signTimesViewModel.AvailableTimes.Add(signingTime.Time!);
+        }
+        
+        return View(signTimesViewModel);
+    }
+    
+    [HttpGet]
+    public IActionResult SigningTimesEmployee(Guid documentId, Guid menteeId)
+    {
+        var signingTimes = bll.DocumentSigningTimes.GetAll()
+            .Where(time => time.EmployeeMentorshipDocumentId.Equals(documentId));
+
+        var signTimesViewModel = new SignTimeViewModel
+        {
+            AvailableTimes = new List<string>(),
+            DocumentId = documentId,
+            MenteeId = menteeId
+        };
+
+        foreach (var signingTime in signingTimes)
+        {
+            signTimesViewModel.AvailableTimes.Add(signingTime.Time!);
+        }
+        
+        return View(signTimesViewModel);
     }
 }

@@ -5,15 +5,15 @@
     <div class="container mt-3">
         <div class="row justify-content-center column-gap-5">
             <div class="col-lg-10 mb-4">
-                <h2 class="text-center mb-3">Document Samples</h2>
+                <h2 class="text-center mb-3">@App.Resources.Documents.Documents.DocumentSamples</h2>
                 <div class="card border rounded-3">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
                                 <thead>
                                 <tr>
-                                    <th style="width: 70%;">Title</th>
-                                    <th style="width: 30%;">Action</th>
+                                    <th style="width: 70%;">@App.Resources.Documents.Documents.Title</th>
+                                    <th style="width: 30%;">@App.Resources.Documents.Documents.Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
@@ -22,8 +22,8 @@
                                     <tr>
                                         <td>@sample.Title</td>
                                         <td>
-                                            <a href="@Url.Action("DownloadSample", "Details", new { documentId = sample.Id })" class="btn btn-primary px-3 py-2 me-2">Download</a>
-                                            <a asp-controller="Document" asp-action="DeleteSampleDocument" asp-route-documentId="@sample.Id" class="btn btn-danger px-3 py-2">Delete</a>
+                                            <a href="@Url.Action("DownloadSample", "Details", new { documentId = sample.Id })" class="btn btn-primary px-3 py-2 me-2">@App.Resources.Documents.Documents.Download</a>
+                                            <a asp-controller="Document" asp-action="DeleteSampleDocument" asp-route-documentId="@sample.Id" class="btn btn-danger px-3 py-2">@App.Resources.Documents.Documents.Delete</a>
                                         </td>
                                     </tr>
                                 }

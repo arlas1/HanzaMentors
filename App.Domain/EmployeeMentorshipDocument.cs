@@ -12,7 +12,7 @@ public class EmployeeMentorshipDocument : BaseEntityId
     public Guid? DocumentSampleId { get; set; }
     public DocumentSample? DocumentSample { get; set; }
     
-    public Guid? ReceiverId { get; set; }
+    public string? Title { get; set; }
     
     [Column(TypeName = "bytea")]
     public string? Base64Code { get; set; }

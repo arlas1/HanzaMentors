@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using App.BLL.Contracts;
 using App.BLL.DTO;
+using App.DAL.EF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
@@ -183,7 +184,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
     }
     
     [HttpPost]
-    public async Task<IActionResult> GenerateDocumentIntern(List<Guid> selectedSamples, Guid selectedMentorId, Guid menteeId, List<string> signingTimes)
+    public async Task<IActionResult> GenerateDocumentIntern(List<Guid> selectedSamples, Guid selectedMentorId,
+        Guid menteeId, List<string> signingTimes)
     {
         var samples = (await bll.DocumentSamples.GetAllAsync()).Where(sample => selectedSamples.Contains(sample.Id));
         var mentor = await bll.Mentors.FirstOrDefaultAsync(selectedMentorId);
@@ -242,7 +244,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                     var pdfFileName = $"{sampleDocument.Title}-{Guid.NewGuid()}.pdf";
                     var pdfPath = Path.Combine(tempFolderPath, pdfFileName);
                     pdfDocument.SaveToFile(pdfPath, FileFormat.PDF);
-
+                    
                     var pdfBytes = await System.IO.File.ReadAllBytesAsync(pdfPath);
                     string base64String = Convert.ToBase64String(pdfBytes);
                     var internsDocument = new InternMentorshipDocument
@@ -250,7 +252,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         Id = Guid.NewGuid(),
                         InternMentorshipId = mentorship.Id,
                         DocumentSampleId = sampleDocument.Id,
-                        ReceiverId = mentee.Id,
+                        Title = pdfFileName,
                         Base64Code = base64String,
                         DocumentStatus = "Not signed",
                         ChoosenSigningTime = "Not chosen",
@@ -279,8 +281,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
             }
         }
 
-        // var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}");
-        // await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
+        var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}");
+        await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
         
         byte[] zipFileBytes = System.IO.File.ReadAllBytes(zipFilePath);
         return File(zipFileBytes, "application/zip", randomFileName);
@@ -355,7 +357,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         Id = Guid.NewGuid(),
                         EmployeeMentorshipId = mentorship.Id,
                         DocumentSampleId = sampleDocument.Id,
-                        ReceiverId = mentee.Id,
+                        Title = pdfFileName,
                         Base64Code = base64String,
                         DocumentStatus = "Not signed",
                         ChoosenSigningTime = "Not chosen",
@@ -383,8 +385,9 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                 }
             }
         }
-        // var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}"); 
-        // await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
+        
+        var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}"); 
+        await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
         
         byte[] zipFileBytes = System.IO.File.ReadAllBytes(zipFilePath);
         return File(zipFileBytes, "application/zip", randomFileName);
@@ -534,8 +537,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         {
             await userManager.AddToRoleAsync(user, "Mentee");
         
-            // var emailBody = emailService.GenerateEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
-            // await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
+            var emailBody = emailService.GenerateAccountEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
+            await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
         
             switch (menteeViewModel.MenteeType)
             {
@@ -635,6 +638,13 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         }
         
         return RedirectToAction("Index", "Mentor");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddSigningTime(HomeViewModel homeViewModel)
+    {
+        return Ok();
     }
         
     private bool EmployeeExists(Guid id)

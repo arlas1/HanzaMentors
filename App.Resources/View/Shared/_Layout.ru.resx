@@ -1,0 +1,65 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Logout" xml:space="preserve">
+        <value>Выйти</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>Добавить</value>
+    </data>
+    <data name="AddDocumentSample" xml:space="preserve">
+        <value>Добавить образец документа</value>
+    </data>
+    <data name="AddMentee" xml:space="preserve">
+        <value>Добавить ученика</value>
+    </data>
+    <data name="AddMentor" xml:space="preserve">
+        <value>Добавить ментора</value>
+    </data>
+    <data name="AddSupervisor" xml:space="preserve">
+        <value>Добавить супервайзора</value>
+    </data>
+    <data name="Document Samples" xml:space="preserve">
+        <value>Образец документа</value>
+    </data>
+    <data name="Documents" xml:space="preserve">
+        <value>Документы</value>
+    </data>
+    <data name="Mentee" xml:space="preserve">
+        <value>Обучающиеся</value>
+    </data>
+    <data name="Mentee-Employees" xml:space="preserve">
+        <value>Обучающийся-работник</value>
+    </data>
+    <data name="Mentee-Interns" xml:space="preserve">
+        <value>Обучающийся-стажер</value>
+    </data>
+    <data name="Mentors" xml:space="preserve">
+        <value>Менторы</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>Логин</value>
+    </data>
+    <data name="Language" xml:space="preserve">
+        <value>Язык</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>Настройки</value>
+    </data>
+    <data name="ValueIsInvalidAccessor" xml:space="preserve">
+        <value>ВалюэИзИнвалинАсессор</value>
+    </data>
+    <data name="IdentityError" xml:space="preserve">
+        <value>Идентини еррор</value>
+    </data>
+</root>

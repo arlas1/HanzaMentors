@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="AddMentee" xml:space="preserve">
+        <value>Add Mentee</value>
+    </data>
+    <data name="EmployeeIntern" xml:space="preserve">
+        <value>Employee/Intern</value>
+    </data>
+    <data name="OptionIntern" xml:space="preserve">
+        <value>Intern</value>
+    </data>
+    <data name="OptionEmployee" xml:space="preserve">
+        <value>Employee</value>
+    </data>
+    <data name="MenteeType" xml:space="preserve">
+        <value>Mentee type</value>
+    </data>
+    <data name="OptionVocationalSchool" xml:space="preserve">
+        <value>Vocational school (gep)</value>
+    </data>
+    <data name="Töötukassa" xml:space="preserve">
+        <value>Töötukassa</value>
+    </data>
+    <data name="InternSupervisor" xml:space="preserve">
+        <value>Intern supervisor</value>
+    </data>
+    <data name="FactorySupervisor" xml:space="preserve">
+        <value>Factory supervisor</value>
+    </data>
+    <data name="Full-time" xml:space="preserve">
+        <value>Full-time</value>
+    </data>
+    <data name="Rental" xml:space="preserve">
+        <value>Rental</value>
+    </data>
+    <data name="Probation" xml:space="preserve">
+        <value>Probation</value>
+    </data>
+    <data name="MenteeInfo" xml:space="preserve">
+        <value>Mentee Info</value>
+    </data>
+    <data name="FirstName" xml:space="preserve">
+        <value>First Name</value>
+    </data>
+    <data name="LastName" xml:space="preserve">
+        <value>Last Name</value>
+    </data>
+    <data name="Email" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="IdCode" xml:space="preserve">
+        <value>Id code</value>
+    </data>
+    <data name="Profession" xml:space="preserve">
+        <value>Profession</value>
+    </data>
+    <data name="MenteeFromDate" xml:space="preserve">
+        <value>Mentee from date</value>
+    </data>
+    <data name="MenteeUntilDate" xml:space="preserve">
+        <value>Mentee until date</value>
+    </data>
+    <data name="MenteeTotaHours" xml:space="preserve">
+        <value>Mentee for total hours</value>
+    </data>
+    <data name="AssignMentor" xml:space="preserve">
+        <value>Assign Mentor</value>
+    </data>
+    <data name="Mentors" xml:space="preserve">
+        <value>Mentors</value>
+    </data>
+    <data name="MentorTotalHours" xml:space="preserve">
+        <value>Mentor for total hours</value>
+    </data>
+    <data name="AddCreateUser" xml:space="preserve">
+        <value>Add &amp; Create User</value>
+    </data>
+    <data name="Notification" xml:space="preserve">
+        <value>Notification</value>
+    </data>
+    <data name="Message" xml:space="preserve">
+        <value>Mentee added, user created and email-notification sent.</value>
+    </data>
+    <data name="Mentee'sName" xml:space="preserve">
+        <value>Mentee's name</value>
+    </data>
+    <data name="Mentee'sType" xml:space="preserve">
+        <value>Mentee's type</value>
+    </data>
+    <data name="EmployeeMentees" xml:space="preserve">
+        <value>Employee Mentees</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="Mentee'sMentor" xml:space="preserve">
+        <value>Mentee's mentor</value>
+    </data>
+    <data name="MentorshipUntil/from" xml:space="preserve">
+        <value>Mentorship until/from/total hours</value>
+    </data>
+    <data name="Hours" xml:space="preserve">
+        <value>hours</value>
+    </data>
+    <data name="(currently active)" xml:space="preserve">
+        <value>(currently active)</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="GenerateDocument" xml:space="preserve">
+        <value>Generate Document</value>
+    </data>
+    <data name="StudyProgram" xml:space="preserve">
+        <value>Study Program</value>
+    </data>
+    <data name="InternMentees" xml:space="preserve">
+        <value>Intern Mentees</value>
+    </data>
+</root>

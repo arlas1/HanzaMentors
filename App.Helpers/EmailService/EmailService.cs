@@ -58,6 +58,11 @@ public class EmailService : IEmailService
 
     }
     
+    public string GenerateDocSignEmailBody(string title, string time, string fullName)
+    {
+        return $"Intern {fullName} have chosen signing time ({time}) for a document {title}.";
+
+    }
     public string GenerateUserPassword(int length = 12)
     {
         char[] chars = new char[length];

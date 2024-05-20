@@ -13,7 +13,7 @@
                                 <div class="col">
                                     <div class="text-center mb-2">
                                         <div class="table-title">
-                                            <h6>Mentee Info</h6>
+                                            <h6>@App.Resources.Details.EmployeeMentee.MenteeInfo</h6>
                                             <hr class="mx-auto mb-1">
                                         </div>
                                     </div>
@@ -25,37 +25,37 @@
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeFirstName" value="@Model.EmployeeFirstName" id="firstName" class="form-control border-dark-subtle" disabled/>
                                                         <span asp-validation-for="EmployeeFirstName" class="text-danger"></span>
-                                                        <label for="firstName">First Name</label>
+                                                        <label for="firstName">@App.Resources.Add.Mentee.FirstName</label>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeLastName" value="@Model.EmployeeLastName" id="lastName" class="form-control border-dark-subtle" disabled/>
                                                         <span asp-validation-for="EmployeeLastName" class="text-danger"></span>
-                                                        <label for="lastName">Last Name</label>
+                                                        <label for="lastName">@App.Resources.Add.Mentee.LastName</label>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeProfession" value="@Model.EmployeeProfession" id="profession" class="form-control border-dark-subtle" disabled/>
                                                         <span asp-validation-for="EmployeeProfession" class="text-danger"></span>
-                                                        <label for="profession">Profession</label>
+                                                        <label for="profession">@App.Resources.Add.Mentee.Profession</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
-                                                        <input asp-for="EmployeeFromDate" type="date" value="@Model.EmployeeFromDate" id="menteeFromDate" class="form-control border-dark-subtle" placeholder="Mentee from date" aria-label="Mentee from date" disabled/>
+                                                        <input asp-for="EmployeeFromDate" type="date" value="@Model.EmployeeFromDate" id="menteeFromDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Add.Mentee.MenteeFromDate" aria-label="@App.Resources.Add.Mentee.MenteeFromDate" disabled/>
                                                         <span asp-validation-for="EmployeeFromDate" class="text-danger"></span>
-                                                        <label for="menteeFromDate">Mentee from date</label>
+                                                        <label for="menteeFromDate">@App.Resources.Add.Mentee.MenteeFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
-                                                        <input asp-for="EmployeeUntilDate" type="date" value="@Model.EmployeeUntilDate" id="menteeUntilDate" class="form-control border-dark-subtle" placeholder="Mentee until date" aria-label="Mentee until date" disabled/>
+                                                        <input asp-for="EmployeeUntilDate" type="date" value="@Model.EmployeeUntilDate" id="menteeUntilDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Add.Mentee.MenteeUntilDate" aria-label="@App.Resources.Add.Mentee.MenteeUntilDate" disabled/>
                                                         <span asp-validation-for="EmployeeUntilDate" class="text-danger"></span>
-                                                        <label for="menteeUntilDate">Mentee until date</label>
+                                                        <label for="menteeUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeTotalHours" value="@Model.EmployeeTotalHours" id="menteeTotalHours" class="form-control border-dark-subtle" disabled/>
                                                         <span asp-validation-for="EmployeeTotalHours" class="text-danger"></span>
-                                                        <label for="menteeTotalHours">Mentee for total hours</label>
+                                                        <label for="menteeTotalHours">@App.Resources.Add.Mentee.MenteeTotaHours</label>
                                                         <input asp-for="EmployeeId" name="EmployeeId" type="hidden" value="@Model.EmployeeId"/>
                                                         <input asp-for="InitialMentorId" name="InitialMentorId" type="hidden" value="@Model.InitialMentorId"/>
                                                     </div>
@@ -68,7 +68,7 @@
                                 <div class="col">
                                     <div class="text-center mb-2">
                                         <div class="table-title">
-                                            <h6>Assigned Mentor</h6>
+                                            <h6>@App.Resources.Details.EmployeeMentee.AssignedMentor</h6>
                                             <hr class="mx-auto mb-1">
                                         </div>
                                     </div>
@@ -88,33 +88,33 @@
                                                                 }
                                                             }
                                                         </select>
-                                                        <label for="mentorSelect">Mentors</label>
+                                                        <label for="mentorSelect">@App.Resources.Add.Mentee.Mentors</label>
                                                         <span asp-validation-for="NewMentorId" class="text-danger"></span>
                                                     </div>
                                                     <br>
                                                     <div class="form-floating">
-                                                        <input asp-for="EmployeeMentorFromDate" type="date" value="@Model.EmployeeMentorFromDate" id="mentorFromDate" class="form-control border-dark-subtle" placeholder="Mentor from date" aria-label="Mentor from date" disabled/>
+                                                        <input asp-for="EmployeeMentorFromDate" type="date" value="@Model.EmployeeMentorFromDate" id="mentorFromDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.MentorFromDate" aria-label="@App.Resources.Details.EmployeeMentee.MentorFromDate" disabled/>
                                                         <span asp-validation-for="EmployeeMentorFromDate" class="text-danger"></span>
-                                                        <label for="mentorFromDate">Mentor until date</label>
+                                                        <label for="mentorFromDate">@App.Resources.Details.EmployeeMentee.MentorFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
-                                                        <input asp-for="EmployeeMentorUntilDate" type="date" value="@Model.EmployeeMentorUntilDate" id="mentorUntilDate" class="form-control border-dark-subtle" placeholder="Mentor until date" aria-label="Mentor until date" disabled/>
+                                                        <input asp-for="EmployeeMentorUntilDate" type="date" value="@Model.EmployeeMentorUntilDate" id="mentorUntilDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.MentorUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.MentorUntilDate" disabled/>
                                                         <span asp-validation-for="EmployeeMentorUntilDate" class="text-danger"></span>
-                                                        <label for="mentorUntilDate">Mentor until date</label>
+                                                        <label for="mentorUntilDate">@App.Resources.Details.EmployeeMentee.MentorUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeMentorTotalHours" value="@Model.EmployeeMentorTotalHours" id="mentorTotalHours" class="form-control border-dark-subtle" disabled/>
                                                         <span asp-validation-for="EmployeeMentorTotalHours" class="text-danger"></span>
-                                                        <label for="mentorTotalHours">Mentor for total hours</label>
+                                                        <label for="mentorTotalHours">@App.Resources.Add.Mentee.MentorTotalHours</label>
                                                     </div>
                                                     <br/>
                                                                 
                                                     <div class="form-floating" id="changeReasonField" style="display: none;">
                                                         <textarea asp-for="ChangeReason" value="@Model.ChangeReason"  class="form-control border-dark-subtle" disabled></textarea>
                                                         <span asp-validation-for="ChangeReason" class="text-danger"></span>
-                                                        <label for="mentorTotalHours">Reason of change for another mentor</label>
+                                                        <label for="mentorTotalHours">@App.Resources.Details.EmployeeMentee.ReasonOfChange</label>
                                                     </div>
                                                                 
                                                 </td>
@@ -127,7 +127,7 @@
                                 <div class="col" id="newMentorFields" style="display: none;">
                                     <div class="text-center mb-2">
                                         <div class="table-title">
-                                            <h6>New Mentor</h6>
+                                            <h6>@App.Resources.Details.EmployeeMentee.NewMentor</h6>
                                             <hr class="mx-auto mb-1">
                                         </div>
                                     </div>
@@ -137,21 +137,21 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-floating">
-                                                        <input asp-for="NewMentorFromDate" type="date" value="@Model.NewMentorFromDate" class="form-control border-dark-subtle" placeholder="Mentor from date" aria-label="Mentor from date" disabled/>
+                                                        <input asp-for="NewMentorFromDate" type="date" value="@Model.NewMentorFromDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.NewMentorFromDate" aria-label="@App.Resources.Details.EmployeeMentee.NewMentorFromDate" disabled/>
                                                         <span asp-validation-for="NewMentorFromDate" class="text-danger"></span>
-                                                        <label for="mentorFromDate">New Mentor until date</label>
+                                                        <label for="mentorFromDate">@App.Resources.Details.EmployeeMentee.NewMentorFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
-                                                        <input asp-for="NewMentorUntilDate" type="date" value="@Model.NewMentorUntilDate" class="form-control border-dark-subtle" placeholder="Mentor until date" aria-label="Mentor until date" disabled/>
+                                                        <input asp-for="NewMentorUntilDate" type="date" value="@Model.NewMentorUntilDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.NewMentorUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.NewMentorUntilDate" disabled/>
                                                         <span asp-validation-for="NewMentorUntilDate" class="text-danger"></span>
-                                                        <label for="mentorUntilDate">New Mentor until date</label>
+                                                        <label for="mentorUntilDate">@App.Resources.Details.EmployeeMentee.NewMentorUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="NewMentorTotalHours" value="@Model.NewMentorTotalHours" class="form-control border-dark-subtle" disabled/>
                                                         <span asp-validation-for="NewMentorTotalHours" class="text-danger"></span>
-                                                        <label for="mentorTotalHours">New Mentor for total hours</label>
+                                                        <label for="mentorTotalHours">@App.Resources.Details.EmployeeMentee.NewMentorTotalHours</label>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -164,16 +164,16 @@
                             <div class="form-group text-center mb-3">
                                 <div class="d-flex justify-content-center">
                                     <div class="btn-group" role="group" aria-label="Add buttons">
-                                        <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">Edit</button>
+                                        <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">@App.Resources.Add.Mentee.Edit</button>
                                     </div>
                                     <div class="input-group-text" style="opacity: 0;">&nbsp;</div>
                                     <div class="btn-group" role="group" aria-label="Add buttons">
-                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>Save</button>
+                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>@App.Resources.Details.EmployeeMentee.Save</button>
                                     </div>
                                     <div class="input-group-text" style="opacity: 0;">&nbsp;</div>
                                     <div class="btn-group" role="group" aria-label="Add buttons">
                                         <button type="button" class="btn btn-primary px-4 py-2 rounded-3 qwe-btn"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Add sick leave</button>
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>@App.Resources.Details.EmployeeMentee.AddSickLeave</button>
                                     </div>
                                 </div>
                             </div>
@@ -189,32 +189,32 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5 w-100 text-center" id="staticBackdropLabel">Sick leave info</h1>
+                <h1 class="modal-title fs-5 w-100 text-center" id="staticBackdropLabel">@App.Resources.Details.EmployeeMentee.SickLeaveInfo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" asp-controller="Add" asp-action="SickLeaveEmployee" asp-route-employeeId="@Model.EmployeeId">
                 <div class="modal-body">
                     <div class="form-floating mb-3">
                         <input asp-for="SickLeaveFromDate" type="date" value="@Model.SickLeaveFromDate" id="sickLeaveFromDate" class="form-control border-dark-subtle"
-                               placeholder="Sick leave from date" aria-label="Sick leave from date" disabled/>
+                               placeholder="@App.Resources.Details.EmployeeMentee.SickLeaveFromDate" aria-label="@App.Resources.Details.EmployeeMentee.SickLeaveFromDate" disabled/>
                         <span asp-validation-for="SickLeaveFromDate" class="text-danger"></span>
-                        <label for="sickLeaveFromDate">Sick leave from date</label>
+                        <label for="sickLeaveFromDate">@App.Resources.Details.EmployeeMentee.SickLeaveFromDate</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input asp-for="SickLeaveUntilDate" type="date" value="@Model.SickLeaveUntilDate" id="sickLeaveUntilDate" class="form-control border-dark-subtle"
-                               placeholder="Sick leave until date" aria-label="Sick leave until date" disabled/>
+                               placeholder="@App.Resources.Details.EmployeeMentee.SickLeaveUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.SickLeaveUntilDate" disabled/>
                         <span asp-validation-for="SickLeaveUntilDate" class="text-danger"></span>
-                        <label for="sickLeaveUntilDate">Sick leave until date</label>
+                        <label for="sickLeaveUntilDate">@App.Resources.Details.EmployeeMentee.SickLeaveUntilDate</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input asp-for="SickLeaveReason" value="@Model.SickLeaveReason" id="reason" class="form-control border-dark-subtle"
                                placeholder="Reason" aria-label="Reason" disabled/>
                         <span asp-validation-for="SickLeaveReason" class="text-danger"></span>
-                        <label for="reason">Sick leave reason</label>
+                        <label for="reason">@App.Resources.Details.EmployeeMentee.SickLeaveReason</label>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-primary px-3 py-2 rounded-3">Add sick leave</button>
+                    <button type="submit" class="btn btn-primary px-3 py-2 rounded-3">@App.Resources.Details.EmployeeMentee.AddSickLeave</button>
                 </div>
             </form>
         </div>
