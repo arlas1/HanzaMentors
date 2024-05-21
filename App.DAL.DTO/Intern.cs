@@ -1,4 +1,6 @@
-﻿using Base.Domain.Contracts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Base.Domain;
+using Base.Domain.Contracts;
 
 namespace App.DAL.DTO;
 
@@ -8,9 +10,14 @@ public class Intern : IBaseEntityId
     
     public Guid? AppUserId { get; set; }
     
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? FirstName { get; set; }
+    
+    [Column(TypeName = "jsonb")]
+    public LangStr? LastName { get; set; }
     public string? InternType { get; set; }
-    public string? StudyProgram { get; set; }
+    
+    [Column(TypeName = "jsonb")]
+    public LangStr? StudyProgram { get; set; }
     public string? Email { get; set; }
 }

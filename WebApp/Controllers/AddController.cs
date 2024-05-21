@@ -296,8 +296,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         var mentee = await bll.Employees.FirstOrDefaultAsync(menteeId);
         var menteesMentor = (await bll.EmployeesMentors.GetAllAsync()).FirstOrDefault(ms => ms.MentorId.Equals(mentor!.Id));
         var mentorship = (await bll.EmployeeMentorships.GetAllAsync()).FirstOrDefault(ms => ms.EmployeeId.Equals(mentee!.Id));
-        
-        
+
         if (mentor == null || mentee == null || menteesMentor == null || mentorship == null)
         {
             return NotFound();
@@ -352,7 +351,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
 
                     var pdfBytes = await System.IO.File.ReadAllBytesAsync(pdfPath);
                     string base64String = Convert.ToBase64String(pdfBytes);
-                    var employeesDocument = new EmployeeMentorshipDocument()
+                    var employeesDocument = new EmployeeMentorshipDocument
                     {
                         Id = Guid.NewGuid(),
                         EmployeeMentorshipId = mentorship.Id,
@@ -361,7 +360,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                         Base64Code = base64String,
                         DocumentStatus = "Not signed",
                         ChoosenSigningTime = "Not chosen",
-                        WayOfSigning = "Not chosen"
+                        WayOfSigning = "Not chosen",
+
                     };
                     
                     bll.EmployeeMentorshipDocuments.Add(employeesDocument);
@@ -385,13 +385,11 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                 }
             }
         }
-        
-        var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}"); 
-        await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
-        
+
         byte[] zipFileBytes = System.IO.File.ReadAllBytes(zipFilePath);
         return File(zipFileBytes, "application/zip", randomFileName);
     }
+    
     
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -494,21 +492,18 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
                 bll.Employees.Add(employee);
                 await bll.SaveChangesAsync();
         
-                if (EmployeeExists(employee.Id))
+                var mentor = new Mentor()
                 {
-                    var mentor = new Mentor()
-                    {
-                        EmployeeId = employee.Id,
-                        FirstName = mentorViewModel.FirstName,
-                        LastName = mentorViewModel.LastName,
-                        PaymentAmount = null,
-                        PaymentOrderDate = null,
-                        Profession = mentorViewModel.Profession
-                    };
+                    EmployeeId = employee.Id,
+                    FirstName = mentorViewModel.FirstName,
+                    LastName = mentorViewModel.LastName,
+                    PaymentAmount = null,
+                    PaymentOrderDate = null,
+                    Profession = mentorViewModel.Profession
+                };
             
-                    bll.Mentors.Add(mentor);
-                    await bll.SaveChangesAsync();    
-                }
+                bll.Mentors.Add(mentor);
+                await bll.SaveChangesAsync();  
             }
         }
 
@@ -640,15 +635,4 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         return RedirectToAction("Index", "Mentor");
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddSigningTime(HomeViewModel homeViewModel)
-    {
-        return Ok();
-    }
-        
-    private bool EmployeeExists(Guid id)
-    {
-        return bll.Employees.Exists(id);
-    }
 }

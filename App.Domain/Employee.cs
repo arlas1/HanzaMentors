@@ -13,12 +13,13 @@ public class Employee : BaseEntityId
     
     [MaxLength(128)]
     [Display(ResourceType = typeof(App.Resources.Domain.AppUser), Name = nameof(FirstName))]
-    // [Column(TypeName = "jsonb")]
-    public string? FirstName { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? FirstName { get; set; } //
     
     [MaxLength(128)]
     [Display(ResourceType = typeof(App.Resources.Domain.AppUser), Name = nameof(LastName))]
-    public string? LastName { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? LastName { get; set; } //
     
     [MaxLength(50)]
     [Display(ResourceType = typeof(App.Resources.Domain.Employee), Name = nameof(EmployeeType))]
@@ -26,7 +27,8 @@ public class Employee : BaseEntityId
     
     [MaxLength(50)]
     [Display(ResourceType = typeof(App.Resources.Domain.Employee), Name = nameof(Profession))]
-    public string? Profession { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? Profession { get; set; }//
     
     [Display(ResourceType = typeof(App.Resources.Domain.Employee), Name = nameof(Email))]
     public string? Email { get; set; }

@@ -127,7 +127,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 // ===================================================
 var app = builder.Build();
 // ===================================================
-
+// SetupAppData(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -154,7 +154,7 @@ app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>(); 
-    foreach ( var description in provider.ApiVersionDescriptions )
+    foreach (var description in provider.ApiVersionDescriptions)
     {
         options.SwaggerEndpoint(
             $"/swagger/{description.GroupName}/swagger.json",
@@ -176,3 +176,56 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run(); 
+
+// static void SetupAppData(WebApplication app)
+// {
+//     using var serviceScope = ((IApplicationBuilder) app).ApplicationServices
+//         .GetRequiredService<IServiceScopeFactory>()
+//         .CreateScope();
+//     using var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+//
+//     context.Database.Migrate();
+//
+//     using var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+//     using var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+//
+//     var res = roleManager.CreateAsync(new AppRole()
+//     {
+//         Name = "Admin"
+//     }).Result;
+//     
+//     res = roleManager.CreateAsync(new AppRole()
+//     {
+//         Name = "Mentor"
+//     }).Result;
+//     res = roleManager.CreateAsync(new AppRole()
+//     {
+//         Name = "Mentee"
+//     }).Result;
+//
+//     if (!res.Succeeded)
+//     {
+//         Console.WriteLine(res.ToString());
+//     }
+//
+//     var user = new AppUser()
+//     {
+//         Email = "lasimer0406@gmail.com",
+//         UserName = "lasimer0406@gmail.com",
+//         FirstName = "Artur",
+//         LastName = "Lasimer",
+//         PersonalCode = 123
+//     };
+//     res = userManager.CreateAsync(user, "Qwe.qwe1").Result;
+//     if (!res.Succeeded)
+//     {
+//         Console.WriteLine(res.ToString());
+//     }
+//
+//
+//     res = userManager.AddToRoleAsync(user, "Admin").Result;
+//     if (!res.Succeeded)
+//     {
+//         Console.WriteLine(res.ToString());
+//     }
+// }

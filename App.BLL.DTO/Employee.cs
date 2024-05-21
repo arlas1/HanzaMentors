@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Base.Domain;
 using Base.Domain.Contracts;
 
 namespace App.BLL.DTO;
@@ -9,11 +11,15 @@ public class Employee : IBaseEntityId
     
     public Guid? AppUserId { get; set; }
     
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? FirstName { get; set; }
+    
+    [Column(TypeName = "jsonb")]
+    public LangStr? LastName { get; set; }
     public string? EmployeeType	{ get; set; }
     
     [MaxLength(50)]
-    public string? Profession { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? Profession { get; set; }
     public string? Email { get; set; }
 }

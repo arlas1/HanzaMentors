@@ -103,9 +103,9 @@ public class DetailsController(IAppBLL bll) : Controller
 
         var newDetails = new DetailsViewModel();
         
-        employee!.FirstName = menteeDetails.EmployeeFirstName;
-        employee.LastName = menteeDetails.EmployeeLastName;
-        employee.Profession = menteeDetails.EmployeeProfession;
+        employee!.FirstName!.SetTranslation(menteeDetails.EmployeeFirstName!);
+        employee.LastName!.SetTranslation(menteeDetails.EmployeeLastName!);
+        employee.Profession!.SetTranslation(menteeDetails.EmployeeProfession!);
         employeeMentorship!.FromDate = menteeDetails.EmployeeFromDate;
         employeeMentorship.UntilDate = menteeDetails.EmployeeUntilDate;
         employeeMentorship.TotalHours = menteeDetails.EmployeeTotalHours;
@@ -239,9 +239,9 @@ public class DetailsController(IAppBLL bll) : Controller
 
         var newDetails = new DetailsViewModel();
         
-        intern!.FirstName = menteeDetails.EmployeeFirstName;
-        intern.LastName = menteeDetails.EmployeeLastName;
-        intern.StudyProgram = menteeDetails.EmployeeProfession;
+        intern!.FirstName!.SetTranslation(menteeDetails.EmployeeFirstName!);
+        intern.LastName!.SetTranslation(menteeDetails.EmployeeLastName!);
+        intern.StudyProgram!.SetTranslation(menteeDetails.EmployeeProfession!);
         internMentorship!.FromDate = menteeDetails.EmployeeFromDate;
         internMentorship.UntilDate = menteeDetails.EmployeeUntilDate;
         internMentorship.TotalHours = menteeDetails.EmployeeTotalHours;
@@ -329,7 +329,7 @@ public class DetailsController(IAppBLL bll) : Controller
         var sample = bll.DocumentSamples.GetAll().ToList().FirstOrDefault(me => me.Id.Equals(documentId));
         byte[] fileBytes = Convert.FromBase64String(sample!.Base64Code!);
         
-        return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", sample.Title + ".docx");
+        return File(fileBytes, "application/pdf", sample.Title + ".pdf");
     }
     
     public IActionResult DownloadInternDocument(Guid documentId)
@@ -337,7 +337,7 @@ public class DetailsController(IAppBLL bll) : Controller
         var pdfDoc = bll.InternMentorshipDocuments.GetAll().ToList().FirstOrDefault(me => me.Id.Equals(documentId));
         byte[] fileBytes = Convert.FromBase64String(pdfDoc!.Base64Code!);
         
-        return File(fileBytes, "application/pdf", pdfDoc.Id + ".docx");
+        return File(fileBytes, "application/pdf", pdfDoc.Id + ".pdf");
     }
     
     public IActionResult DownloadEmployeeDocument(Guid documentId)
@@ -345,7 +345,7 @@ public class DetailsController(IAppBLL bll) : Controller
         var pdfDoc = bll.EmployeeMentorshipDocuments.GetAll().ToList().FirstOrDefault(me => me.Id.Equals(documentId));
         byte[] fileBytes = Convert.FromBase64String(pdfDoc!.Base64Code!);
         
-        return File(fileBytes, "application/pdf", pdfDoc.Id + ".docx");
+        return File(fileBytes, "application/pdf", pdfDoc.Id + ".pdf");
     }
 
 }

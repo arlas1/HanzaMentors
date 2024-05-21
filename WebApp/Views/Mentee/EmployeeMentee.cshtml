@@ -89,7 +89,8 @@
                                             }
                                         </td>
                                         <td>
-                                            <a asp-controller="Details" asp-action="EmployeeMentee" asp-route-employeeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a>
+                                            @* <a asp-controller="Details" asp-action="EmployeeMentee" asp-route-employeeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a> *@
+                                            <a href="javascript:void(0);" onclick="handleEditButtonClick('@mentee.Id')" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a>
                                             <a asp-controller="Add" asp-action="DocumentEmployee" asp-route-menteeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.GenerateDocument</a>
                                         </td>
                                     </tr>
@@ -134,3 +135,25 @@
         border-color: #0056b3;
     }
 </style>
+
+<script>
+    async function handleEditButtonClick(menteeId) {
+        try {
+            const response = await fetch('/api/v1.0/Identity/Account/RefreshTokenData?expiresInSeconds=3600', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                // Redirect to the desired action after successful API call
+                window.location.href = `/Details/EmployeeMentee?employeeId=${menteeId}`;
+            } else {
+                console.error('Failed to refresh token data');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>

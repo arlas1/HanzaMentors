@@ -27,18 +27,18 @@ public class MenteeController(IAppBLL bll, UserManager<AppUser> userManager) : C
         switch (viewModel.FilterType)
         {
             case "Mentee's name":
-                menteesViewModel.EmployeeMentees = bll.Employees.GetAll().Where(employee =>
-                    (employee.FirstName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) ||
-                     employee.LastName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase)) &&
-                    !bll.Mentors.GetAll().Select(mentor => mentor.EmployeeId).Contains(employee.Id)
-                ).ToList();
+                // menteesViewModel.EmployeeMentees = bll.Employees.GetAll().Where(employee =>
+                //     (employee.FirstName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) ||
+                //      employee.LastName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase)) &&
+                //     !bll.Mentors.GetAll().Select(mentor => mentor.EmployeeId).Contains(employee.Id)
+                // ).ToList();
                 break;
 
             case "Profession":
-                menteesViewModel.EmployeeMentees = bll.Employees.GetAll().Where(employee =>
-                    employee.Profession!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) &&
-                    !bll.Mentors.GetAll().Select(mentor => mentor.EmployeeId).Contains(employee.Id)
-                ).ToList();
+                // menteesViewModel.EmployeeMentees = bll.Employees.GetAll().Where(employee =>
+                //     employee.Profession!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) &&
+                //     !bll.Mentors.GetAll().Select(mentor => mentor.EmployeeId).Contains(employee.Id)
+                // ).ToList();
                 break;
 
             case "Mentee's type":
@@ -110,16 +110,16 @@ public class MenteeController(IAppBLL bll, UserManager<AppUser> userManager) : C
         switch (viewModel.FilterType)
         {
             case "Mentee's name":
-                menteesViewModel.InternMentees = bll.Interns.GetAll().Where(intern =>
-                    (intern.FirstName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) ||
-                     intern.LastName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase))
-                ).ToList();
+                // menteesViewModel.InternMentees = bll.Interns.GetAll().Where(intern =>
+                //     (intern.FirstName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase) ||
+                //      intern.LastName!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase))
+                // ).ToList();
                 break;
 
             case "Profession":
-                menteesViewModel.InternMentees = bll.Interns.GetAll().Where(intern =>
-                    intern.StudyProgram!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
+                // menteesViewModel.InternMentees = bll.Interns.GetAll().Where(intern =>
+                //     intern.StudyProgram!.Contains(viewModel.FilterRequest, StringComparison.OrdinalIgnoreCase)
+                // ).ToList();
                 break;
 
             case "Mentee's type":

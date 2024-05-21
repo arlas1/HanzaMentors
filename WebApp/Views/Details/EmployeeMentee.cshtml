@@ -43,13 +43,13 @@
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeFromDate" type="date" value="@Model.EmployeeFromDate" id="menteeFromDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Add.Mentee.MenteeFromDate" aria-label="@App.Resources.Add.Mentee.MenteeFromDate" disabled/>
                                                         <span asp-validation-for="EmployeeFromDate" class="text-danger"></span>
-                                                        <label for="menteeFromDate">@App.Resources.Add.Mentee.MenteeFromDate</label>
+                                                        <label for="menteeFromDate">@App.Resources.Add.Mentee.MenteeFromDate: @Model.EmployeeFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeUntilDate" type="date" value="@Model.EmployeeUntilDate" id="menteeUntilDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Add.Mentee.MenteeUntilDate" aria-label="@App.Resources.Add.Mentee.MenteeUntilDate" disabled/>
                                                         <span asp-validation-for="EmployeeUntilDate" class="text-danger"></span>
-                                                        <label for="menteeUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate</label>
+                                                        <label for="menteeUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate: @Model.EmployeeUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
@@ -95,13 +95,13 @@
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeMentorFromDate" type="date" value="@Model.EmployeeMentorFromDate" id="mentorFromDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.MentorFromDate" aria-label="@App.Resources.Details.EmployeeMentee.MentorFromDate" disabled/>
                                                         <span asp-validation-for="EmployeeMentorFromDate" class="text-danger"></span>
-                                                        <label for="mentorFromDate">@App.Resources.Details.EmployeeMentee.MentorFromDate</label>
+                                                        <label for="mentorFromDate">@App.Resources.Details.EmployeeMentee.MentorFromDate: @Model.EmployeeMentorFromDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
                                                         <input asp-for="EmployeeMentorUntilDate" type="date" value="@Model.EmployeeMentorUntilDate" id="mentorUntilDate" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.MentorUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.MentorUntilDate" disabled/>
                                                         <span asp-validation-for="EmployeeMentorUntilDate" class="text-danger"></span>
-                                                        <label for="mentorUntilDate">@App.Resources.Details.EmployeeMentee.MentorUntilDate</label>
+                                                        <label for="mentorUntilDate">@App.Resources.Details.EmployeeMentee.MentorUntilDate: @Model.EmployeeMentorUntilDate</label>
                                                     </div>
                                                     <br/>
                                                     <div class="form-floating">
@@ -110,7 +110,6 @@
                                                         <label for="mentorTotalHours">@App.Resources.Add.Mentee.MentorTotalHours</label>
                                                     </div>
                                                     <br/>
-                                                                
                                                     <div class="form-floating" id="changeReasonField" style="display: none;">
                                                         <textarea asp-for="ChangeReason" value="@Model.ChangeReason"  class="form-control border-dark-subtle" disabled></textarea>
                                                         <span asp-validation-for="ChangeReason" class="text-danger"></span>

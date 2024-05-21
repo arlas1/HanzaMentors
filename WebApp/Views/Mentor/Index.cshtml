@@ -29,41 +29,39 @@
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
                             <colgroup>
-                                <col style="width: 30%;">
-                                <col style="width: 30%;">
-                                <col style="width: 30%;">
+                                <col style="width: 45%;">
+                                <col style="width: 45%;">
                                 <col style="width: 10%;">
                             </colgroup>
                             <thead>
-                                <tr>
-                                    <th>@App.Resources.Add.Mentor.FullName</th>
-                                    <th>@App.Resources.Add.Mentee.Profession</th>
-                                    <th>@App.Resources.Add.Mentor.CurrentlyMentors</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>@App.Resources.Add.Mentor.FullName</th>
+                                <th>@App.Resources.Add.Mentor.CurrentlyMentors</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach (var mentor in Model.Mentors)
-                                {
-                                    <tr>
-                                        <td>@mentor.FirstName @mentor.LastName</td>
-                                        <td>@mentor.Profession</td>
-                                        <td>
-                                            @foreach (var mentorMentee in Model.MentorMentees)
+                            @foreach (var mentor in Model.Mentors)
+                            {
+                                <tr>
+                                    <td>@mentor.FirstName @mentor.LastName</td>
+                                    <td>
+                                        @foreach (var mentorMentee in Model.MentorMentees)
+                                        {
+                                            @if (mentorMentee.Key.Count >= 2 && mentor.Id.Equals(mentorMentee.Key[0]))
                                             {
-                                                @if (mentorMentee.Key.Count >= 2 && mentor.Id.Equals(mentorMentee.Key[0]))
-                                                {
-                                                    <span>@mentorMentee.Value</span><br/>
-                                                }
+                                                <span>@mentorMentee.Value</span><br/>
                                             }
-                                        </td>
-                                        <td>
-                                            <a asp-controller="Details" asp-action="Mentor" asp-route-mentorId="@mentor.Id" class="btn btn-primary">@App.Resources.Add.Mentor.Edit</a>
-                                        </td>
-                                    </tr>
-                                }
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Details" asp-action="Mentor" asp-route-mentorId="@mentor.Id" class="btn btn-primary">@App.Resources.Add.Mentor.Edit</a>
+                                    </td>
+                                </tr>
+                            }
                             </tbody>
                         </table>
+                        <br/>
                     </div>
                 </div>
             </div>

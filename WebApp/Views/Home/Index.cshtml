@@ -253,7 +253,6 @@ else if(!User.Identity!.IsAuthenticated)
         </div>
 }
 
-
 <style>
     .container {
         margin-top: 50px;
@@ -272,7 +271,6 @@ else if(!User.Identity!.IsAuthenticated)
         margin-bottom: 20px;
     }
 </style>
-
 <style>
     .container {
         margin-top: 50px;
@@ -304,3 +302,19 @@ else if(!User.Identity!.IsAuthenticated)
         border-color: #0056b3;
     }
 </style>
+
+@* <script> *@
+@*     function updateTable() { *@
+@*         $.ajax({ *@
+@*             type: "GET", *@
+@*             url: "http://localhost:5191/", *@
+@*             success: function (data) { *@
+@*                 const updatedBody = $(data).find('#asd tbody'); *@
+@* *@
+@*                 $('#asd tbody').html(updatedBody.html()); *@
+@*             } *@
+@*         }); *@
+@*         console.log("updated"); *@
+@*     } *@
+@*     setInterval(updateTable, 3000); *@
+@* </script> *@

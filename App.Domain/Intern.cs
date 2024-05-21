@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using App.Domain.Identity;
 using Base.Domain;
 
@@ -12,11 +13,13 @@ public class Intern : BaseEntityId
     
     [MaxLength(128)]
     [Display(ResourceType = typeof(App.Resources.Domain.Intern), Name = nameof(FirstName))]
-    public string? FirstName { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? FirstName { get; set; } // 
     
     [MaxLength(128)]
     [Display(ResourceType = typeof(App.Resources.Domain.Intern), Name = nameof(LastName))]
-    public string? LastName { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? LastName { get; set; } // 
     
     [MaxLength(128)]
     [Display(ResourceType = typeof(App.Resources.Domain.Intern), Name = nameof(InternType))]
@@ -24,7 +27,8 @@ public class Intern : BaseEntityId
     
     [MaxLength(50)]
     [Display(ResourceType = typeof(App.Resources.Domain.Intern), Name = nameof(StudyProgram))]
-    public string? StudyProgram { get; set; }
+    [Column(TypeName = "jsonb")]
+    public LangStr? StudyProgram { get; set; } // 
     
     [Display(ResourceType = typeof(App.Resources.Domain.Intern), Name = nameof(Email))]
     public string? Email { get; set; }

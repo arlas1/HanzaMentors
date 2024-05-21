@@ -4,8 +4,6 @@ public class LangStr : Dictionary<string, string>
 {
     private const string DefaultCulture = "en";
 
-    // s["en"] = "foo";
-    // var bar = s["en"]; 
     public new string this[string key]
     {
         get => base[key];
@@ -64,9 +62,7 @@ public class LangStr : Dictionary<string, string>
         return Translate() ?? "????";
     }
 
-    // string xxx = new LangStr("foo","et-EE"); xxx == "foo";
     public static implicit operator string(LangStr? langStr) => langStr?.ToString() ?? "null";
 
-    // LangStr xxx = "foobar";
     public static implicit operator LangStr(string value) => new LangStr(value);
 }
