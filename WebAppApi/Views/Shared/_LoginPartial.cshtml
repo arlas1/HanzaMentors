@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using App.Domain.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <partial name="_LanguageSelectionPartial"/>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@App.Resources.View.Shared._Layout.Settings</a>
+        </li>
+        <li class="nav-item">
+            <button type="button" id="logoutButton" class="nav-link btn btn-link text-dark">@App.Resources.View.Shared._Layout.Logout</button>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">@App.Resources.View.Shared._Layout.Login</a>
+        </li>
+    }
+</ul>
+
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        fetch('/api/v1.0/Identity/Account/Logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirect to the home page after successful logout
+                window.location.href = '@Url.Action("Index", "Home", new { area = "" })';
+            } else {
+                console.error('Logout failed');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>

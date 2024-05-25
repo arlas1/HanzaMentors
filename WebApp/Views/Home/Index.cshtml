@@ -181,7 +181,6 @@ else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Employee"))
         </div>
     </div>
 }
-
 else if (User.IsInRole("Mentor"))
 {
     <div class="row justify-content-center column-gap-5">
@@ -302,19 +301,3 @@ else if(!User.Identity!.IsAuthenticated)
         border-color: #0056b3;
     }
 </style>
-
-@* <script> *@
-@*     function updateTable() { *@
-@*         $.ajax({ *@
-@*             type: "GET", *@
-@*             url: "http://localhost:5191/", *@
-@*             success: function (data) { *@
-@*                 const updatedBody = $(data).find('#asd tbody'); *@
-@* *@
-@*                 $('#asd tbody').html(updatedBody.html()); *@
-@*             } *@
-@*         }); *@
-@*         console.log("updated"); *@
-@*     } *@
-@*     setInterval(updateTable, 3000); *@
-@* </script> *@

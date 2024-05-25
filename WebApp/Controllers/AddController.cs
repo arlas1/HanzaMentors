@@ -83,10 +83,9 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         bll.MenteeSickLeaves.Add(sickLeave);
         await bll.SaveChangesAsync();
         
-        return RedirectToAction("EmployeeMentee", "Mentee");
+        return RedirectToAction("EmployeeMentee", "MenteeApi");
     }
     
-    // GET: Add/Mentee
     public IActionResult Mentee()
     {
         var menteeViewModel = new AddMenteeViewModel();
@@ -97,19 +96,16 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         return View(menteeViewModel);
     }
         
-    // GET: Add/Mentor
     public IActionResult Mentor()
     {
         return View();
     }
     
-    // GET: Add/Supervisor
     public IActionResult Supervisor()
     {
         return View();
     }
     
-    // GET: Add/DocumentSample
     public IActionResult DocumentSample()
     {
         return View();
@@ -289,7 +285,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
     }
 
     [HttpPost]
-    public async Task<IActionResult> GenerateDocumentEmployee(List<Guid> selectedSamples, Guid selectedMentorId, Guid menteeId, List<string> signingTimes)
+    public async Task<IActionResult> GenerateDocumentEmployee(List<Guid> selectedSamples, Guid selectedMentorId,
+        Guid menteeId, List<string> signingTimes)
     {
         var samples = (await bll.DocumentSamples.GetAllAsync()).Where(sample => selectedSamples.Contains(sample.Id));
         var mentor = await bll.Mentors.FirstOrDefaultAsync(selectedMentorId);
@@ -386,10 +383,12 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
             }
         }
 
+        var emailBody = emailService.GenerateDocumentEmailBody($"{mentee.FirstName} {mentee.LastName}");
+        await emailService.SendEmailAsync(mentee.Email!, "New documents assigned", emailBody);
+        
         byte[] zipFileBytes = System.IO.File.ReadAllBytes(zipFilePath);
         return File(zipFileBytes, "application/zip", randomFileName);
     }
-    
     
     [HttpPost]
     [ValidateAntiForgeryToken]

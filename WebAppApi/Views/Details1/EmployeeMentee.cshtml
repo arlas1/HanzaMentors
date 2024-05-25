@@ -1,0 +1,396 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApp.Models.DetailsViewModel
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h2 class="text-center mb-3">@App.Resources.Details.EmployeeMentee.MenteeDetails</h2>   
+            <div class="card">
+                <div class="card-body">
+                    <section>
+                        <form id="menteeForm" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-center mb-2">
+                                        <div class="table-title">
+                                            <h6>@App.Resources.Details.EmployeeMentee.MenteeInfo</h6>
+                                            <hr class="mx-auto mb-1">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-floating">
+                                                        <input id="firstName" name="firstName" class="form-control border-dark-subtle" disabled/>
+                                                        <label for="firstName">@App.Resources.Add.Mentee.FirstName</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="lastName" name="lastName" class="form-control border-dark-subtle" disabled/>
+                                                        <label for="lastName">@App.Resources.Add.Mentee.LastName</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="profession" name="profession" class="form-control border-dark-subtle" disabled/>
+                                                        <label for="profession">@App.Resources.Add.Mentee.Profession</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="menteeFromDate" name="menteeFromDate" type="date" class="form-control border-dark-subtle" placeholder="@App.Resources.Add.Mentee.MenteeFromDate" aria-label="@App.Resources.Add.Mentee.MenteeFromDate" disabled/>
+                                                        <label for="menteeFromDate">@App.Resources.Add.Mentee.MenteeFromDate: @Model.EmployeeFromDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="menteeUntilDate" name="menteeUntilDate" type="date" class="form-control border-dark-subtle" placeholder="@App.Resources.Add.Mentee.MenteeUntilDate" aria-label="@App.Resources.Add.Mentee.MenteeUntilDate" disabled/>
+                                                        <label for="menteeUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate: @Model.EmployeeUntilDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="menteeTotalHours" name="menteeTotalHours" class="form-control border-dark-subtle" disabled/>
+                                                        <label for="menteeTotalHours">@App.Resources.Add.Mentee.MenteeTotaHours</label>
+
+                                                        <input id="EmployeeId" name="EmployeeId" type="hidden"/>
+                                                        <input id="InitialMentorId" name="InitialMentorId" type="hidden"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-center mb-2">
+                                        <div class="table-title">
+                                            <h6>@App.Resources.Details.EmployeeMentee.AssignedMentor</h6>
+                                            <hr class="mx-auto mb-1">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-floating">
+                                                        <select id="mentorSelect" name="mentorSelect" class="form-select border-dark-subtle" disabled>
+
+                                                        </select>
+                                                        <label for="mentorSelect">@App.Resources.Add.Mentee.Mentors</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="mentorFromDate" name="mentorFromDate" type="date" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.MentorFromDate" aria-label="@App.Resources.Details.EmployeeMentee.MentorFromDate" disabled/>
+                                                        <label for="mentorFromDate">@App.Resources.Details.EmployeeMentee.MentorFromDate: @Model.EmployeeMentorFromDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="mentorUntilDate" name="mentorUntilDate" type="date" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.MentorUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.MentorUntilDate" disabled/>
+                                                        <label for="mentorUntilDate">@App.Resources.Details.EmployeeMentee.MentorUntilDate: @Model.EmployeeMentorUntilDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="mentorTotalHours" name="mentorTotalHours" class="form-control border-dark-subtle" disabled/>
+                                                        <label for="mentorTotalHours">@App.Resources.Add.Mentee.MentorTotalHours</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating" id="changeReasonField" style="display: none;">
+                                                        <textarea class="form-control border-dark-subtle" disabled></textarea>
+                                                        <label for="mentorTotalHours">@App.Resources.Details.EmployeeMentee.ReasonOfChange</label>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col" id="newMentorFields" style="display: none;">
+                                    <div class="text-center mb-2">
+                                        <div class="table-title">
+                                            <h6>@App.Resources.Details.EmployeeMentee.NewMentor</h6>
+                                            <hr class="mx-auto mb-1">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-floating">
+                                                        <input id="newMentorFromDate" name="newMentorFromDate" type="date" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.NewMentorFromDate" aria-label="@App.Resources.Details.EmployeeMentee.NewMentorFromDate" disabled/>
+                                                        <label for="newMentorFromDate">@App.Resources.Details.EmployeeMentee.NewMentorFromDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="newMentorUntilDate" name="newMentorUntilDate" type="date" class="form-control border-dark-subtle" placeholder="@App.Resources.Details.EmployeeMentee.NewMentorUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.NewMentorUntilDate" disabled/>
+                                                        <label for="newMentorUntilDate">@App.Resources.Details.EmployeeMentee.NewMentorUntilDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="newMentorTotalHours" name="newMentorTotalHours" class="form-control border-dark-subtle" disabled/>
+                                                        <label for="newMentorTotalHours">@App.Resources.Details.EmployeeMentee.NewMentorTotalHours</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group text-center mb-3">
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn-group" role="group" aria-label="Add buttons">
+                                        <button type="button" class="btn btn-primary px-4 py-2 rounded-3 edit-btn">@App.Resources.Add.Mentee.Edit</button>
+                                    </div>
+                                    <div class="input-group-text" style="opacity: 0;">&nbsp;</div>
+                                    <div class="btn-group" role="group" aria-label="Add buttons">
+                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 save-btn" disabled>@App.Resources.Details.EmployeeMentee.Save</button>
+                                    </div>
+                                    <div class="input-group-text" style="opacity: 0;">&nbsp;</div>
+                                    <div class="btn-group" role="group" aria-label="Add buttons">
+                                        <button type="button" class="btn btn-primary px-4 py-2 rounded-3 qwe-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>@App.Resources.Details.EmployeeMentee.AddSickLeave</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 w-100 text-center" id="staticBackdropLabel">@App.Resources.Details.EmployeeMentee.SickLeaveInfo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-controller="Add">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input id="sickLeaveFromDate" name="sickLeaveFromDate" type="date" class="form-control border-dark-subtle"
+                               placeholder="@App.Resources.Details.EmployeeMentee.SickLeaveFromDate" aria-label="@App.Resources.Details.EmployeeMentee.SickLeaveFromDate" disabled/>
+                        <label for="sickLeaveFromDate">@App.Resources.Details.EmployeeMentee.SickLeaveFromDate</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="sickLeaveUntilDate" name="sickLeaveUntilDate"  type="date" class="form-control border-dark-subtle"
+                               placeholder="@App.Resources.Details.EmployeeMentee.SickLeaveUntilDate" aria-label="@App.Resources.Details.EmployeeMentee.SickLeaveUntilDate" disabled/>
+                        <label for="sickLeaveUntilDate">@App.Resources.Details.EmployeeMentee.SickLeaveUntilDate</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="reason" name="reason" class="form-control border-dark-subtle"
+                               placeholder="Reason" aria-label="Reason" disabled/>
+                        <label for="reason">@App.Resources.Details.EmployeeMentee.SickLeaveReason</label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary px-3 py-2 rounded-3">@App.Resources.Details.EmployeeMentee.AddSickLeave</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchMentorData();
+    
+        const editBtn = document.querySelector('.edit-btn');
+        const saveBtn = document.querySelector('.save-btn');
+        const qweBtn = document.querySelector('.qwe-btn');
+        const inputs = document.querySelectorAll('input, select');
+        const changeReasonTextarea = document.querySelector('#changeReasonField textarea');
+    
+        function toggleInputDisabled() {
+            inputs.forEach(input => {
+                input.disabled = !input.disabled;
+            });
+            changeReasonTextarea.disabled = !changeReasonTextarea.disabled;
+        }
+    
+        editBtn.addEventListener('click', function() {
+            toggleInputDisabled();
+            saveBtn.disabled = !saveBtn.disabled;
+            qweBtn.disabled = !qweBtn.disabled;
+        });
+        let initialMentorId = "";
+        function fetchMentorData() {
+            fetch('/api/v1.0/DetailsApi/GetEmployeeMentee', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ menteeId: "@Model.EmployeeId" })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch mentor data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                initialMentorId = data.initialMentorId;
+                document.getElementById('EmployeeId').value = data.menteeId|| '';
+                document.getElementById('firstName').value = data.employeeFirstName || '';
+                document.getElementById('lastName').value = data.employeeLastName || '';
+                document.getElementById('profession').value = data.employeeProfession || '';
+                document.getElementById('menteeFromDate').value = data.employeeFromDate ? data.employeeFromDate.split('T')[0] : '';
+                document.getElementById('menteeUntilDate').value = data.employeeUntilDate ? data.employeeUntilDate.split('T')[0] : '';
+                document.getElementById('menteeTotalHours').value = data.employeeTotalHours || '';
+                populateMentorSelect(data.mentors, data.initialMentorId);
+                document.getElementById('mentorFromDate').value = data.employeeMentorFromDate ? data.employeeMentorFromDate.split('T')[0] : '';
+                document.getElementById('mentorUntilDate').value = data.employeeMentorUntilDate ? data.employeeMentorUntilDate.split('T')[0] : '';
+                document.getElementById('mentorTotalHours').value = data.employeeMentorTotalHours || '';
+            })
+            .catch(error => {
+                console.error("Error fetching mentor data:", error);
+                alert("Failed to fetch mentor data: " + error.message);
+            });
+        }
+        
+        function populateMentorSelect(mentors, selectedMentorId) {
+            const select = document.getElementById('mentorSelect');
+            select.innerHTML = '';
+            mentors.forEach(mentor => {
+                const option = document.createElement('option');
+                option.id = mentor.id;
+                option.value = mentor.id;
+                option.text = mentor.firstName + ' ' + mentor.lastName;
+                if (mentor.id === selectedMentorId) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+            select.disabled = true;
+        }
+    
+        document.getElementById("mentorSelect").addEventListener("change", function() {
+            const selectedValue = this.value;
+    
+            if (selectedValue === initialMentorId) {
+                document.getElementById("newMentorFields").style.display = "none";
+                document.getElementById("changeReasonField").style.display = "none";
+                document.querySelector('#changeReasonField textarea').disabled = true;
+            } else {
+                document.getElementById("newMentorFields").style.display = "block";
+                document.getElementById("changeReasonField").style.display = "block";
+                document.querySelector('#changeReasonField textarea').disabled = false;
+            }
+        });
+        
+        const form = document.getElementById('menteeForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!saveBtn.disabled) {
+                updateMentee();
+            }
+        });
+        
+         function updateMentee() {
+            const menteeData = {
+                menteeId: document.getElementById('EmployeeId').value || null,
+                initialMentorId: initialMentorId,
+                newMentorId: document.getElementById('mentorSelect').value || null,
+                
+                employeeFirstName: document.getElementById('firstName').value.trim() || "",
+                employeeLastName: document.getElementById('lastName').value.trim() || "",
+                employeeProfession: document.getElementById('profession').value.trim() || "",
+                employeeFromDate: document.getElementById('menteeFromDate').value || null,
+                employeeUntilDate: document.getElementById('menteeUntilDate').value || null,
+                employeeTotalHours: parseInt(document.getElementById('menteeTotalHours').value, 10) || null,
+                
+                employeeMentorFromDate: document.getElementById('mentorFromDate').value || null,
+                employeeMentorUntilDate: document.getElementById('mentorUntilDate').value || null,
+                employeeMentorTotalHours: parseInt(document.getElementById('mentorTotalHours').value, 10) || null,
+                
+                newMentorFromDate: document.getElementById('newMentorFromDate').value || null,
+                newMentorUntilDate: document.getElementById('newMentorUntilDate').value || null,
+                newMentorTotalHours: parseInt(document.getElementById('newMentorTotalHours').value, 10) || null,
+                changeReason: document.querySelector('#changeReasonField textarea').value.trim() || "",
+                
+                mentorFirstName: "",
+                mentorLastName: ""
+            };
+    
+            fetch('/api/v1.0/DetailsApi/EmployeeMentee', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(menteeData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('FETCH FAIL');
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.location.reload();
+                initialMentorId = data.initialMentorId;
+                document.getElementById('EmployeeId').value = data.menteeId|| '';
+                document.getElementById('firstName').value = data.employeeFirstName || '';
+                document.getElementById('lastName').value = data.employeeLastName || '';
+                document.getElementById('profession').value = data.employeeProfession || '';
+                document.getElementById('menteeFromDate').value = data.employeeFromDate ? data.employeeFromDate.split('T')[0] : '';
+                document.getElementById('menteeUntilDate').value = data.employeeUntilDate ? data.employeeUntilDate.split('T')[0] : '';
+                document.getElementById('menteeTotalHours').value = data.employeeTotalHours || '';
+                populateMentorSelect(data.mentors, data.initialMentorId);
+                document.getElementById('mentorFromDate').value = data.employeeMentorFromDate ? data.employeeMentorFromDate.split('T')[0] : '';
+                document.getElementById('mentorUntilDate').value = data.employeeMentorUntilDate ? data.employeeMentorUntilDate.split('T')[0] : '';
+                document.getElementById('mentorTotalHours').value = data.employeeMentorTotalHours || '';
+                inputs.forEach(input => {
+                    input.disabled = !input.disabled;
+                });
+                changeReasonTextarea.disabled = !changeReasonTextarea.disabled;
+                const select = document.getElementById('mentorSelect');
+                select.disabled = !select.disabled
+            })
+            .catch(error => {
+                console.error("update or fetch error:", error);
+                alert("Catched error: " + error.message);
+            });
+        }
+    });
+    
+
+</script>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .form-floating {
+        margin-bottom: 0;
+    }
+    .form-group{
+        margin-bottom: 0;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .modal-title {
+            font-size: 1rem;
+    }
+    .modal-body {
+        padding: 0.75rem;
+    }
+    .table td, .table th {
+            border-bottom: none !important;
+        }
+</style>

@@ -36,10 +36,3 @@ public class DetailsViewModel
     public DateOnly? NewMentorUntilDate { get; set; }
     public int? NewMentorTotalHours { get; set; }
 }
-
-// Dict of all active mentor's mentorship processes,
-    // list[0] - mentor id,
-    // list[1] - mentee id,
-    // string - mentee name
-//     public Dictionary<List<Guid>, string> MentorMentorships { get; set; }
-// }

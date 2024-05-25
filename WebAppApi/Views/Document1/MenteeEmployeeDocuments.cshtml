@@ -1,0 +1,149 @@
+﻿@if (User.IsInRole("Admin"))
+{
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 mb-4">
+                <h2 class="text-center mb-3">@App.Resources.Documents.Documents.Mentee_EmployeeDocuments</h2>
+                <div class="card border rounded-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="employeeDocumentTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 24%;">@App.Resources.Documents.Documents.Title</th>
+                                        <th style="width: 23%;">@App.Resources.Documents.Documents.DocumentStatus</th>
+                                        <th style="width: 23%;">@App.Resources.Documents.Documents.WayOfSigning</th>
+                                        <th style="width: 30%;">@App.Resources.Documents.Documents.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 0;
+    }
+    .table th,
+    .table td {
+        border: none;
+    }
+    .table th {
+        background-color: #f8f9fa;
+    }
+    .table tr {
+        border-bottom: 1px solid #acacac;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchData();
+    
+        function fetchData() {
+            console.log("Fetching employee mentorship documents...");
+            fetch('/api/v1.0/DocumentApi/GetMenteeEmployeeDocuments', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateTable(data.employeeMentorshipDocuments);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                alert("Failed to fetch data: " + error.message);
+            });
+        }
+    
+        function updateTable(documents) {
+            const tbody = document.getElementById('employeeDocumentTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            documents.forEach(document => {
+                const row = `<tr id="doc-${document.id}">
+                    <td>${document.title}</td>
+                    <td>${document.documentStatus}</td>
+                    <td>${document.wayOfSigning}</td>
+                    <td>
+                        <button onclick="downloadDocument('${document.id}')" class="btn btn-primary px-3 py-2 me-2">Download</button>
+                        <button onclick="deleteDocument('${document.id}')" class="btn btn-danger px-3 py-2">Delete</button>
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+        
+        window.downloadDocument = function(documentId) {
+            fetch(`/api/v1.0/DocumentApi/DownloadEmployeeDocument`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(documentId)
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = documentId + ".pdf";
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error("Error downloading file:", error);
+                alert("Failed to download file: " + error.message);
+            });
+        }
+    
+        window.deleteDocument = function(documentId) {
+            if (!confirm('Are you sure you want to delete this document?')) return;
+            fetch(`/api/v1.0/DocumentApi/DeleteEmployeeDocument`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(documentId)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete document');
+                }
+                const row = document.getElementById(`doc-${documentId}`);
+                if (row) {
+                    row.remove();
+                }
+            })
+            .catch(error => {
+                console.error("Error deleting document:", error);
+                alert("Failed to delete document: " + error.message);
+            });
+        }
+    });
+</script>

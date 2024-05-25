@@ -8,7 +8,6 @@ namespace WebApp.Controllers;
 
 public class MentorController(IAppBLL bll, UserManager<AppUser> userManager) : Controller
 {
-    // GET: Mentor
     public IActionResult Index(MentorsViewModel viewModel)
     {
         // var userId = Guid.Parse(userManager.GetUserId(User)!);

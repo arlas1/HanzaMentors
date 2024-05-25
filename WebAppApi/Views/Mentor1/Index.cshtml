@@ -1,0 +1,107 @@
+﻿<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 mb-4">
+            <h2 class="text-center mb-3">@App.Resources.Add.Mentee.Mentors</h2>
+            <div class="card border rounded-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="mentorTable">
+                            <colgroup>
+                                <col style="width: 45%;">
+                                <col style="width: 45%;">
+                                <col style="width: 10%;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>@App.Resources.Add.Mentor.FullName</th>
+                                    <th>@App.Resources.Add.Mentor.CurrentlyMentors</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 0;
+    }
+    .table th,
+    .table td {
+        border: none;
+    }
+    .table th {
+        background-color: #f8f9fa;
+    }
+    .table tr {
+        border-bottom: 1px solid #acacac;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchData();
+    
+        function fetchData() {
+            console.log("Fetching mentor data...");
+            fetch('/api/v1.0/MentorApi/Index', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+            })
+            .then(response => {
+                console.log("Received response", response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received:", data);
+                updateTable(data.mentors, data.mentorMentees);
+            })
+            .catch(error => {
+                console.error("Error fetching mentor data: ", error);
+                alert("Failed to fetch mentor data: " + error.message);
+            });
+        }
+    
+        function updateTable(mentors, mentorMentees) {
+            const tbody = document.getElementById('mentorTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            mentors.forEach(mentor => {
+                const mentees = mentorMentees[mentor.id]?.join(", ") || "No active mentees";
+                const row = `<tr>
+                    <td>${mentor.firstName} ${mentor.lastName}</td>
+                    <td>${mentees}</td>
+                    <td>
+                        <a href="/Details1/Mentor?mentorId=${mentor.id}" class="btn btn-primary">@App.Resources.Add.Mentor.Edit</a>
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+    });
+</script>

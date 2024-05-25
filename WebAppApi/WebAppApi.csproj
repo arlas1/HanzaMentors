@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-WebAppApi-ADD0292D-B306-4CDB-AE38-832F98B7909B</UserSecretsId>
+        <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+        <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="CodeGenerator" Version="2019.2.9.2128" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+        <PackageReference Include="MicrosoftOfficeCore" Version="15.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+        <PackageReference Include="Spire.PDF" Version="10.5.5" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\App.BLL.Contracts\App.BLL.Contracts.csproj" />
+      <ProjectReference Include="..\App.BLL\App.BLL.csproj" />
+      <ProjectReference Include="..\App.DAL.Contracts\App.DAL.Contracts.csproj" />
+      <ProjectReference Include="..\App.DAL.EF\App.DAL.EF.csproj" />
+      <ProjectReference Include="..\App.Domain\App.Domain.csproj" />
+      <ProjectReference Include="..\App.Helpers\App.Helpers.csproj" />
+      <ProjectReference Include="..\WebApp\WebApp.csproj" />
+    </ItemGroup>
+
+</Project>

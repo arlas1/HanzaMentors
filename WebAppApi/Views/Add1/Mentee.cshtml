@@ -1,0 +1,324 @@
+﻿<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h2 class="text-center mb-3">@App.Resources.Add.Mentee.AddMentee</h2>   
+            <div class="card">
+                <div class="card-body">
+                    <section>
+                        <form id="menteeForm" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-center mb-2">
+                                        <div class="table-title">
+                                            <h6>@App.Resources.Add.Mentee.EmployeeIntern</h6> 
+                                            <hr class="mx-auto mb-1">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-floating">
+                                                            <select id="menteeTypeSelect" class="form-select border border-dark-subtle">
+                                                                <option selected="selected"></option>
+                                                                <option value="Intern">@App.Resources.Add.Mentee.OptionIntern</option>
+                                                                <option value="Employee">@App.Resources.Add.Mentee.OptionEmployee</option>
+                                                            </select>
+                                                            <label for="menteeTypeSelect">@App.Resources.Add.Mentee.MenteeType</label>
+                                                            <span class="text-danger"></span>
+                                                        </div>
+                                                        <br>
+                                                        
+                                                        <div id="internFields" style="display: none;">
+                                                            <div class="form-floating">
+                                                                <select id="internTypeSelect" class="form-select border border-dark-subtle">
+                                                                    <option selected="selected"></option>
+                                                                    <option value="Vocational school (gep)">@App.Resources.Add.Mentee.OptionVocationalSchool</option>
+                                                                    <option value="Töötukassa">@App.Resources.Add.Mentee.Töötukassa</option>
+                                                                </select>
+                                                                <label for="internTypeSelect">@App.Resources.Add.Mentee.MenteeType</label>
+                                                                <span class="text-danger"></span>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="form-floating">
+                                                                <select id="internSupervisorSelect" class="form-select border border-dark-subtle">
+                                                                    <option selected="selected"></option>
+                                                                    @foreach (var internSupervisor in Model.InternSupervisors)
+                                                                    {
+                                                                        <option value="@internSupervisor.Id ">@internSupervisor.FullName</option>
+                                                                    }
+                                                                </select>
+                                                                <label for="internSupervisorSelect">@App.Resources.Add.Mentee.InternSupervisor</label>
+                                                                <span class="text-danger"></span>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="form-floating">
+                                                                <select id="factorySupervisorSelect1" class="form-select border border-dark-subtle">
+                                                                    <option selected="selected"></option>
+                                                                    @foreach (var factorySupervisor in Model.FactorySupervisors)
+                                                                    {
+                                                                        <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
+                                                                    }
+                                                                </select>
+                                                                <label for="factorySupervisorSelect1">@App.Resources.Add.Mentee.FactorySupervisor</label>
+                                                                <span class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div id="employeeFields" style="display: none;">
+                                                            <div class="form-floating">
+                                                                <select id="employeeTypeSelect" class="form-select">
+                                                                    <option selected="selected"></option>
+                                                                    <option value="Full-time">@App.Resources.Add.Mentee.Full_time</option>
+                                                                    <option value="Rental">@App.Resources.Add.Mentee.Rental</option>
+                                                                    <option value="Probation">@App.Resources.Add.Mentee.Probation</option>
+                                                                </select>
+                                                                <label for="employeeTypeSelect">@App.Resources.Add.Mentee.MenteeType</label>
+                                                                <span class="text-danger"></span>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="form-floating">
+                                                                <select id="factorySupervisorSelect" class="form-select border border-dark-subtle">
+                                                                    <option selected="selected"></option>
+                                                                    @foreach (var factorySupervisor in Model.FactorySupervisors)
+                                                                    {
+                                                                        <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
+                                                                    }
+                                                                </select>
+                                                                <label for="factorySupervisorSelect">@App.Resources.Add.Mentee.FactorySupervisor</label>
+                                                                <span class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-center mb-2">
+                                        <div class="table-title">
+                                            <h6>@App.Resources.Add.Mentee.MenteeInfo</h6>
+                                            <hr class="mx-auto mb-1">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-floating">
+                                                        <input id="firstName" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="firstName">@App.Resources.Add.Mentee.FirstName</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="lastName" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="lastName">@App.Resources.Add.Mentee.LastName</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="email" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="email">@App.Resources.Add.Mentee.Email</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="idCode" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="idCode">@App.Resources.Add.Mentee.IdCode</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input id="profession" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="profession">@App.Resources.Add.Mentee.Profession</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input type="date" id="menteeFromDate" class="form-control border-dark-subtle" placeholder="Mentee from date" aria-label="Mentee from date"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="menteeFromDate">@App.Resources.Add.Mentee.MenteeFromDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input type="date" id="menteeUntilDate" class="form-control border-dark-subtle" placeholder="Mentee until date" aria-label="Mentee until date"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="menteeUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="menteeTotalHours" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="menteeTotalHours">@App.Resources.Add.Mentee.MenteeTotaHours</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-center mb-2">
+                                        <div class="table-title">
+                                            <h6>@App.Resources.Add.Mentee.AssignMentor</h6>
+                                            <hr class="mx-auto mb-1">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-floating">
+                                                        <select id="mentorSelect" class="form-select border border-dark-subtle">
+                                                            <option selected="selected"></option>
+                                                            @foreach (var mentor in Model.Mentors)
+                                                            {
+                                                                <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option>
+                                                            }
+                                                        </select>
+                                                        <label for="mentorSelect">@App.Resources.Add.Mentee.Mentors</label>
+                                                        <span class="text-danger"></span>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-floating">
+                                                        <input type="date" id="mentorFromDate" class="form-control border-dark-subtle" placeholder="Mentor from date" aria-label="Mentor from date"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="mentorFromDate">@App.Resources.Add.Mentee.MenteeFromDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input type="date" id="mentorUntilDate" class="form-control border-dark-subtle" placeholder="Mentor until date" aria-label="Mentor until date"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="mentorUntilDate">@App.Resources.Add.Mentee.MenteeUntilDate</label>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-floating">
+                                                        <input id="mentorTotalHours" class="form-control border-dark-subtle"/>
+                                                        <span class="text-danger"></span>
+                                                        <label for="mentorTotalHours">@App.Resources.Add.Mentee.MentorTotalHours</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center mb-0">
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn-group" role="group" aria-label="Add buttons">
+                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">@App.Resources.Add.Mentee.AddCreateUser</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script>
+    document.getElementById("menteeTypeSelect").addEventListener("change", function() {
+        const selectedValue = this.value;
+
+        document.getElementById("internFields").style.display = "none";
+        document.getElementById("employeeFields").style.display = "none";
+
+        if (selectedValue === "Intern") {
+            document.getElementById("internFields").style.display = "block";
+        } else if (selectedValue === "Employee") {
+            document.getElementById("employeeFields").style.display = "block";
+        }
+    });
+    
+    document.getElementById('menteeForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            personalCode: parseInt(document.getElementById('idCode').value, 10) || 0,
+            profession: document.getElementById('profession').value,
+            menteeType: document.getElementById('menteeTypeSelect').value || "",
+            internType: document.getElementById('internTypeSelect').value || "",
+            internSupervisorId: document.getElementById('internSupervisorSelect').value || "00000000-0000-0000-0000-000000000000",
+            internFactorySupervisorId: document.getElementById('factorySupervisorSelect1').value || "00000000-0000-0000-0000-000000000000",
+            employeeType: document.getElementById('employeeTypeSelect').value || "",
+            employeeFactorySupervisorId: document.getElementById('factorySupervisorSelect').value || "00000000-0000-0000-0000-000000000000",
+            chosenMentorId: document.getElementById('mentorSelect').value || "00000000-0000-0000-0000-000000000000",
+            mentorFromDate: document.getElementById('mentorFromDate').value,
+            mentorUntilDate: document.getElementById('mentorUntilDate').value,
+            mentorTotalHours: parseInt(document.getElementById('mentorTotalHours').value, 10) || 0,
+            menteeFromDate: document.getElementById('menteeFromDate').value,
+            menteeUntilDate: document.getElementById('menteeUntilDate').value,
+            menteeTotalHours: parseInt(document.getElementById('menteeTotalHours').value, 10) || 0
+        };
+
+        
+        console.log("Form Data:", formData);
+        
+        fetch('/api/v1.0/AddApi/AddMentee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(result => {
+            if (result.status === 200) {
+                window.location.href = '/Mentee1/EmployeeMentee';
+            } else {
+                console.error('Failed to add mentor:', result.body);
+                alert(`Failed to add mentor. Please check the data and try again.\nError: ${result.body.error || 'Unknown error'}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding the mentee.');
+        });
+    });
+
+</script>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .form-floating {
+        margin-bottom: 0;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .modal-title {
+            font-size: 1rem;
+    }
+    .modal-body {
+        padding: 0.75rem;
+    }
+    .table td, .table th {
+            border-bottom: none !important;
+        }
+</style>

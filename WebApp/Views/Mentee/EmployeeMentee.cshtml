@@ -3,7 +3,7 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-8 mb-3">
-            <form method="get" asp-controller="Mentee" asp-action="EmployeeMentee">
+            <form method="get" asp-controller="Mentee1" asp-action="EmployeeMentee">
                 <div class="input-group">
                     <select asp-for="FilterType" class="custom-select border border-1 rounded-start-3 border-primary-subtle" style="background-color: white;">
                         <option value=""></option>
@@ -89,8 +89,8 @@
                                             }
                                         </td>
                                         <td>
-                                            @* <a asp-controller="Details" asp-action="EmployeeMentee" asp-route-employeeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a> *@
-                                            <a href="javascript:void(0);" onclick="handleEditButtonClick('@mentee.Id')" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a>
+                                            <a asp-controller="Details" asp-action="EmployeeMentee" asp-route-employeeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a>
+                                            @* <a href="javascript:void(0);" onclick="handleEditButtonClick('@mentee.Id')" class="btn btn-primary">@App.Resources.Add.Mentee.Edit</a> *@
                                             <a asp-controller="Add" asp-action="DocumentEmployee" asp-route-menteeId="@mentee.Id" class="btn btn-primary">@App.Resources.Add.Mentee.GenerateDocument</a>
                                         </td>
                                     </tr>

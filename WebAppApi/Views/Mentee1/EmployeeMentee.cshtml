@@ -1,0 +1,148 @@
+﻿@model WebApp.Models.MenteeViewModel
+
+<div class="container mt-3">
+    <div class="row justify-content-center column-gap-5">
+        <div class="col-lg-12 mb-4">
+            <h2 class="text-center mb-3">Employee Mentees</h2>
+            <div class="card border rounded-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <colgroup>
+                                <col style="width: 15%;">
+                                <col style="width: 8.5%;">
+                                <col style="width: 8.5%;">
+                                <col style="width: 25%;">
+                                <col style="width: 20%;">
+                                <col style="width: 23%;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Profession</th>
+                                    <th>Type</th>
+                                    <th>Mentorship Period</th>
+                                    <th>Mentor</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 0;
+    }
+    .table th,
+    .table td {
+        border: none;
+    }
+    .table th {
+        background-color: #f8f9fa;
+    }
+    .table tr {
+        border-bottom: 1px solid #acacac;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    fetchData();
+
+    function fetchData() {
+        console.log("Fetching data...");
+        fetch('/api/v1.0/MenteeApi/EmployeeMentee', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(response => {
+            console.log("Received response", response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Data received:", data);
+            updateTable(data);
+        })
+        .catch(error => {
+            console.error("Error fetching data: ", error);
+            alert("Failed to fetch data: " + error.message);
+        });
+    }
+
+    
+    function getLangStrValue(langStr, preferredLangs = ['en', 'ru']) {
+        if (!langStr) return '';
+        for (const lang of preferredLangs) {
+            if (langStr[lang]) {
+                return langStr[lang];
+            }
+        }
+        return langStr[Object.keys(langStr)[0]];
+    }
+
+    function updateTable(data) {
+        const tbody = document.querySelector("table tbody");
+        tbody.innerHTML = '';
+    
+        if (data && data.employeeMentees) {
+            data.employeeMentees.forEach(mentee => {
+                const mentorships = data.employeeMentorships.filter(m => m.employeeId === mentee.id).map(m => {
+                    return `${m.fromDate} - ${m.untilDate} / ${m.totalHours} hours`;
+                }).join(", ");
+    
+                const mentors = data.menteesMentor[mentee.id]?.map(id => {
+                    const mentor = data.mentors.find(m => m.id === id);
+                    return mentor ? `${mentor.firstName} ${mentor.lastName}` : 'Unknown';
+                }).join(", ");
+    
+                const row = `<tr>
+                    <td>${getLangStrValue(mentee.firstName)} ${getLangStrValue(mentee.lastName)}</td>
+                    <td>${getLangStrValue(mentee.profession)}</td>
+                    <td>${mentee.employeeType}</td>
+                    <td>${mentorships}</td>
+                    <td>${mentors}</td>
+                    <td>
+                        <a href="/Details1/EmployeeMentee?menteeId=${mentee.id}" class="btn btn-primary">Edit</a>
+                        <a href="/Add/DocumentEmployee?menteeId=${mentee.id}" class="btn btn-primary">Generate Doc ument</a>
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        } else {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center">No data available</td></tr>';
+        }
+    }
+
+});
+</script>
+
+
+

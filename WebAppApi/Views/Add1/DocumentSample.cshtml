@@ -1,0 +1,110 @@
+﻿
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6 mb-3">
+            <h1 class="text-center mb-3">@App.Resources.Add.DocumentSample.AddDocumentSample</h1>
+            <div class="card">
+                <div class="card-body">
+                    <section>
+                        <form id="documentSampleForm" method="post" enctype="multipart/form-data">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10">
+                                    <div class="form-floating mb-3">
+                                        <input id="sampleTitle" class="form-control border-dark-subtle"/>
+                                        <span class="text-danger"></span>
+                                        <label for="sampleTitle">@App.Resources.Add.DocumentSample.SampleDocumentTitle</label>
+                                    </div>
+                                    
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control border border-dark-subtle">
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>   
+                            </div>
+                            <div class="form-group text-center mb-0">
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn-group" role="group" aria-label="Add buttons">
+                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">@App.Resources.Add.DocumentSample.AddSample</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 2rem;
+    }
+    .form-floating {
+        margin-bottom: 1rem;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<script>
+    document.getElementById('documentSampleForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+    
+        const fileInput = document.querySelector('input[type="file"]');
+        const title = document.getElementById('sampleTitle').value;
+    
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const base64 = await toBase64(file);
+    
+            const data = {
+                Title: title,
+                FileBase64Code: base64
+            };
+    
+
+            fetch('/api/v1.0/AddApi/AddDocumentSample', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/Document/DocumentSamples';
+                }
+                throw new Error('Something went wrong');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+    
+    function toBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
+    }
+</script>

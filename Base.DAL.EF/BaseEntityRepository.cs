@@ -24,7 +24,6 @@ public class BaseEntityRepository<TKey, TDomainEntity, TDalEntity, TDbContext>
     where TDomainEntity : class, IBaseEntityId
     where TDalEntity : class, IBaseEntityId
     where TDbContext : DbContext
-
 {
     protected readonly TDbContext RepoDbContext;
     protected readonly DbSet<TDomainEntity> RepoDbSet;

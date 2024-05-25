@@ -1,0 +1,149 @@
+﻿<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6 mb-3">
+            <h1 class="text-center mb-3">@App.Resources.Add.Mentor.AddMentor</h1>
+            <div class="card">
+                <div class="card-body">
+                    <form id="mentorForm" method="post">
+                        <div class="text-danger" id="validationSummary"></div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                
+                                <div class="form-floating mb-3 ">
+                                    <input type="text" id="firstName" class="form-control border border-dark-subtle" required/>
+                                    <label for="firstName">@App.Resources.Add.Mentor.FirstName</label>
+                                    <span class="text-danger" id="firstNameError"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="lastName" class="form-control border border-dark-subtle" required/>
+                                    <label for="lastName">@App.Resources.Add.Mentor.LastName</label>
+                                    <span class="text-danger" id="lastNameError"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="email" id="email" class="form-control border border-dark-subtle" required/>
+                                    <label for="email">@App.Resources.Add.Mentor.Email</label>
+                                    <span class="text-danger" id="emailError"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="idCode" class="form-control border border-dark-subtle" required/>
+                                    <label for="idCode">@App.Resources.Add.Mentor.IdCode</label>
+                                    <span class="text-danger" id="idCodeError"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="profession" class="form-control border border-dark-subtle" required/>
+                                    <label for="profession">@App.Resources.Add.Mentor.Profession</label>
+                                    <span class="text-danger" id="professionError"></span>
+                                </div>
+
+                                <div class="form-group text-center mb-0">
+                                    <button type="submit" class="btn btn-primary px-4 py-2">Add Mentor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 2rem;
+    }
+    .form-floating {
+        margin-bottom: 1rem;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<script>
+    document.getElementById('mentorForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const idCode = document.getElementById('idCode').value;
+        const profession = document.getElementById('profession').value;
+
+        let isValid = true;
+        
+        document.getElementById('firstNameError').textContent = '';
+        document.getElementById('lastNameError').textContent = '';
+        document.getElementById('emailError').textContent = '';
+        document.getElementById('idCodeError').textContent = '';
+        document.getElementById('professionError').textContent = '';
+
+        if (!firstName) {
+            document.getElementById('firstNameError').textContent = 'First name is required';
+            isValid = false;
+        }
+        if (!lastName) {
+            document.getElementById('lastNameError').textContent = 'Last name is required';
+            isValid = false;
+        }
+        if (!email) {
+            document.getElementById('emailError').textContent = 'Email is required';
+            isValid = false;
+        }
+        if (!idCode) {
+            document.getElementById('idCodeError').textContent = 'ID code is required';
+            isValid = false;
+        }
+        if (!profession) {
+            document.getElementById('professionError').textContent = 'Profession is required';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        const formData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            idCode: idCode,
+            profession: profession
+        };
+
+        fetch('/api/v1.0/AddApi/AddMentor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/Mentor1/Index';
+            } else {
+                alert('Failed to add mentor. Please check the data and try again.');
+            }
+        });
+    });
+</script>
