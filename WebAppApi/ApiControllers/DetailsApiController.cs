@@ -9,11 +9,20 @@ using WebAppApi.Models;
 
 namespace WebAppApi.ApiControllers;
 
+/// <summary>
+/// Api controller with actions related to editing mentee and mentor
+/// </summary>
+/// <param name="bll"></param>
 [ApiVersion( "1.0" )]
 [ApiController]
 [Route("/api/v{version:apiVersion}/[controller]/[action]")]
 public class DetailsApiController(IAppBLL bll) : ControllerBase
 {
+    /// <summary>
+    /// Api action for loading mentor edit page 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns>DetailsViewModel</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -33,6 +42,11 @@ public class DetailsApiController(IAppBLL bll) : ControllerBase
     }
     
     
+    /// <summary>
+    /// Api action for loading mentor edit page 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns>DetailsViewModel</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -58,6 +72,11 @@ public class DetailsApiController(IAppBLL bll) : ControllerBase
     }
 
     
+    /// <summary>
+    /// Api action for loading employee mentee edit page
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns>MenteeRequestDTO</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -97,6 +116,12 @@ public class DetailsApiController(IAppBLL bll) : ControllerBase
         return Ok(details);
     }
     
+    
+    /// <summary>
+    /// Api action for editing employee mentee
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns>DetailsViewModel</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -206,6 +231,12 @@ public class DetailsApiController(IAppBLL bll) : ControllerBase
         return Ok(newDetails);
     }
     
+    
+    /// <summary>
+    /// Api action for loading intern mentee edit page
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns>MenteeRequestDTO</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -245,6 +276,12 @@ public class DetailsApiController(IAppBLL bll) : ControllerBase
         return Ok(details);
     }
     
+    
+    /// <summary>
+    /// Api action for editing intern mentee
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns>DetailsViewModel</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]

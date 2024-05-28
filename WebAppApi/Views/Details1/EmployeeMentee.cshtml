@@ -96,7 +96,7 @@
                                                     <br/>
                                                     <div class="form-floating" id="changeReasonField" style="display: none;">
                                                         <textarea class="form-control border-dark-subtle" disabled></textarea>
-                                                        <label for="mentorTotalHours">@App.Resources.Details.EmployeeMentee.ReasonOfChange</label>
+                                                        <label for="changeReasonField">@App.Resources.Details.EmployeeMentee.ReasonOfChange</label>
                                                     </div>
 
                                                 </td>
@@ -171,7 +171,7 @@
                 <h1 class="modal-title fs-5 w-100 text-center" id="staticBackdropLabel">@App.Resources.Details.EmployeeMentee.SickLeaveInfo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" asp-controller="Add">
+            <form method="post" id="sickLeaveForm">
                 <div class="modal-body">
                     <div class="form-floating mb-3">
                         <input id="sickLeaveFromDate" name="sickLeaveFromDate" type="date" class="form-control border-dark-subtle"
@@ -347,6 +347,39 @@
                 changeReasonTextarea.disabled = !changeReasonTextarea.disabled;
                 const select = document.getElementById('mentorSelect');
                 select.disabled = !select.disabled
+            })
+            .catch(error => {
+                console.error("update or fetch error:", error);
+                alert("Catched error: " + error.message);
+            });
+        }
+        
+        const sickLeaveForm = document.getElementById('sickLeaveForm');
+        sickLeaveForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            addSickLeave();
+        });
+        
+        function addSickLeave() {
+            const sickLeaveData = {
+                menteeId: document.getElementById('EmployeeId').value || null,
+                sickLeaveFromDate: document.getElementById('sickLeaveFromDate').value || null,
+                sickLeaveUntilDate: document.getElementById('sickLeaveUntilDate').value || null,
+                sickLeaveReason: document.getElementById('reason').value || null,
+            };
+    
+            fetch('/api/v1.0/AddApi/SickLeaveEmployee', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(sickLeaveData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('FETCH FAIL');
+                }
+                window.location.reload();
+                alert("Sick leave added and mentorship until date was changed");
+                return response.json();
             })
             .catch(error => {
                 console.error("update or fetch error:", error);

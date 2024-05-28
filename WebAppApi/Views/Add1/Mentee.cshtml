@@ -43,11 +43,11 @@
                                                             <br/>
                                                             <div class="form-floating">
                                                                 <select id="internSupervisorSelect" class="form-select border border-dark-subtle">
-                                                                    <option selected="selected"></option>
-                                                                    @foreach (var internSupervisor in Model.InternSupervisors)
-                                                                    {
-                                                                        <option value="@internSupervisor.Id ">@internSupervisor.FullName</option>
-                                                                    }
+                                                                    @* <option selected="selected"></option> *@
+                                                                    @* @foreach (var internSupervisor in Model.InternSupervisors) *@
+                                                                    @* { *@
+                                                                    @*     <option value="@internSupervisor.Id ">@internSupervisor.FullName</option> *@
+                                                                    @* } *@
                                                                 </select>
                                                                 <label for="internSupervisorSelect">@App.Resources.Add.Mentee.InternSupervisor</label>
                                                                 <span class="text-danger"></span>
@@ -55,11 +55,11 @@
                                                             <br/>
                                                             <div class="form-floating">
                                                                 <select id="factorySupervisorSelect1" class="form-select border border-dark-subtle">
-                                                                    <option selected="selected"></option>
-                                                                    @foreach (var factorySupervisor in Model.FactorySupervisors)
-                                                                    {
-                                                                        <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
-                                                                    }
+                                                                    @* <option selected="selected"></option> *@
+                                                                    @* @foreach (var factorySupervisor in Model.FactorySupervisors) *@
+                                                                    @* { *@
+                                                                    @*     <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option> *@
+                                                                    @* } *@
                                                                 </select>
                                                                 <label for="factorySupervisorSelect1">@App.Resources.Add.Mentee.FactorySupervisor</label>
                                                                 <span class="text-danger"></span>
@@ -80,11 +80,11 @@
                                                             <br/>
                                                             <div class="form-floating">
                                                                 <select id="factorySupervisorSelect" class="form-select border border-dark-subtle">
-                                                                    <option selected="selected"></option>
-                                                                    @foreach (var factorySupervisor in Model.FactorySupervisors)
-                                                                    {
-                                                                        <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option>
-                                                                    }
+                                                                    @* <option selected="selected"></option> *@
+                                                                    @* @foreach (var factorySupervisor in Model.FactorySupervisors) *@
+                                                                    @* { *@
+                                                                    @*     <option value="@factorySupervisor.Id">@factorySupervisor.FullName</option> *@
+                                                                    @* } *@
                                                                 </select>
                                                                 <label for="factorySupervisorSelect">@App.Resources.Add.Mentee.FactorySupervisor</label>
                                                                 <span class="text-danger"></span>
@@ -175,11 +175,11 @@
                                                 <td>
                                                     <div class="form-floating">
                                                         <select id="mentorSelect" class="form-select border border-dark-subtle">
-                                                            <option selected="selected"></option>
-                                                            @foreach (var mentor in Model.Mentors)
-                                                            {
-                                                                <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option>
-                                                            }
+                                                            @* <option selected="selected"></option> *@
+                                                            @* @foreach (var mentor in Model.Mentors) *@
+                                                            @* { *@
+                                                            @*     <option value="@mentor.Id">@mentor.FirstName @mentor.LastName</option> *@
+                                                            @* } *@
                                                         </select>
                                                         <label for="mentorSelect">@App.Resources.Add.Mentee.Mentors</label>
                                                         <span class="text-danger"></span>
@@ -227,6 +227,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('/api/v1.0/AddApi/GetMenteeInfo', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(response => response.json())
+        .then(data => {
+            populateDropdown('#internSupervisorSelect', data.internSupervisors);
+            populateDropdown('#factorySupervisorSelect1', data.factorySupervisors);
+            populateDropdown('#factorySupervisorSelect', data.factorySupervisors);
+            populateMentorsDropdown('#mentorSelect', data.mentors);
+        })
+        .catch(error => console.error('Failed to fetch initialization data:', error));
+
+        function populateDropdown(selector, items) {
+            const select = $(selector);
+            select.empty();
+            select.append('<option selected="selected"></option>');
+            items.forEach(item => {
+                select.append(`<option value="${item.id}">${item.fullName}</option>`);
+            });
+        }
+        
+        function populateMentorsDropdown(selector, items) {
+            const select = $(selector);
+            select.empty();
+            select.append('<option selected="selected"></option>');
+            items.forEach(item => {
+                select.append(`<option value="${item.id}">${item.firstName} ${item.lastName}</option>`);
+            });
+        }
+    })
+
     document.getElementById("menteeTypeSelect").addEventListener("change", function() {
         const selectedValue = this.value;
 

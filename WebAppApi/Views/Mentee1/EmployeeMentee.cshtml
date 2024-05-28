@@ -72,13 +72,41 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    fetchData();
-
+    let token = "";
+    
+    getToken();
+    
+    function getToken() {
+        console.log("Fetching token...");
+        fetch('/api/v1.0/AccountApi/GetToken', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error receiving token');
+            }
+            return response.json();
+        })
+        .then(data => {
+            token = data.refreshToken;
+            fetchData();
+        })
+        .catch(error => {
+            console.error("Error receiving token: ", error);
+        });
+    }
+    
+   
     function fetchData() {
         console.log("Fetching data...");
         fetch('/api/v1.0/MenteeApi/EmployeeMentee', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(token)
         })
         .then(response => {
             console.log("Received response", response);
@@ -131,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${mentors}</td>
                     <td>
                         <a href="/Details1/EmployeeMentee?menteeId=${mentee.id}" class="btn btn-primary">Edit</a>
-                        <a href="/Add/DocumentEmployee?menteeId=${mentee.id}" class="btn btn-primary">Generate Doc ument</a>
+                        <a href="/Add1/DocumentEmployee?menteeId=${mentee.id}" class="btn btn-primary">Generate Document</a>
                     </td>
                 </tr>`;
                 tbody.innerHTML += row;

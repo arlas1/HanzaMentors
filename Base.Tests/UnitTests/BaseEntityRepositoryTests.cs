@@ -148,8 +148,8 @@ public class BaseEntityRepositoryTests
 
             var result = repository.FirstOrDefault(entity.Id);
 
-            result.Should().NotBeNull();
-            result.Id.Should().Be(entity.Id);
+            result!.Should().NotBeNull();
+            result!.Id.Should().Be(entity.Id);
         }
 
         [Fact]
@@ -165,7 +165,7 @@ public class BaseEntityRepositoryTests
 
             var result = await repository.FirstOrDefaultAsync(entity.Id);
 
-            result.Should().NotBeNull();
-            result.Id.Should().Be(entity.Id);
+            result!.Should().NotBeNull();
+            result!.Id.Should().Be(entity.Id);
         }
     }

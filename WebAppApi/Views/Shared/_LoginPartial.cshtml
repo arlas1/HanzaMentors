@@ -12,13 +12,20 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@App.Resources.View.Shared._Layout.Settings</a>
         </li>
         <li class="nav-item">
-            <button type="button" id="logoutButton" class="nav-link btn btn-link text-dark">@App.Resources.View.Shared._Layout.Logout</button>
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">@App.Resources.View.Shared._Layout.Logout</button>
+            </form>
         </li>
+        @* <li class="nav-item"> *@
+        @*     <button type="button" id="logoutButton" class="nav-link btn btn-link text-dark">@App.Resources.View.Shared._Layout.Logout</button> *@
+        @* </li> *@
     }
     else
     {
         <li class="nav-item">
-            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">@App.Resources.View.Shared._Layout.Login</a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary">
+                @App.Resources.View.Shared._Layout.Login
+            </a>
         </li>
     }
 </ul>
@@ -26,22 +33,49 @@
 <script>
     document.getElementById('logoutButton').addEventListener('click', function(event) {
         event.preventDefault();
-        fetch('/api/v1.0/Identity/Account/Logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // Redirect to the home page after successful logout
-                window.location.href = '@Url.Action("Index", "Home", new { area = "" })';
-            } else {
-                console.error('Logout failed');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        getToken();
+        
+        function getToken() {
+            console.log("Logging out...");
+            fetch('/api/v1.0/AccountApi/GetToken', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error receiving token');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data)
+                logout();
+            })
+            .catch(error => {
+                console.error("Error receiving token: ", error);
+            });
+        }
+        
+        function logout(token){
+            fetch('/api/v1.0/AccountApi/Logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(token)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '@Url.Action("Index", "Home", new { area = "" })';
+                } else {
+                    console.error('Logout failed');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+       
     });
 </script>

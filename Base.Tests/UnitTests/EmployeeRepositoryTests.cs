@@ -61,7 +61,7 @@ public class EmployeeRepositoryTests
             var result = repository.Update(updatedEmployee);
 
             result.Should().NotBeNull();
-            updateContext.Employees.Should().ContainSingle(e => e.FirstName.ToString() == updatedEmployee.FirstName.ToString() && e.LastName.ToString() == updatedEmployee.LastName.ToString());
+            updateContext.Employees.Should().ContainSingle(e => e!.FirstName!.ToString() == updatedEmployee.FirstName.ToString() && e.LastName!.ToString() == updatedEmployee.LastName.ToString());
         }
     }
 
@@ -107,7 +107,7 @@ public class EmployeeRepositoryTests
         var result = repository.GetAll();
 
         result.Should().HaveCount(2);
-        result.Select(e => e.FirstName.ToString()).Should().Contain(new[] { "John", "Jane" });
+        result.Select(e => e.FirstName!.ToString()).Should().Contain(new[] { "John", "Jane" });
     }
 
     [Fact]
@@ -125,7 +125,7 @@ public class EmployeeRepositoryTests
         var result = await repository.GetAllAsync();
 
         result.Should().HaveCount(2);
-        result.Select(e => e.FirstName.ToString()).Should().Contain(new[] { "John", "Jane" });
+        result.Select(e => e!.FirstName!.ToString()).Should().Contain(new[] { "John", "Jane" });
     }
 
     [Fact]
@@ -140,8 +140,8 @@ public class EmployeeRepositoryTests
 
         var result = repository.FirstOrDefault(employee.Id);
 
-        result.Should().NotBeNull();
-        result.FirstName.ToString().Should().Be(employee.FirstName.ToString());
+        result!.Should().NotBeNull();
+        result!.FirstName!.ToString().Should().Be(employee.FirstName.ToString());
     }
 
     [Fact]
@@ -157,6 +157,6 @@ public class EmployeeRepositoryTests
         var result = await repository.FirstOrDefaultAsync(employee.Id);
 
         result.Should().NotBeNull();
-        result.FirstName.ToString().Should().Be(employee.FirstName.ToString());
+        result?.FirstName!.ToString().Should().Be(employee.FirstName.ToString());
     }
 }

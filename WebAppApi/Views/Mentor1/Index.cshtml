@@ -63,13 +63,41 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        fetchData();
-    
+        let token = "";
+
+        getToken();
+        
+                    
+        function getToken() {
+            console.log("Fetching token...");
+            fetch('/api/v1.0/AccountApi/GetToken', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error receiving token');
+                }
+                return response.json();
+            })
+            .then(data => {
+                token = data.refreshToken;
+                fetchData();
+            })
+            .catch(error => {
+                console.error("Error receiving token: ", error);
+            });
+        }
+        
         function fetchData() {
             console.log("Fetching mentor data...");
             fetch('/api/v1.0/MentorApi/Index', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(token)
             })
             .then(response => {
                 console.log("Received response", response);
@@ -84,7 +112,6 @@
             })
             .catch(error => {
                 console.error("Error fetching mentor data: ", error);
-                alert("Failed to fetch mentor data: " + error.message);
             });
         }
     
@@ -103,5 +130,7 @@
                 tbody.innerHTML += row;
             });
         }
+        
+     
     });
 </script>

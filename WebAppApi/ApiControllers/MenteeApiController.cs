@@ -1,23 +1,45 @@
 ﻿using System.Net;
 using App.BLL.Contracts;
 using Asp.Versioning;
+using Base.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.DTO;
 using WebApp.Models;
 namespace WebAppApi.ApiControllers;
 
+/// <summary>
+/// Api controller with action related to mentee and mentors home pages
+/// </summary>
+/// <param name="bll"></param>
 [ApiVersion( "1.0" )]
 [ApiController]
 [Route("/api/v{version:apiVersion}/[controller]/[action]")]
-public class MenteeApiController(IAppBLL bll) : ControllerBase
+public class MenteeApiController(IAppBLL bll, IConfiguration configuration) : ControllerBase
 {
+    /// <summary>
+    /// Api action loading the employee mentees home page
+    /// </summary>
+    /// <returns>HomeViewModel</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
     [ProducesResponseType<HomeViewModel>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
-    public async Task<IActionResult> EmployeeMentee()
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> EmployeeMentee([FromBody] string token)
     {
+        if (!IdentityHelpers.ValidateJWT(
+                token,
+                configuration.GetValue<string>("JWT:key")!,
+                configuration.GetValue<string>("JWT:issuer")!,
+                configuration.GetValue<string>("JWT:audience")!
+            ))
+        {
+            return BadRequest("JWT validation fail");
+        }
+        
         var documentSamples = (await bll.DocumentSamples.GetAllAsync())
             .ToDictionary(sample => sample.Id, sample => sample.Title);
         
@@ -71,13 +93,29 @@ public class MenteeApiController(IAppBLL bll) : ControllerBase
         return Ok(menteesViewModel);
     }
     
+    
+    /// <summary>
+    /// Api action loading the intern mentees home page
+    /// </summary>
+    /// <returns>HomeViewModel</returns>
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
     [ProducesResponseType<HomeViewModel>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
-    public IActionResult InternMentee()
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public IActionResult InternMentee([FromBody] string token)
     {
+        if (!IdentityHelpers.ValidateJWT(
+                token,
+                configuration.GetValue<string>("JWT:key")!,
+                configuration.GetValue<string>("JWT:issuer")!,
+                configuration.GetValue<string>("JWT:audience")!
+            ))
+        {
+            return BadRequest("JWT validation fail");
+        }
+        
         var documentSamples = bll.DocumentSamples.GetAll()
             .ToDictionary(sample => sample.Id, sample => sample.Title);
         

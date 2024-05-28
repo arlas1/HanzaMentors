@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using AppUser = App.Domain.Identity.AppUser;
 using App.Helpers.EmailService;
+using Microsoft.AspNetCore.Authorization;
 using Spire.Pdf;
 using Spire.Pdf.Texts;
 
@@ -83,7 +84,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         bll.MenteeSickLeaves.Add(sickLeave);
         await bll.SaveChangesAsync();
         
-        return RedirectToAction("EmployeeMentee", "MenteeApi");
+        return RedirectToAction("EmployeeMentee", "Mentee");
     }
     
     public IActionResult Mentee()
@@ -96,6 +97,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         return View(menteeViewModel);
     }
         
+    [Authorize]
     public IActionResult Mentor()
     {
         return View();
@@ -451,7 +453,6 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
     }
     
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddMentor(AddMentorViewModel mentorViewModel)
     {
         if (ModelState.IsValid)
@@ -474,8 +475,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
             {
                 await userManager.AddToRoleAsync(user, "Mentor");
                 
-                var emailBody = emailService.GenerateAccountEmailBody(mentorViewModel.FirstName!, mentorViewModel.Email!, userPassword);
-                await emailService.SendEmailAsync(mentorViewModel.Email!, "HANZA Mentors account created", emailBody);
+                // var emailBody = emailService.GenerateAccountEmailBody(mentorViewModel.FirstName!, mentorViewModel.Email!, userPassword);
+                // await emailService.SendEmailAsync(mentorViewModel.Email!, "HANZA Mentors account created", emailBody);
                     
                 var employee = new Employee()
                 {
@@ -531,8 +532,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         {
             await userManager.AddToRoleAsync(user, "Mentee");
         
-            var emailBody = emailService.GenerateAccountEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
-            await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
+            // var emailBody = emailService.GenerateAccountEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
+            // await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
         
             switch (menteeViewModel.MenteeType)
             {

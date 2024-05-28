@@ -1,0 +1,168 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApp.Models.SignTimeViewModel
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card text-center">
+                <div class="card-header bg-white">
+                    <h5 class="card-title">Available Times</h5>
+                </div>
+                <div class="card-body">
+                    <form id="timeSelectionForm" method="post">
+                        <div class="form-group" id="timeOptionsContainer">
+
+                        </div>
+                        <br/>
+                        <h5 class="mt-3">Way of Signing:</h5>
+                        <div class="form-check form-check-inline">
+                            <input asp-for="ChosenWay" class="form-check-input wayOption" type="radio" id="op1" name="wayOption" value="Manually in office">
+                            <label class="form-check-label" for="op1">
+                                Manually in office
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input asp-for="ChosenWay" class="form-check-input wayOption" type="radio" id="op2" name="wayOption" value="Digitally in office">
+                            <label class="form-check-label" for="op2">
+                                Digitally in office
+                            </label>
+                        </div>
+                        <div class="mt-3">
+                            <input asp-for="DocumentId" type="hidden" value="@Model.DocumentId"/>
+                            <input asp-for="MenteeId" type="hidden" value="@Model.MenteeId"/>
+                            <input asp-for="ChosenTime" id="chosenTime" type="hidden">
+                            <input asp-for="ChosenWay" id="chosenWay" type="hidden"/>
+                            <button type="submit" id="confirmButton" class="btn btn-primary" disabled>Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const documentId = '@Model.DocumentId';
+
+            fetch(`/api/v1.0/DocumentApi/GetSigningTimesIntern`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(documentId)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('timeOptionsContainer');
+                data.availableTimes.forEach(time => {
+                    const div = document.createElement('div');
+                    div.className = 'form-check form-check-inline';
+
+                    const input = document.createElement('input');
+                    input.className = 'form-check-input timeOption';
+                    input.type = 'radio';
+                    input.name = 'timeOption';
+                    input.id = `timeOption_${time}`;
+                    input.value = time;
+
+                    const label = document.createElement('label');
+                    label.className = 'form-check-label';
+                    label.setAttribute('for', `timeOption_${time}`);
+                    label.textContent = time;
+
+                    div.appendChild(input);
+                    div.appendChild(label);
+                    container.appendChild(div);
+                });
+
+                if (data.availableTimes.length > 0) {
+                    $('.timeOption').on('click', function() {
+                        checkSelection();
+                    });
+                }
+            })
+            .catch(error => console.error('Failed to fetch signing times:', error));
+
+            function checkSelection() {
+                const timeSelected = $('.timeOption:checked').length > 0;
+                const waySelected = $('.wayOption:checked').length > 0;
+                $('#confirmButton').prop('disabled', !(timeSelected && waySelected));
+            }
+
+            $('.wayOption').on('click', function() {
+                checkSelection();
+            });
+            
+            $('#timeSelectionForm').on('submit', function(event) {
+                event.preventDefault();
+
+                const chosenTime = $('.timeOption:checked').val();
+                const chosenWay = $('.wayOption:checked').val();
+
+                const signTimeDTO = {
+                    documentId: documentId,
+                    chosenTime: chosenTime,
+                    chosenWay: chosenWay,
+                    availableTimes: null
+                };
+
+                fetch(`/api/v1.0/DocumentApi/ChoseSigningTimeIntern`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(signTimeDTO)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/Home/Index';
+                    }
+                })
+                .catch(error => {
+                    console.error('Failed to choose signing time:', error);
+                    alert("Error choosing signing time.");
+                });
+            });
+            
+        });
+    </script>
+}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    
+    .table td, .table th {
+            border-bottom: none !important;
+    }
+    
+    .form-floating input,
+    .form-floating label {
+        font-size: 1rem;
+    }
+    
+    .modal-footer button {
+        font-size: 1rem;
+        padding: 0.5rem 1.5rem;
+    }
+</style>

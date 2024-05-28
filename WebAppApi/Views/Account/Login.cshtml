@@ -1,0 +1,90 @@
+﻿<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Login</h1>
+                    <form id="loginForm">
+                        <div class="text-danger justify-content-center" id="validationSummary"></div>
+                        <div class="form-floating mb-3">
+                            <input type="email" id="email" class="form-control" required placeholder="name@example.com">
+                            <label for="email">Email address</label>
+                            <span class="text-danger" id="emailError"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" id="password" class="form-control" required placeholder="Password">
+                            <label for="password">Password</label>
+                            <span class="text-danger" id="passwordError"></span>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary px-4 py-2">Log in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 2rem;
+    }
+    .form-floating {
+        margin-bottom: 1rem;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+
+        fetch('/api/v1.0/AccountApi/Login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                rememberMe: rememberMe
+            })
+        })
+        .then(response => {
+            if (response.ok){
+                window.location.href = '/Home/Index';
+                return response.json();
+            } else {
+                document.getElementById('validationSummary').textContent = 'Login failed. Please check your credentials.';
+            }
+        })
+        
+        // .catch(error => {
+        //     console.error('Error:', error);
+        //     document.getElementById('validationSummary').textContent = 'An error occurred. Please try again later.';
+        // });
+    });
+</script>

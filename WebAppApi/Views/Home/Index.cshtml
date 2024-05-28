@@ -1,5 +1,4 @@
-﻿@using Microsoft.IdentityModel.Tokens
-@model WebApp.Models.HomeViewModel
+﻿@model WebApp.Models.HomeViewModel
 
 @if (User.IsInRole("Admin"))
 {
@@ -20,7 +19,7 @@
         </div>
     </div>
 }
-else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Intern"))
+else if (User.IsInRole("Mentee"))
 {
     <div class="container">
         <div class="row justify-content-center">
@@ -30,15 +29,10 @@ else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Intern"))
                         <h5 class="card-title">@App.Resources.Home.Mentee.YourCurrentInternship</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span class="text-primary">@Model.MenteeFromDate - @Model.MenteeUntilDate</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span class="text-success">@Model.MenteeTotalHours</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span class="text-danger">@Model.IsOnSickLeave</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <span>
-                            @foreach (var mentor in Model.MenteeData.InternsMentors)
-                            {
-                                <span>@mentor.Value - @App.Resources.Home.Mentee.From: @mentor.Key.FromDate, @App.Resources.Home.Mentee.Until: @mentor.Key.UntilDate</span><br />
-                            }
-                        </span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span id="mentorshipPeriod" class="text-primary"></span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span id="mentorshipHours" class="text-success"></span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span id="isOnSickLeave" class="text-danger"></span></p>
+                        <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <div id="mentorList"></div></p>
                     </div>
                 </div>
             </div>
@@ -62,116 +56,8 @@ else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Intern"))
                                 <th>@App.Resources.Home.Mentee.Action</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @if (Model.MenteeData.InternDocuments.IsNullOrEmpty())
-                            {
-                                <tr>
-                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
-                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
-                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
-                                    <td></td>
-                                </tr>
-                            }
-                            else
-                            {
-                                foreach (var document in Model.MenteeData.InternDocuments!)
-                                {
-                                    <tr>
-                                        <td>@document.Key.DocumentStatus</td>
-                                        <td>@document.Key.WayOfSigning</td>
-                                        <td>@document.Key.ChoosenSigningTime</td>
-                                        <td>
-                                            <a href="@Url.Action("DownloadInternDocument", "Details", new { documentId = document.Key.Id })"
-                                               class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.Download</a>
-                                            @if (document.Key.DocumentStatus == "Not signed")
-                                            {
-                                                <a href="@Url.Action("SigningTimesIntern", "Document", new { documentId = document.Key.Id, menteeId = @Model.MenteeId})"
-                                                   class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.ChoseSigningOption</a>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Employee"))
-{
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="card text-center">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title">@App.Resources.Home.Mentee.YourCurrentMentorship</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span class="text-primary">@Model.MenteeFromDate - @Model.MenteeUntilDate</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span class="text-success">@Model.MenteeTotalHours</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span class="text-danger">@Model.IsOnSickLeave</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <span>
-                            @foreach (var mentor in Model.MenteeData.EmployeesMentors)
-                            {
-                                <span>@mentor.Value - @App.Resources.Home.Mentee.From: @mentor.Key.FromDate, @App.Resources.Home.Mentee.Until: @mentor.Key.UntilDate</span><br />
-                            }
-                        </span></p>
-                    </div>
-                </div>
-            </div>
-            <br/>
-            <h2 class="text-center mb-3">@App.Resources.Home.Mentee.YourDocuments</h2>
-            <div class="card border rounded-3">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <colgroup>
-                                <col style="width: 24%;">
-                                <col style="width: 23%;">
-                                <col style="width: 23%;">
-                                <col style="width: 30%;">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>@App.Resources.Home.Mentee.DocumentStatus</th>
-                                <th>@App.Resources.Home.Mentee.WayOfSigning</th>
-                                <th>@App.Resources.Home.Mentee.TimeOfSigning</th>
-                                <th>@App.Resources.Home.Mentee.Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @if (Model.MenteeData.EmployeeDocuments.IsNullOrEmpty())
-                            {
-                                <tr>
-                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
-                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
-                                    <td>@App.Resources.Home.Mentee.NoDocumentsFound</td>
-                                    <td></td>
-                                </tr>
-                            }
-                            else
-                            {
-                                foreach (var document in Model.MenteeData.EmployeeDocuments!)
-                                {
-                                    <tr>
-                                        <td>@document.Key.DocumentStatus</td>
-                                        <td>@document.Key.WayOfSigning</td>
-                                        <td>@document.Key.ChoosenSigningTime</td>
-                                        <td>
-                                            <a href="@Url.Action("DownloadEmployeeDocument", "Details", new { documentId = document.Key.Id })"
-                                               class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.Download</a>
-                                            @if (document.Key.DocumentStatus == "Not signed")
-                                            {
-                                                <a href="@Url.Action("SigningTimesEmployee", "Document", new { documentId = document.Key.Id, menteeId = @Model.MenteeId})"
-                                                   class="btn btn-primary px-3 py-2 me-2">@App.Resources.Home.Mentee.ChoseSigningOption</a>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            }
+                            <tbody id="documentTableBody">
+
                             </tbody>
                         </table>
                     </div>
@@ -203,28 +89,8 @@ else if (User.IsInRole("Mentor"))
                                 <th>@App.Resources.Home.Mentor.MentoForTotaHours</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @if (Model.MentorData.IsNullOrEmpty())
-                            {
-                                <tr>
-                                    <td>no data</td>
-                                    <td>no data</td>
-                                    <td>no data</td>
-                                    <td>no data</td>
-                                </tr>
-                            }
-                            else
-                            {
-                                @foreach (var mentor in Model.MentorData!)
-                                {
-                                    <tr>
-                                        <td>@mentor.MenteeFullName</td>
-                                        <td>@mentor.MenteeType</td>
-                                        <td>@mentor.MentorFromDate - @mentor.MentorUntilDate</td>
-                                        <td>@mentor.MentorTotalHours</td>
-                                    </tr>
-                                }
-                            }
+                            <tbody id="mentorDataTableBody">
+
                             </tbody>
                         </table>
                     </div>
@@ -303,33 +169,168 @@ else if(!User.Identity!.IsAuthenticated)
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        fetch('/api/v1/Home/Index', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        fetchData()
+        
+        function fetchData(){
+            fetch('/api/v1/Home/Index', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.type === "Admin"){
+                    document.getElementById('totalMentors').textContent = data.totalMentorsAmount;
+                    document.getElementById('activeMentorships').textContent = data.activeMentorshipsAmount;    
+                    document.getElementById('totalFactorySupervisors').textContent = data.factorySupervisorsAmount;
+                } else if (data.type === "Mentor"){
+                    populateMentorTable(data.mentorData)
+                } else if (data.type === "Mentee-Intern"){
+                    updateInternMenteeInfo(data)
+                } else if (data.type === "Mentee-Employee"){
+                    updateEmployeeMenteeInfo(data)
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+        
+        
+        function populateMentorTable(data) {
+            const table = document.getElementById('mentorDataTableBody');
+            table.innerHTML = '';
+    
+            if (data && data.length > 0) {
+                data.forEach(mentee => {
+                    const row = `
+                        <tr>
+                            <td>${mentee.menteeFullName}</td>
+                            <td>${mentee.menteeType}</td>
+                            <td>${mentee.mentorFromDate} - ${mentee.mentorUntilDate}</td>
+                            <td>${mentee.mentorTotalHours}</td>
+                        </tr>
+                    `;
+                    table.innerHTML += row;
+                });
+            } else {
+                table.innerHTML = '<tr><td colspan="4">No data available</td></tr>';
             }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Fetched data:', data);
-    
-            document.getElementById('totalMentors').textContent = data.totalMentorsAmount;
-            console.log('Total Mentors Amount:', data.totalMentorsAmount);
-    
-            document.getElementById('activeMentorships').textContent = data.activeMentorshipsAmount;
-            console.log('Active Mentorships Amount:', data.activeMentorshipsAmount);
-    
-            document.getElementById('totalFactorySupervisors').textContent = data.factorySupervisorsAmount;
-            console.log('Factory Supervisors Amount:', data.factorySupervisorsAmount);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-    });
+        }
+        
+        function updateInternMenteeInfo(data) {
+            document.querySelector('.text-primary').textContent = `${data.menteeFromDate} - ${data.menteeUntilDate}`;
+            document.querySelector('.text-success').textContent = data.menteeTotalHours;
+            document.querySelector('.text-danger').textContent = data.isOnSickLeave ? "Yes" : "No";
 
+        
+            const mentorList = document.querySelector('#mentorList');
+            data.internsMentors.forEach(mentor => {
+                const mentorInfo = document.createElement('div');
+                mentorInfo.textContent = mentor;
+                mentorList.appendChild(mentorInfo);
+            });
+        
+            const documentTableBody = document.querySelector('#documentTableBody');
+            data.internDocuments.forEach(doc => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${doc.documentStatus}</td>
+                    <td>${doc.wayOfSigning}</td>
+                    <td>${doc.choosenSigningTime}</td>
+                    <td>
+                        <button onclick="downloadInternDocument('${doc.id}')" class="btn btn-primary px-3 py-2 me-2">Download</button>
+                        ${doc.documentStatus === 'Not signed' ? `<a href="/Document1/SigningTimesIntern?documentId=${doc.id}" class="btn btn-primary px-3 py-2 me-2">Choose Signing Option</a>` : ''}
+                    </td>
+                `;
+                documentTableBody.appendChild(row);
+            });
+        }
+        
+        function updateEmployeeMenteeInfo(data) {
+            document.querySelector('.text-primary').textContent = `${data.menteeFromDate} - ${data.menteeUntilDate}`;
+            document.querySelector('.text-success').textContent = data.menteeTotalHours;
+            document.querySelector('.text-danger').textContent = data.isOnSickLeave ? "Yes" : "No";
+
+                    
+            const mentorList = document.querySelector('#mentorList');
+            data.employeesMentors.forEach(mentor => {
+                const mentorInfo = document.createElement('div');
+                mentorInfo.textContent = mentor;
+                mentorList.appendChild(mentorInfo);
+            });
+        
+            const documentTableBody = document.querySelector('#documentTableBody');
+            
+            data.employeeDocuments.forEach(doc => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${doc.documentStatus}</td>
+                    <td>${doc.wayOfSigning}</td>
+                    <td>${doc.choosenSigningTime}</td>
+                    <td>
+                        <button onclick="downloadEmployeeDocument('${doc.id}')" class="btn btn-primary px-3 py-2 me-2">Download</button>
+                        ${doc.documentStatus === 'Not signed' ? `<a href="/Document1/SigningTimesEmployee?documentId=${doc.id}" class="btn btn-primary px-3 py-2 me-2">Choose Signing Option</a>` : ''}
+                    </td>
+                `;
+                documentTableBody.appendChild(row);
+            });
+        }
+        
+        window.downloadEmployeeDocument = function(documentId) {
+            fetch(`/api/v1.0/DocumentApi/DownloadEmployeeDocument`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(documentId)
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = documentId + ".pdf";
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error("Error downloading file:", error);
+                alert("Failed to download file: " + error.message);
+            });
+        }
+        
+        window.downloadInternDocument = function(documentId) {
+            fetch(`/api/v1.0/DocumentApi/DownloadInternDocument`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(documentId)
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = documentId + ".pdf";
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error("Error downloading file:", error);
+                alert("Failed to download file: " + error.message);
+            });
+        }
+            
+        
+    });
 </script>
