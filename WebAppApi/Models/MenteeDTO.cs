@@ -27,4 +27,6 @@ public class MenteeDTO
     public string InternFactorySupervisorId { get; set; }
     public string EmployeeFactorySupervisorId { get; set; }
     public string InternSupervisorId { get; set; }
+    
+    public string IsTest { get; set; }
 }

@@ -1,7 +1,7 @@
 services:
   sql:
     image: postgres:16
-    container_name: HANZA-Mentors-sql
+    container_name: HANZA-Mentors-db
     ports:
       - 5267:5432
     volumes:
@@ -9,11 +9,27 @@ services:
     environment:
       - POSTGRES_PASSWORD=opy
       - POSTGRES_USER=jhe
+      - POSTGRES_DB=hanza_db
     restart: on-failure
     logging:
       options: 
         max-size: 10m
         max-file: 3
         
+  app:
+    build: ./
+    container_name: HANZA-Mentors-app
+    ports:
+      - 8080:8080
+    restart: on-failure
+    logging:
+      options:
+        max-size: 10m
+        max-file: 3
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=HANZA-Mentors-db;Port=5432;Database=hanza_db;Username=jhe;Password=opy"
+    depends_on:
+      - sql
+
 volumes:
   sql-volume:

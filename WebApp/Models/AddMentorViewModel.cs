@@ -25,4 +25,6 @@ public class AddMentorViewModel
     [MinLength(1, ErrorMessage = "Profession must be between 1 and 50 characters.")]
     [MaxLength(50, ErrorMessage = "Profession must be between 1 and 50 characters.")]
     public string? Profession { get; set; }
+
+    public string IsTest { get; set; }
 }

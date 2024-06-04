@@ -177,11 +177,6 @@ app.MapRazorPages();
 
 app.Run();
 
-public partial class Program
-{
-}
-
-
 // static void SetupAppData(WebApplication app)
 // {
 //     using var serviceScope = ((IApplicationBuilder) app).ApplicationServices
@@ -234,3 +229,7 @@ public partial class Program
 //         Console.WriteLine(res.ToString());
 //     }
 // }
+
+public partial class Program
+{
+}

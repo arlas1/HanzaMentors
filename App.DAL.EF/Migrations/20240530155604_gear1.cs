@@ -1,5 +1,4 @@
 ﻿using System;
-using Base.Domain;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -8,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.DAL.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class i18n : Migration
+    public partial class gear1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -204,10 +203,10 @@ namespace App.DAL.EF.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    FirstName = table.Column<LangStr>(type: "jsonb", maxLength: 128, nullable: true),
-                    LastName = table.Column<LangStr>(type: "jsonb", maxLength: 128, nullable: true),
+                    FirstName = table.Column<string>(type: "jsonb", maxLength: 128, nullable: true),
+                    LastName = table.Column<string>(type: "jsonb", maxLength: 128, nullable: true),
                     EmployeeType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    Profession = table.Column<LangStr>(type: "jsonb", maxLength: 50, nullable: true),
+                    Profession = table.Column<string>(type: "jsonb", maxLength: 50, nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -226,10 +225,10 @@ namespace App.DAL.EF.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    FirstName = table.Column<LangStr>(type: "jsonb", maxLength: 128, nullable: true),
-                    LastName = table.Column<LangStr>(type: "jsonb", maxLength: 128, nullable: true),
+                    FirstName = table.Column<string>(type: "jsonb", maxLength: 128, nullable: true),
+                    LastName = table.Column<string>(type: "jsonb", maxLength: 128, nullable: true),
                     InternType = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    StudyProgram = table.Column<LangStr>(type: "jsonb", maxLength: 50, nullable: true),
+                    StudyProgram = table.Column<string>(type: "jsonb", maxLength: 50, nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -248,9 +247,9 @@ namespace App.DAL.EF.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    RefreshToken = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: false),
                     ExpirationDT = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PreviousRefreshToken = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
+                    PreviousRefreshToken = table.Column<string>(type: "text", nullable: true),
                     PreviousExpirationDT = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

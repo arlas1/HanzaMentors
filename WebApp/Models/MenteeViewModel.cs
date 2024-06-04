@@ -21,4 +21,10 @@ public class MenteeViewModel
     public Guid SelectedMentorId  { get; set; }
     public string FilterType { get; set; }
     public string FilterRequest { get; set; }
+    
+    public string IsTest { get; set; }
+    public string TestMenteeId { get; set; }
+    public string TestSigningTimes { get; set; }
+    public string TestSelectedSampleId { get; set; }
+    public string TestSelectedMentorId { get; set; }
 }

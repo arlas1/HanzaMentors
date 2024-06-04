@@ -70,7 +70,7 @@
             fetch(`/api/v1.0/AddApi/GetInternInfo`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ menteeId: menteeId, selectedSamples: null, selectedMentorId: "", signingTimes: null })
+                body: JSON.stringify({ menteeId: menteeId, selectedSamples: null, selectedMentorId: "", signingTimes: null, isTest: "" })
             })
             .then(response => response.json())
             .then(data => {
@@ -148,7 +148,8 @@
                 MenteeId: menteeId,
                 selectedSamples: selectedSamples,
                 selectedMentorId: selectedMentorId,
-                signingTimes: signingTimes
+                signingTimes: signingTimes,
+                isTest: ""
             };
         
             fetch('/api/v1.0/AddApi/GenerateDocumentIntern', {

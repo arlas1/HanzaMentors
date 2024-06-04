@@ -9,7 +9,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0_Solution_Items", "0_Solution_Items", "{1A72DF69-7ADF-4459-B38D-44A1310191B1}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		..\..\Downloads\docker-compose.yml = ..\..\Downloads\docker-compose.yml
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Domain", "Base.Domain\Base.Domain.csproj", "{B71BB652-4754-4A43-BE3C-B8310E4A9D55}"
@@ -57,6 +59,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppApi", "WebAppApi\WebAppApi.csproj", "{80C4A467-37E9-4265-B859-090F6180BC8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Tests", "App.Tests\App.Tests.csproj", "{D649D64C-18F2-44E6-92AC-90F167F8A468}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.TestsApi", "App.TestsApi\App.TestsApi.csproj", "{CE460C0E-0DA6-4246-8193-29474135C5ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,6 +160,10 @@ Global
 		{D649D64C-18F2-44E6-92AC-90F167F8A468}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D649D64C-18F2-44E6-92AC-90F167F8A468}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D649D64C-18F2-44E6-92AC-90F167F8A468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE460C0E-0DA6-4246-8193-29474135C5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE460C0E-0DA6-4246-8193-29474135C5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE460C0E-0DA6-4246-8193-29474135C5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE460C0E-0DA6-4246-8193-29474135C5ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7A1316C4-F0CD-4318-B23A-7C4792DB2F9A} = {A3F97125-CE62-4AC7-94AC-4255EFC3B1DB}
@@ -181,5 +189,6 @@ Global
 		{8894F8FC-C509-4D07-ABC5-091ED17260A6} = {89188C86-89E8-4476-A697-54CBA271A58A}
 		{80C4A467-37E9-4265-B859-090F6180BC8C} = {2F68DC82-72CB-41EB-92F2-C80CA2A5944F}
 		{D649D64C-18F2-44E6-92AC-90F167F8A468} = {A3F97125-CE62-4AC7-94AC-4255EFC3B1DB}
+		{CE460C0E-0DA6-4246-8193-29474135C5ED} = {2F68DC82-72CB-41EB-92F2-C80CA2A5944F}
 	EndGlobalSection
 EndGlobal

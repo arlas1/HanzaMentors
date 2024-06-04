@@ -18,14 +18,6 @@ public class Add1Controller(IAppBLL bll): Controller
     
     public IActionResult Mentee()
     {
-        // var menteeViewModel = new AddMenteeViewModel
-        // {
-        //     Mentors = bll.Mentors.GetAll(),
-        //     FactorySupervisors = bll.FactorySupervisors.GetAll(),
-        //     InternSupervisors = bll.InternSupervisors.GetAll()
-        // };
-        //
-        // return View(menteeViewModel);
         return View();
     }
     

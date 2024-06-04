@@ -5,32 +5,52 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace App.Tests.IntegrationTests.Utils;
+namespace App.Tests.IntegrationTests;
 
 public class CustomWebAppFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        // builder.ConfigureServices(services =>
+        // {
+        //     var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
+        //
+        //     if (descriptor != null)
+        //     {
+        //         services.Remove(descriptor);
+        //     }
+        //
+        //     // Using an in-memory database for testing
+        //     services.AddDbContext<AppDbContext>(options =>
+        //     {
+        //         options.UseInMemoryDatabase("InMemoryTestDb");
+        //     });
+        // });
+        //
+        // // Ensure the factory client doesn't use a running server
+        // builder.ConfigureTestServices(services =>
+        // {
+        //     services.AddHttpClient<CustomWebAppFactory<TStartup>>().ConfigureHttpClient(client =>
+        //     {
+        //         client.BaseAddress = new Uri("http://localhost/");
+        //     });
+        // });
         builder.ConfigureServices(services =>
         {
-            // find DbContext
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
                      typeof(DbContextOptions<AppDbContext>));
 
-            // if found - remove
             if (descriptor != null)
             {
                 services.Remove(descriptor);
             }
 
-            // and new DbContext
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("TestDb");
             });
 
-            // create db and seed data
             var sp = services.BuildServiceProvider();
             using var scope = sp.CreateScope();
             var scopedServices = scope.ServiceProvider;
@@ -39,6 +59,8 @@ public class CustomWebAppFactory<TStartup> : WebApplicationFactory<TStartup> whe
                 .GetRequiredService<ILogger<CustomWebAppFactory<TStartup>>>();
 
             db.Database.EnsureCreated();
+            
+            
         });
     }
 }

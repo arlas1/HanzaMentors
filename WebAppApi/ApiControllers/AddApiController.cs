@@ -1,11 +1,13 @@
 ﻿using System.IO.Compression;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using App.BLL.Contracts;
 using App.BLL.DTO;
 using App.Helpers.EmailService;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Spire.Pdf;
 using Spire.Pdf.Texts;
 using WebApp.DTO;
@@ -55,7 +57,7 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+    [ProducesResponseType<App.Public.DTO.v1.FactorySupervisor>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> AddSupervisor([FromBody] SupervisorDTO supervisorDto)
     {
@@ -64,10 +66,18 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
             case "Factory":
                 var factorySupervisor = new FactorySupervisor()
                 {
+                    Id = Guid.NewGuid(),
                     FullName = supervisorDto.FullName,
                 };
                 bll.FactorySupervisors.Add(factorySupervisor);
                 await bll.SaveChangesAsync();
+                
+                var responseSupervisor = new App.Public.DTO.v1.FactorySupervisor
+                {
+                    Id = factorySupervisor.Id,
+                    FullName = supervisorDto.FullName
+                };
+                return Ok(responseSupervisor);
                 break;
             
             case "Vocational school":
@@ -91,7 +101,7 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+    [ProducesResponseType<App.Public.DTO.v1.Mentor>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> AddMentor([FromBody] MentorDTO supervisorDto)
     {
@@ -115,8 +125,8 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
             {
                 await userManager.AddToRoleAsync(user, "Mentor");
                 
-                // var emailBody = emailService.GenerateAccountEmailBody(supervisorDto.FirstName!, supervisorDto.Email!, userPassword);
-                // await emailService.SendEmailAsync(supervisorDto.Email!, "HANZA Mentors account created", emailBody);
+                var emailBody = emailService.GenerateAccountEmailBody(supervisorDto.FirstName!, supervisorDto.Email!, userPassword);
+                await emailService.SendEmailAsync(supervisorDto.Email!, "HANZA Mentors account created", emailBody);
                      
                 var employee = new Employee()
                 {
@@ -134,6 +144,7 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
         
                 var mentor = new Mentor()
                 {
+                    Id = Guid.NewGuid(),
                     EmployeeId = employee.Id,
                     FirstName = supervisorDto.FirstName,
                     LastName = supervisorDto.LastName,
@@ -141,9 +152,22 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
                     PaymentOrderDate = null,
                     Profession = supervisorDto.Profession
                 };
-            
+                
                 bll.Mentors.Add(mentor);
-                await bll.SaveChangesAsync();  
+                await bll.SaveChangesAsync();
+                
+                var publicMentor = new App.Public.DTO.v1.Mentor
+                {
+                    Id = mentor.Id,
+                    EmployeeId = mentor.EmployeeId,
+                    FirstName = mentor.FirstName,
+                    LastName = mentor.LastName,
+                    PaymentAmount = mentor.PaymentAmount,
+                    PaymentOrderDate = mentor.PaymentOrderDate,
+                    Profession = mentor.Profession
+                };
+                
+                return Ok(publicMentor);
             }
         }
 
@@ -158,7 +182,7 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+    [ProducesResponseType<App.Public.DTO.v1.Employee>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> AddMentee([FromBody] MenteeDTO menteeDto)
     {
@@ -275,7 +299,23 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
 
                     bll.EmployeesMentors.Add(employeesMentor);
                     await bll.SaveChangesAsync();
-                    
+
+                    if (!menteeDto.IsTest.IsNullOrEmpty() && menteeDto.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var responseEmployee = new App.Public.DTO.v1.Employee
+                        {
+                            Id = employee.Id,
+                            AppUserId = employee.AppUserId,
+                            FirstName = employee.FirstName,
+                            LastName = employee.LastName,
+                            EmployeeType = employee.EmployeeType,
+                            Profession = employee.Profession,
+                            Email = employee.Email
+                        };
+                        
+                        return Ok(responseEmployee);
+                    }
+
                     break;
             }
         }
@@ -304,6 +344,18 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
 
         bll.DocumentSamples.Add(documentSample);
         await bll.SaveChangesAsync();
+        
+        if (!documentSampleDto.IsTest.IsNullOrEmpty() && documentSampleDto.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+        {
+            var publicDocumentSample = new App.Public.DTO.v1.DocumentSample
+            {
+                Id = documentSample.Id,
+                Title = documentSample.Title,
+                Base64Code = documentSample.Base64Code
+            };
+
+            return Ok(publicDocumentSample);
+        }
 
         return RedirectToAction("DocumentSamples", "Document");
     }
@@ -604,8 +656,9 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
     /// <param name="request"></param>
     /// <returns>void</returns>
     [HttpPost]
-    [Produces("application/octet-stream")]
+    [Produces("application/json", "application/octet-stream")] 
     [Consumes("application/json")]
+    [ProducesResponseType<App.Public.DTO.v1.EmployeeMentorshipDocument>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> GenerateDocumentEmployee([FromBody] GenerateDoucmentDTO request)
     {
@@ -698,6 +751,23 @@ public class AddApiController(IAppBLL bll, IEmailService emailService, UserManag
                     }
                     
                     await bll.SaveChangesAsync();
+                    
+                    if (!request.IsTest.IsNullOrEmpty() && request.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var responseEmployeeMentorshipDocument = new App.Public.DTO.v1.EmployeeMentorshipDocument
+                        {
+                            Id = employeesDocument.Id,
+                            EmployeeMentorshipId = employeesDocument.EmployeeMentorshipId,
+                            DocumentSampleId = employeesDocument.DocumentSampleId,
+                            Title = employeesDocument.Title,
+                            Base64Code = employeesDocument.Base64Code,
+                            DocumentStatus = employeesDocument.DocumentStatus,
+                            ChoosenSigningTime = employeesDocument.ChoosenSigningTime,
+                            WayOfSigning = employeesDocument.WayOfSigning
+                        };
+                        
+                        return Ok(responseEmployeeMentorshipDocument);
+                    }
                     
                     zipArchive.CreateEntryFromFile(pdfPath, pdfFileName);
                 }

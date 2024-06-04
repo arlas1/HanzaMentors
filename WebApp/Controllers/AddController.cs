@@ -1,13 +1,13 @@
 using System.IO.Compression;
 using App.BLL.Contracts;
 using App.BLL.DTO;
-using App.DAL.EF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using AppUser = App.Domain.Identity.AppUser;
 using App.Helpers.EmailService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using Spire.Pdf;
 using Spire.Pdf.Texts;
 
@@ -87,6 +87,7 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         return RedirectToAction("EmployeeMentee", "Mentee");
     }
     
+    [Authorize]
     public IActionResult Mentee()
     {
         var menteeViewModel = new AddMenteeViewModel();
@@ -103,11 +104,13 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         return View();
     }
     
+    [Authorize]
     public IActionResult Supervisor()
     {
         return View();
     }
     
+    [Authorize]
     public IActionResult DocumentSample()
     {
         return View();
@@ -287,9 +290,108 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
     }
 
     [HttpPost]
-    public async Task<IActionResult> GenerateDocumentEmployee(List<Guid> selectedSamples, Guid selectedMentorId,
-        Guid menteeId, List<string> signingTimes)
+    public async Task<IActionResult> GenerateDocumentEmployee(
+        List<Guid> selectedSamples, Guid selectedMentorId, Guid menteeId, List<string> signingTimes,
+        string isTest, string testSigningTimes, string testSelectedSampleId, string testSelectedMentorId, string testMenteeId)
     {
+        if (!isTest.IsNullOrEmpty() && isTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+        {
+            var response = new EmployeeMentorshipDocument();
+                
+            var testSamples = (await bll.DocumentSamples.GetAllAsync()).Where(sample => sample.Id.Equals(Guid.Parse(testSelectedSampleId)));
+            var testMentor = await bll.Mentors.FirstOrDefaultAsync(Guid.Parse(testSelectedMentorId));
+            var testMentee = await bll.Employees.FirstOrDefaultAsync(Guid.Parse(testMenteeId));
+            var testMenteesMentor = (await bll.EmployeesMentors.GetAllAsync()).FirstOrDefault(ms => ms.MentorId.Equals(testMentor!.Id));
+            var testMentorship = (await bll.EmployeeMentorships.GetAllAsync()).FirstOrDefault(ms => ms.EmployeeId.Equals(testMentee!.Id));
+
+            if (testMentor == null || testMentee == null || testMenteesMentor == null || testMentorship == null)
+            {
+                return NotFound();
+            }
+
+            var testPlaceholders = new Dictionary<string, string>
+            {
+                { "%mentorFirstName%", testMentor.FirstName! },
+                { "%mentorLastName%", testMentor.LastName! },
+                { "%menteeFirstName%", testMentee.FirstName! },
+                { "%menteeLastName%", testMentee.LastName! },
+                { "%mentorFromDate%", testMenteesMentor.FromDate!.ToString()! },
+                { "%mentorUntilDate%", testMenteesMentor.UntilDate!.ToString()! }
+            };
+
+            var testTempFolderPath = Path.GetTempPath();
+            var testRandomFileName = $"{Path.GetRandomFileName()}.zip";
+            var testZipFilePath = Path.Combine(testTempFolderPath, testRandomFileName);
+
+            
+            foreach (var sampleDocument in testSamples)
+            {
+                var decodedDocument = Convert.FromBase64String(sampleDocument.Base64Code!);
+
+                using (var memoryStream = new MemoryStream(decodedDocument))
+                {
+                    var pdfDocument = new PdfDocument();
+                    pdfDocument.LoadFromStream(memoryStream);
+
+                    for (var i = 0; i < pdfDocument.Pages.Count; i++)
+                    {
+                        var page = pdfDocument.Pages[i];
+                        var textReplacer = new PdfTextReplacer(page);
+                        var textReplaceOptions = new PdfTextReplaceOptions
+                        {
+                            ReplaceType = PdfTextReplaceOptions.ReplaceActionType.IgnoreCase |
+                                           PdfTextReplaceOptions.ReplaceActionType.WholeWord |
+                                           PdfTextReplaceOptions.ReplaceActionType.AutofitWidth
+                        };
+                        textReplacer.Options = textReplaceOptions;
+
+                        foreach (var placeholder in testPlaceholders)
+                        {
+                            textReplacer.ReplaceAllText(placeholder.Key, placeholder.Value);
+                        }
+                    }
+
+                    var pdfFileName = $"{sampleDocument.Title}-{Guid.NewGuid()}.pdf";
+                    var pdfPath = Path.Combine(testTempFolderPath, pdfFileName);
+                    pdfDocument.SaveToFile(pdfPath, FileFormat.PDF);
+
+                    var pdfBytes = await System.IO.File.ReadAllBytesAsync(pdfPath);
+                    string base64String = Convert.ToBase64String(pdfBytes);
+                    var employeesDocument = new EmployeeMentorshipDocument
+                    {
+                        Id = Guid.NewGuid(),
+                        EmployeeMentorshipId = testMentorship.Id,
+                        DocumentSampleId = Guid.Parse(testSelectedSampleId),
+                        Title = pdfFileName,
+                        Base64Code = base64String,
+                        DocumentStatus = "Not signed",
+                        ChoosenSigningTime = "Not chosen",
+                        WayOfSigning = "Not chosen",
+                    };
+                    
+                    bll.EmployeeMentorshipDocuments.Add(employeesDocument);
+                    await bll.SaveChangesAsync();
+                    response = employeesDocument;
+                    
+                    List<string> testSigningTimesList = new List<string>(testSigningTimes.Split(','));
+                    foreach (var time in testSigningTimesList)
+                    {
+                        var signingTime = new DoucmentSigningTime
+                        {
+                            Id = Guid.NewGuid(),
+                            EmployeeMentorshipDocumentId = employeesDocument.Id,
+                            InternMentorshipDocumentId = null,
+                            Time = time
+                        };
+                        bll.DocumentSigningTimes.Add(signingTime);
+                    }
+                    
+                    await bll.SaveChangesAsync();
+                    return Ok(response);
+                }
+            }
+        }
+        
         var samples = (await bll.DocumentSamples.GetAllAsync()).Where(sample => selectedSamples.Contains(sample.Id));
         var mentor = await bll.Mentors.FirstOrDefaultAsync(selectedMentorId);
         var mentee = await bll.Employees.FirstOrDefaultAsync(menteeId);
@@ -393,12 +495,23 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
     }
     
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddDocumentSample(AddDocumentSampleViewModel documentSampleViewModel)
     {
-        Console.WriteLine(documentSampleViewModel.Title);
-        Console.WriteLine(documentSampleViewModel.File);
+        if (!documentSampleViewModel.IsTest.IsNullOrEmpty() && documentSampleViewModel.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+        {
+            var testDocumentSample = new DocumentSample
+            {
+                Id = Guid.NewGuid(),
+                Title = documentSampleViewModel.Title,
+                Base64Code = documentSampleViewModel.TestBase64Code
+            };
 
+            bll.DocumentSamples.Add(testDocumentSample);
+            await bll.SaveChangesAsync();
+            
+            return Ok(testDocumentSample);
+        }
+        
         byte[] fileBytes;
         using (var memoryStream = new MemoryStream())
         {
@@ -422,96 +535,111 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
     }
     
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddSupervisor(AddSupervisorViewModel supervisorViewModel)
     {
-        if (ModelState.IsValid)
+        switch (supervisorViewModel.SupervisorType)
         {
-            switch (supervisorViewModel.SupervisorType)
-            {
-                case "Factory":
-                    var factorySupervisor = new FactorySupervisor()
-                    {
-                        FullName = supervisorViewModel.FullName,
-                    };
-                    bll.FactorySupervisors.Add(factorySupervisor);
-                    await bll.SaveChangesAsync();
-                    break;
+            case "Factory":
+                var factorySupervisor = new FactorySupervisor()
+                {
+                    Id = Guid.NewGuid(),
+                    FullName = supervisorViewModel.FullName,
+                };
+                bll.FactorySupervisors.Add(factorySupervisor);
+                await bll.SaveChangesAsync();
                 
-                case "Vocational school":
-                    var vcSupervisor = new InternSupervisor()
-                    {
-                        FullName = supervisorViewModel.FullName
-                    };
-                    bll.InternSupervisors.Add(vcSupervisor);
-                    await bll.SaveChangesAsync();
-                    break;
-            }
+                if (!supervisorViewModel.IsTest.IsNullOrEmpty() && supervisorViewModel.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Ok(factorySupervisor);
+                }
+                break;
+            
+            case "Vocational school":
+                var vcSupervisor = new InternSupervisor()
+                {
+                    FullName = supervisorViewModel.FullName
+                };
+                bll.InternSupervisors.Add(vcSupervisor);
+                await bll.SaveChangesAsync();
+                break;
         }
-
+        
         return RedirectToAction("Index", "Home");
     }
     
     [HttpPost]
     public async Task<IActionResult> AddMentor(AddMentorViewModel mentorViewModel)
     {
-        if (ModelState.IsValid)
+        var returnMentor = new Mentor();
+
+        var user = new AppUser()
         {
-            var user = new AppUser()
+            Id = Guid.NewGuid(),
+            FirstName = mentorViewModel.FirstName,
+            LastName = mentorViewModel.LastName,
+            Email = mentorViewModel.Email,
+            UserName = mentorViewModel.Email,
+            PersonalCode = mentorViewModel.PersonalCode,
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
+        
+        var userPassword = emailService.GenerateUserPassword();
+        var result = await userManager.CreateAsync(user, userPassword);
+        
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(user, "Mentor");
+            
+            var emailBody = emailService.GenerateAccountEmailBody(mentorViewModel.FirstName!, mentorViewModel.Email!, userPassword);
+            await emailService.SendEmailAsync(mentorViewModel.Email!, "HANZA Mentors account created", emailBody);
+                
+            var employee = new Employee()
             {
                 Id = Guid.NewGuid(),
+                AppUserId = user.Id,
                 FirstName = mentorViewModel.FirstName,
                 LastName = mentorViewModel.LastName,
-                Email = mentorViewModel.Email,
-                UserName = mentorViewModel.Email,
-                PersonalCode = mentorViewModel.PersonalCode,
-                SecurityStamp = Guid.NewGuid().ToString()
+                EmployeeType = "Full-time",
+                Profession = mentorViewModel.Profession,
+                Email = mentorViewModel.Email
             };
             
-            var userPassword = emailService.GenerateUserPassword();
-            var result = await userManager.CreateAsync(user, userPassword);
-            
-            if (result.Succeeded)
+            bll.Employees.Add(employee);
+            await bll.SaveChangesAsync();
+    
+            var mentor = new Mentor()
             {
-                await userManager.AddToRoleAsync(user, "Mentor");
-                
-                // var emailBody = emailService.GenerateAccountEmailBody(mentorViewModel.FirstName!, mentorViewModel.Email!, userPassword);
-                // await emailService.SendEmailAsync(mentorViewModel.Email!, "HANZA Mentors account created", emailBody);
-                    
-                var employee = new Employee()
-                {
-                    Id = Guid.NewGuid(),
-                    AppUserId = user.Id,
-                    FirstName = mentorViewModel.FirstName,
-                    LastName = mentorViewModel.LastName,
-                    EmployeeType = "Full-time",
-                    Profession = mentorViewModel.Profession,
-                    Email = mentorViewModel.Email
-                };
-                
-                bll.Employees.Add(employee);
-                await bll.SaveChangesAsync();
+                Id = Guid.NewGuid(),
+                EmployeeId = employee.Id,
+                FirstName = mentorViewModel.FirstName,
+                LastName = mentorViewModel.LastName,
+                PaymentAmount = null,
+                PaymentOrderDate = null,
+                Profession = mentorViewModel.Profession
+            };
         
-                var mentor = new Mentor()
-                {
-                    EmployeeId = employee.Id,
-                    FirstName = mentorViewModel.FirstName,
-                    LastName = mentorViewModel.LastName,
-                    PaymentAmount = null,
-                    PaymentOrderDate = null,
-                    Profession = mentorViewModel.Profession
-                };
-            
-                bll.Mentors.Add(mentor);
-                await bll.SaveChangesAsync();  
-            }
-        }
+            bll.Mentors.Add(mentor);
+            await bll.SaveChangesAsync();
+            returnMentor = mentor;
 
-        return RedirectToAction("Index", "Mentor");
+        }
+        
+
+        if (mentorViewModel.IsTest.IsNullOrEmpty())
+        {
+            return RedirectToAction("Index", "Mentor");
+        }
+        if (!mentorViewModel.IsTest.IsNullOrEmpty() && mentorViewModel.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+        {
+            return Ok(returnMentor);
+        }
+        else
+        {
+            return RedirectToAction("Index", "Mentor");
+        }
     }
     
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddMentee(AddMenteeViewModel menteeViewModel)
     {
         var user = new AppUser()
@@ -532,8 +660,8 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
         {
             await userManager.AddToRoleAsync(user, "Mentee");
         
-            // var emailBody = emailService.GenerateAccountEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
-            // await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
+            var emailBody = emailService.GenerateAccountEmailBody(menteeViewModel.FirstName!, menteeViewModel.Email!, userPassword);
+            await emailService.SendEmailAsync(menteeViewModel.Email!, "HANZA Mentors account created", emailBody);
         
             switch (menteeViewModel.MenteeType)
             {
@@ -627,6 +755,11 @@ public class AddController(IAppBLL bll, UserManager<AppUser> userManager, IEmail
 
                     bll.EmployeesMentors.Add(employeesMentor);
                     await bll.SaveChangesAsync();
+                    
+                    if (!menteeViewModel.IsTest.IsNullOrEmpty() && menteeViewModel.IsTest.Equals("true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Ok(employee);
+                    }
                     
                     break;
             }

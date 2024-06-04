@@ -8,9 +8,13 @@
                 <div class="card-body">
                     <section>
                         <form id="generateDocumentForm" method="post" action="@Url.Action("GenerateDocumentEmployee", "Add")">
-                            <div class="form-group">
-                                <input asp-for="MenteeId" type="hidden" id="menteeId" name="menteeId" value="@Model.MenteeId" />
-                            </div>
+                            <input asp-for="MenteeId" type="hidden" id="menteeId" name="menteeId" value="@Model.MenteeId" />
+                            <input asp-for="IsTest" id="IsTest" type="hidden" name="isTest" class="form-control border-dark-subtle"/>
+                            <input asp-for="TestMenteeId" type="hidden" id="TestMenteeId" name="testMenteeId" value="@Model.MenteeId" />
+                            <input asp-for="TestSelectedSampleId" id="TestSelectedSampleId" type="hidden" name="testSelectedSampleId" class="form-control border-dark-subtle"/>
+                            <input asp-for="TestSigningTimes" id="TestSigningTimes" type="hidden" name="testSigningTimes" class="form-control border-dark-subtle"/>
+                            <input asp-for="TestSelectedMentorId" id="TestSelectedMentorId" type="hidden" name="testSelectedMentorId" class="form-control border-dark-subtle"/>
+                            
                             <div class="form-group">
                                 <label>@App.Resources.Add.DocumentGenerate.DocumentSamples:</label>
                                 <br/>

@@ -35,7 +35,6 @@ public class HomeController(UserManager<AppUser> userManager, IAppBLL bll, IConf
     [Consumes("application/json")]
     [ProducesResponseType<HomeViewModel>((int) HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int) HttpStatusCode.BadRequest)]
-
     public async Task<IActionResult> Index()
     {
         if (User.Identity!.IsAuthenticated && User.IsInRole("Admin"))

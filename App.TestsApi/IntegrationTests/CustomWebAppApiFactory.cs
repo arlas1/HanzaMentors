@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace App.TestApi;
+namespace App.TestsApi.IntegrationTests;
 
 public class CustomWebAppApiFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class
 {
@@ -13,24 +13,20 @@ public class CustomWebAppApiFactory<TStartup> : WebApplicationFactory<TStartup> 
     {
         builder.ConfigureServices(services =>
         {
-            // find DbContext
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
                      typeof(DbContextOptions<AppDbContext>));
 
-            // if found - remove
             if (descriptor != null)
             {
                 services.Remove(descriptor);
             }
 
-            // and new DbContext
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("TestDb");
             });
 
-            // create db and seed data
             var sp = services.BuildServiceProvider();
             using var scope = sp.CreateScope();
             var scopedServices = scope.ServiceProvider;

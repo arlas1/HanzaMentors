@@ -33,7 +33,6 @@ else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Intern"))
                     <div class="card-body">
                         <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span class="text-primary">@Model.MenteeFromDate - @Model.MenteeUntilDate</span></p>
                         <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span class="text-success">@Model.MenteeTotalHours</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span class="text-danger">@Model.IsOnSickLeave</span></p>
                         <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <span>
                             @foreach (var mentor in Model.MenteeData.InternsMentors)
                             {
@@ -113,7 +112,6 @@ else if (User.IsInRole("Mentee") && Model.MenteeType!.Equals("Employee"))
                     <div class="card-body">
                         <p class="card-text">@App.Resources.Home.Mentee.MentorshipUntil_from: <span class="text-primary">@Model.MenteeFromDate - @Model.MenteeUntilDate</span></p>
                         <p class="card-text">@App.Resources.Home.Mentee.MentorshipTotalHours: <span class="text-success">@Model.MenteeTotalHours</span></p>
-                        <p class="card-text">@App.Resources.Home.Mentee.IsOnSickLeave: <span class="text-danger">@Model.IsOnSickLeave</span></p>
                         <p class="card-text">@App.Resources.Home.Mentee.Mentor_s_: <span>
                             @foreach (var mentor in Model.MenteeData.EmployeesMentors)
                             {

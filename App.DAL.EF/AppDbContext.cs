@@ -27,7 +27,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid, IdentityUs
     public DbSet<FactorySupervisor> FactorySupervisors { get; set; } = default!;
     public DbSet<EmployeeMentorshipDocument> EmployeeMentorshipDocuments { get; set; } = default!;
     public DbSet<EmployeesMentor> EmployeesMentors { get; set; } = default!;
-
+//5191     was :5267
     public DbSet<Mentor> Mentors { get; set; } = default!;
     public DbSet<MenteeSickLeave> MenteeSickLeaves { get; set; } = default!;
     

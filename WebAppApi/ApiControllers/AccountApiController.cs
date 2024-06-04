@@ -26,7 +26,7 @@ public class AccountApiController(
     [HttpPost]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType<JWTResponse>((int)HttpStatusCode.OK)]
     [ProducesResponseType<RestApiErrorResponse>((int)HttpStatusCode.BadRequest)]
     public async Task<ActionResult> Login([FromBody] LoginDTO loginDto)
     {
@@ -130,7 +130,7 @@ public class AccountApiController(
                 }
             );
         }
-
+        
         var tokensToRemove = context.RefreshTokens.Where(x => x.AppUserId == userId).ToList();
         if (!tokensToRemove.Any())
         {
@@ -140,7 +140,7 @@ public class AccountApiController(
                 Error = "No matching refresh token found"
             });
         }
-
+        
         context.RefreshTokens.RemoveRange(tokensToRemove);
         await context.SaveChangesAsync();
         await signInManager.SignOutAsync();

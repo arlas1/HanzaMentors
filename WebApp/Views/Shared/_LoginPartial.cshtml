@@ -12,7 +12,7 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@App.Resources.View.Shared._Layout.Settings</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" id="logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">@App.Resources.View.Shared._Layout.Logout</button>
             </form>
         </li>
@@ -20,7 +20,7 @@
     else
     {
         <li class="nav-item">
-            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">@App.Resources.View.Shared._Layout.Login</a>
+            <a asp-controller="Account11" asp-action="Login1" class="btn btn-primary">@App.Resources.View.Shared._Layout.Login</a>
         </li>
     }
 </ul>

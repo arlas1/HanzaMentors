@@ -58,4 +58,5 @@ public class AddMenteeViewModel
     public Guid InternSupervisorId { get; set; }
     public int MentorTotalHours { get; set; }
     public int MenteeTotalHours { get; set; }
+    public string IsTest { get; set; }
 }

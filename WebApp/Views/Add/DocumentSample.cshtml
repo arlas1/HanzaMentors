@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <section>
-                        <form id="documentSampleForm" method="post" enctype="multipart/form-data">
+                        <form id="documentSampleForm" method="post" enctype="multipart/form-data" asp-controller="Add" asp-action="AddDocumentSample">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row justify-content-center">
                                 <div class="col-md-10">
@@ -22,12 +22,13 @@
                                         <span asp-validation-for="File" class="text-danger"></span>
                                     </div>
                                 </div>   
+                                <input asp-for="IsTest" id="IsTest" type="hidden" class="form-control border-dark-subtle"/>
+                                <input asp-for="TestBase64Code" id="TestBase64Code" type="hidden" class="form-control border-dark-subtle"/>
                             </div>
                             <div class="form-group text-center mb-0">
                                 <div class="d-flex justify-content-center">
                                     <div class="btn-group" role="group" aria-label="Add buttons">
-                                        <button type="button" class="btn btn-primary px-4 py-2 rounded-3"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">@App.Resources.Add.DocumentSample.AddSample</button>
+                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">@App.Resources.Add.DocumentSample.AddSample</button>
                                     </div>
                                 </div>
                             </div>
@@ -39,33 +40,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">@App.Resources.Add.Mentee.Notification</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>@App.Resources.Add.DocumentSample.Message</p>
-      </div>
-      <div class="modal-footer justify-content-center">
-          <button type="button" onclick="setAction('AddDocumentSample')" class="btn btn-primary px-3 py-1 rounded-3 justify-content-center" >Ok</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script>
-    function setAction(actionName) {
-        const form = document.getElementById('documentSampleForm');
-        form.action = actionName;
-        form.submit();
-    }
-</script>
 
 <style>
     .container {

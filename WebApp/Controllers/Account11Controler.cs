@@ -18,15 +18,6 @@ public class Account11Controller(SignInManager<AppUser> signInManager) : Control
     {
         var signIn = await signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, lockoutOnFailure: false);
 
-        // if (signIn.Succeeded)
-        // {
-        //     return RedirectToAction("InternMentee", "Mentee");
-        // }
-        // else
-        // {
-        //     return BadRequest();
-        //     
-        // }
-        return RedirectToAction("InternMentee", "Mentee");
+        return RedirectToAction("Index", "Home");
     }
 }
